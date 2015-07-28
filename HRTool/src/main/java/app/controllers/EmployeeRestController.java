@@ -14,14 +14,14 @@ import app.repository.EmployeeRepository;
 
 
 @RestController
-@RequestMapping("/employees/{username}")
+//@RequestMapping("/employees/{username}")
 public class EmployeeRestController {
 		
 	@Autowired
-	private  EmployeeRepository employeeRepository;
+	EmployeeRepository employeeRepository;
 	
 
-	@RequestMapping(method = RequestMethod.GET)
+	//@RequestMapping(method = RequestMethod.GET)
 	Optional<Employee> readEmployee(@PathVariable String username)
 	{
 		this.validateEmployee(username);
@@ -32,6 +32,11 @@ public class EmployeeRestController {
 	private void validateEmployee(String username) {
 		this.employeeRepository.findByUsername(username).orElseThrow(
 				() -> new UserNotFoundException(username));
+	}
+	
+	@RequestMapping("/employees")
+	private Iterable<Employee> returnEmployees(){
+		return employeeRepository.findAll();
 	}
 	
 }

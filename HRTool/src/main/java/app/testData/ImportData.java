@@ -372,31 +372,7 @@ public class ImportData {
 
 	public void addProjectInfos() {
 
-		ProjectInfo pi = new ProjectInfo();
-
-		pi.setEmployee(empRep.findOne(1));
-		pi.setProject(projRep.findOne(2));
-		pi.setJobResponsibilities("frontend");
-		pi.setProjectExp("Learned a lot about frontend");
-
-		projInfoRep.save(pi);
-
-		pi = new ProjectInfo();
-
-		pi.setEmployee(empRep.findOne(2));
-		pi.setProject(projRep.findOne(2));
-		pi.setJobResponsibilities("backend");
-		pi.setProjectExp("Learned a lot about backend");
-
-		projInfoRep.save(pi);
-		pi = new ProjectInfo();
-
-		pi.setEmployee(empRep.findOne(3));
-		pi.setProject(projRep.findOne(1));
-		pi.setJobResponsibilities("backend");
-		pi.setProjectExp("Learned a lot about backend");
-
-		projInfoRep.save(pi);
+		
 
 	}
 }

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.model.ProjectInfo;
 import app.model.TagCloud;
+import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
 import app.testData.ImportData;
@@ -17,9 +19,12 @@ public class TestRest {
 	
 	@Autowired
 	private TagCloudRepository tagRep;
+	@Autowired
+	ProjectInfoRepository projInfoRep;
+	
 	@RequestMapping("/greeting")
-	public String greet() {
-		return tagRep.findOne(1).getNameTagCloud();
+	public Iterable<ProjectInfo> greet() {
+		return projInfoRep.findAll();
 	}
 
 	@RequestMapping("/greeting2")

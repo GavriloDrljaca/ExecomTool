@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +29,8 @@ public class Project {
 	private List<TagCloud> tagClouds;
 
 	
-//	@OneToMany(mappedBy="project")
-//	private List<ProjectInfo> projectInfo;
+	//@OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
+	//private List<ProjectInfo> projectInfo;
 //	
 //	@OneToMany(mappedBy="project")
 //	private List<TagClouds> tagClouds;
@@ -64,6 +65,7 @@ public class Project {
 //	public List<ProjectInfo> getProjectInfo() {
 //		return projectInfo;
 //	}
+//
 //	public void setProjectInfo(List<ProjectInfo> projectInfo) {
 //		this.projectInfo = projectInfo;
 //	}

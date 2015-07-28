@@ -20,10 +20,7 @@ public class ProjectRestController {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	
 
-	
-	
 	@RequestMapping(method = RequestMethod.GET)
 	Optional<Project> readProject(@PathVariable String projectName)
 	{
