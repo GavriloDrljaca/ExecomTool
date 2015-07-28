@@ -18,9 +18,10 @@ import app.repository.ProjectRepository;
 @RequestMapping("/{nameProject}")
 public class ProjectRestController {
 
+	@Autowired
 	private final ProjectRepository projectRepository;
 	
-	@Autowired
+	
 	public ProjectRestController(ProjectRepository projectRepository)
 	{
 		this.projectRepository = projectRepository;

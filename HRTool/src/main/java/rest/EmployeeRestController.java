@@ -20,14 +20,16 @@ import app.repository.EmployeeRepository;
 @RequestMapping("/{username}")
 public class EmployeeRestController {
 		
+	@Autowired
 	private final EmployeeRepository employeeRepository;
 	
-	@Autowired
+	
 	public EmployeeRestController(EmployeeRepository employeeRepository) {
 		
 		this.employeeRepository = employeeRepository;
 	}
 	
+
 	@RequestMapping(method = RequestMethod.GET)
 	Optional<Employee> readEmployee(@PathVariable String username)
 	{
