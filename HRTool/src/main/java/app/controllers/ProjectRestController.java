@@ -1,8 +1,6 @@
-package rest;
+package app.controllers;
 
 import java.util.Optional;
-
-import http.response.ProjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,22 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.controllers.http.response.ProjectNotFoundException;
 import app.model.Project;
 import app.repository.ProjectRepository;
 
 
 @RestController
-@RequestMapping("/{nameProject}")
+@RequestMapping("/projects/{nameProject}")
 public class ProjectRestController {
 
 	@Autowired
-	private final ProjectRepository projectRepository;
+	private ProjectRepository projectRepository;
 	
 	
-	public ProjectRestController(ProjectRepository projectRepository)
-	{
-		this.projectRepository = projectRepository;
-	}
+
 	
 	
 	@RequestMapping(method = RequestMethod.GET)

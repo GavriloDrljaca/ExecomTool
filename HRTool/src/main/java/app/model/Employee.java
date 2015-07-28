@@ -35,11 +35,8 @@ public class Employee {
 	private String passportNumber;
 	private int yearsOfWorkingExpInExecom;
 	private int yearsOfWorking;
-	
 	private String placeOfBirth;
-	
 	private String trainingLearningPriority;
-	
 	private String licencesCertificates;
 	
 	private String awards;

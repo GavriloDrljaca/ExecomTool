@@ -1,10 +1,6 @@
-package rest;
+package app.controllers;
 
 import java.util.Optional;
-
-import http.response.UserNotFoundException;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,22 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.controllers.http.response.UserNotFoundException;
 import app.model.Employee;
 import app.repository.EmployeeRepository;
 
 
 @RestController
-@RequestMapping("/{username}")
+@RequestMapping("/employees/{username}")
 public class EmployeeRestController {
 		
 	@Autowired
-	private final EmployeeRepository employeeRepository;
-	
-	
-	public EmployeeRestController(EmployeeRepository employeeRepository) {
-		
-		this.employeeRepository = employeeRepository;
-	}
+	private  EmployeeRepository employeeRepository;
 	
 
 	@RequestMapping(method = RequestMethod.GET)
