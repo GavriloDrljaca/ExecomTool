@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import app.model.Employee;
 import app.model.Project;
@@ -14,17 +15,18 @@ import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
 
+@Component
 public class ImportData {
 	@Autowired
-	public static TagCloudRepository tagRep;
+	TagCloudRepository tagRep;
 	@Autowired
-	public static EmployeeRepository empRep;
+	EmployeeRepository empRep;
 	@Autowired
-	public static ProjectInfoRepository projInfoRep;
+	ProjectInfoRepository projInfoRep;
 	@Autowired
-	public static ProjectRepository projRep;
+	ProjectRepository projRep;
 
-	public static void addEmployees() {
+	public void addEmployees() {
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
 
 		// EMPLOYEE PETAR
@@ -198,7 +200,7 @@ public class ImportData {
 
 	}
 
-	public static void addProjects() {
+	public void addProjects() {
 
 		Project p = new Project();
 		p.setNameProject("HRTool");
@@ -217,7 +219,7 @@ public class ImportData {
 
 	}
 
-	public static void addTagClouds() {
+	public void addTagClouds() {
 		TagCloud tc = new TagCloud();
 
 		tc.setNameTagCloud("Java");
@@ -368,7 +370,7 @@ public class ImportData {
 
 	}
 
-	public static void addProjectInfos() {
+	public void addProjectInfos() {
 
 		ProjectInfo pi = new ProjectInfo();
 
