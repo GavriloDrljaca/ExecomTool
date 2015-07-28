@@ -15,7 +15,7 @@ public class ProjectInfo {
 	private int idProjectInfo;
 	
 	
-	  @ManyToOne 
+	@ManyToOne 
 	@JoinColumn(name="idProject")
 	private Project project;
 	
