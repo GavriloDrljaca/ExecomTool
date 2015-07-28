@@ -19,7 +19,6 @@ argfile*
 pom.xml
 activemq-data/
 
-
 /build
 buildSrc/build
 /spring-*/build
