@@ -5,10 +5,11 @@
     <title>DOM Test</title>
     <meta name="google-signin-client_id" content="282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com">
     <script src="http://code.angularjs.org/1.0.8/angular.js"></script>
-    <script src="js/angular-google-plus.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     
+    <!--  Login via google - over angular controller
+    <script>
     var app = angular.module('app', ['googleplus' , 'ngRoute']);
 
     app.config(['GooglePlusProvider', function(GooglePlusProvider) {
@@ -17,7 +18,8 @@
            apiKey: 'AIzaSyDIx-ON-faT2UCTaJz_7HbRsPgN55r62uw'
          });
     }]);
-
+	
+    
     app.controller('AuthCtrl', ['$scope', 'GooglePlus', function ($scope, GooglePlus) {
         $scope.login = function () {
           GooglePlus.login().then(function (authResult) {
@@ -31,15 +33,16 @@
           });
         };
         
-        
     }])
-    </script>
+    </script> -->
   </head>
 
   <body ng-app="app" ng-controller="AuthCtrl">
     <a href="javascript:void(0);" ng-click="login()">Login with Google Plus</a>
     
     <p>
+    
+    
     <a href="#" onclick="signOut();">Sign out</a>
 	<script>
 		  function signOut() {
@@ -47,23 +50,25 @@
 		    auth2.signOut().then(function () {
 		      console.log('User signed out.');
 		    });
+		    
 		  }
 	</script>
  </p>
  
  <p>
- <div class="g-signin2" data-onsuccess="onSignIn"></div>
+ <div class="g-signin2" data-onsuccess="onSignIn" ng-controller=""></div>
  </p>
 	 <script>
 	 function onSignIn(googleUser) {
 		  var profile = googleUser.getBasicProfile();
+
 		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 		  console.log('Name: ' + profile.getName());
 		  console.log('Image URL: ' + profile.getImageUrl());
 		  console.log('Email: ' + profile.getEmail());
 		}
 	 </script>
- 
+	 
   </body>
   
 
