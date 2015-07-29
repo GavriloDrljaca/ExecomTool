@@ -4,9 +4,9 @@
  */
 
 
-app.controller('employeeController', function ($rootScope, $scope, $window){
-	
-	
+app.controller('employeeController', function ($rootScope, $scope, $window, selectedEmployee){
+		$scope.activeForm = "nijedna";
+		$scope.selectedEmployee = selectedEmployee 
 	 $scope.hide = function() {
 		    $mdDialog.hide();
 		  };
@@ -17,5 +17,8 @@ app.controller('employeeController', function ($rootScope, $scope, $window){
 		    $mdDialog.hide(answer);
 		  }
 	
-	
-});
+     $scope.showForm = function(forma){
+    	 $scope.activeForm = forma;
+     }
+		  
+	});

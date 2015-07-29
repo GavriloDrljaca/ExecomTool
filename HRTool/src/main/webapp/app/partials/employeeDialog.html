@@ -1,4 +1,4 @@
-<md-dialog aria-label="Employee" flex="90">
+<md-dialog aria-label="Employee" flex="100">
   <form>
   <md-toolbar>
     <div class="md-toolbar-tools">
@@ -10,21 +10,26 @@
   <md-dialog-content>
     <div>
     <!-- Dodaj EMPLOYEEE -->
-      IME PREZIME
+      {{selectedEmployee.nameEmployee}}
     </div>
-    <div><md-button ng-click = "" class=" md-raised md-primary">Basic information</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Contact information</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Employment information</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Work experience overview</md-button>
+    <div class = "md-actions" layout = "row"><md-button ng-click = "showForm('basic')" class=" md-raised md-primary">Basic info</md-button>
+    <md-button ng-click = "showForm(contact)" class=" md-raised md-primary">Contact info</md-button>
+    <md-button ng-click = "" class=" md-raised md-primary">Employment info</md-button>
+    <md-button ng-click = "" class=" md-raised md-primary">Work experience</md-button>
     <md-button ng-click = "" class=" md-raised md-primary">Personal development </md-button>
     <md-button ng-click = "" class=" md-raised md-primary">Social skills and competences</md-button>
     
     </div>
+    <div>
+    <span flex></span>
+    <form ng-show ="activeForm == 'basic'">
+    	<label>Name:</label><input type = "text">
+    	<label>Gender:</label><input type = "text">
+    	<label>Date of birth:</label><input type = "text">
+    </form>
+    </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">
-    <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" >
-      More on Wikipedia
-    </md-button>
     <span flex></span>
     <md-button ng-click="answer('not useful')" class="md-primary">
      Not Useful
