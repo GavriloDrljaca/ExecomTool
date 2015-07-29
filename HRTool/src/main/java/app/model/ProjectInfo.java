@@ -20,7 +20,8 @@ public class ProjectInfo {
 	@ManyToOne 
 	@JoinColumn(name="idProject")
 	private Project project;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="idEmployee")
 	private Employee employee;

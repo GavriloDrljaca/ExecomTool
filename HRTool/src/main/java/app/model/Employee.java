@@ -13,8 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Employee {
 	
@@ -86,7 +84,6 @@ public class Employee {
 		this.tagClouds = tagClouds;
 	}
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
 	private List<ProjectInfo> projectInfos;
 	

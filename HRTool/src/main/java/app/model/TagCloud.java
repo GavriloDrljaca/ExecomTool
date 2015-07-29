@@ -7,10 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 
 @Entity
 public class TagCloud {
@@ -23,12 +20,11 @@ public class TagCloud {
 	
 	private String tipTagCloud;
 	
-	 @ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
-	 
-	List<Project> projects;
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
+	private List<Project> projects;
 	
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
-	List<Employee> employees;
+	private List<Employee> employees;
 	
 	public TagCloud(){
 		
