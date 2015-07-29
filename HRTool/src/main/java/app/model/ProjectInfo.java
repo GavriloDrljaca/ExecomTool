@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
  
 @Entity
 public class ProjectInfo {
@@ -14,7 +16,7 @@ public class ProjectInfo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProjectInfo;
 	
-	
+	@JsonIgnore
 	@ManyToOne 
 	@JoinColumn(name="idProject")
 	private Project project;

@@ -30,7 +30,6 @@ public class Project {
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
 	private List<TagCloud> tagClouds;
 
-	@JsonIgnore
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL)
 	private List<ProjectInfo> projectInfo;
 //	
