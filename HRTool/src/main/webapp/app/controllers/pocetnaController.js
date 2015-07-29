@@ -32,7 +32,7 @@ app.controller('pocetnaController', function( $scope, $window, $mdDialog) {
 	  };
 	  $scope.showAdvanced = function(ev) {
 	    $mdDialog.show({
-	      controller: DialogController,
+	      controller: 'employeeController',
 	      templateUrl: 'app/partials/employeeDialog.html',
 	      parent: angular.element(document.body),
 	      targetEvent: ev,

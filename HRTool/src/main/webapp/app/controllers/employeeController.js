@@ -4,14 +4,18 @@
  */
 
 
-app.controller('employeeController', function ($rootScope, $scope, $window, employeeFactory){
+app.controller('employeeController', function ($rootScope, $scope, $window){
 	
 	
-	$scope.getEmployee() = function(id){
-		$scope.currentEmp = employeeFactory.getEmployee(id)
-		
-		
-	}
+	 $scope.hide = function() {
+		    $mdDialog.hide();
+		  };
+		  $scope.cancel = function() {
+		    $mdDialog.cancel();
+		  };
+		  $scope.answer = function(answer) {
+		    $mdDialog.hide(answer);
+		  }
 	
 	
 });
