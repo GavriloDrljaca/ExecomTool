@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Employee {
 	
@@ -86,8 +88,9 @@ public class Employee {
 		this.tagClouds = tagClouds;
 	}
 	
-	//@OneToMany(fetch = FetchType.EAGER, mappedBy="employee", cascade = CascadeType.ALL)
-	//private List<ProjectInfo> projectInfos;
+	@JsonIgnore
+	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
+	private List<ProjectInfo> projectInfos;
 	
 	
 	
@@ -171,7 +174,7 @@ public class Employee {
 	}
 	public void setIdCardNumber(String idCardNumber) {
 		this.idCardNumber = idCardNumber;
-	}
+	}	
 	public String getPassportNumber() {
 		return passportNumber;
 	}
@@ -304,11 +307,30 @@ public class Employee {
 //	public void setTagCloudEmps(List<TagCloudEmp> tagCloudEmps) {
 //		this.tagCloudEmps = tagCloudEmps;
 //	}
-//	public List<ProjectInfo> getProjectInfos() {
-//		return projectInfos;
-//	}
-//	public void setProjectInfos(List<ProjectInfo> projectInfos) {
-//		this.projectInfos = projectInfos;
-//	}
+	public List<ProjectInfo> getProjectInfos() {
+		return projectInfos;
+	}
+	public void setProjectInfos(List<ProjectInfo> projectInfos) {
+		this.projectInfos = projectInfos;
+	}
+	@Override
+	public String toString() {
+		return "Employee [idEmployee=" + idEmployee + ", nameEmployee=" + nameEmployee + ", gender=" + gender
+				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", phoneNumber=" + phoneNumber + ", email="
+				+ email + ", emergencyPhoneNumber=" + emergencyPhoneNumber + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", startDateFromBooklet=" + startDateFromBooklet + ", username=" + username
+				+ ", idCardNumber=" + idCardNumber + ", passportNumber=" + passportNumber
+				+ ", yearsOfWorkingExpInExecom=" + yearsOfWorkingExpInExecom + ", yearsOfWorking=" + yearsOfWorking
+				+ ", placeOfBirth=" + placeOfBirth + ", trainingLearningPriority=" + trainingLearningPriority
+				+ ", licencesCertificates=" + licencesCertificates + ", awards=" + awards + ", contractType="
+				+ contractType + ", communication=" + communication + ", fastLearning=" + fastLearning
+				+ ", openToChange=" + openToChange + ", teamPlayer=" + teamPlayer + ", proactiveCommunication="
+				+ proactiveCommunication + ", interpersonalSkills=" + interpersonalSkills + ", knowledgeSharing="
+				+ knowledgeSharing + ", judgement=" + judgement + ", decisionMaking=" + decisionMaking
+				+ ", influencing=" + influencing + ", leadership=" + leadership + ", coaching=" + coaching
+				+ ", organizationalSkills=" + organizationalSkills + ", tagClouds=" + tagClouds + "]";
+	}
+	
+	
 	
 }

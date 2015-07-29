@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Project {
 	
@@ -28,9 +30,9 @@ public class Project {
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
 	private List<TagCloud> tagClouds;
 
-	
-	//@OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
-	//private List<ProjectInfo> projectInfo;
+	@JsonIgnore
+	@OneToMany(mappedBy="project", cascade = CascadeType.ALL)
+	private List<ProjectInfo> projectInfo;
 //	
 //	@OneToMany(mappedBy="project")
 //	private List<TagClouds> tagClouds;
@@ -62,13 +64,13 @@ public class Project {
 	public void setDurationOfProject(int durationOfProject) {
 		this.durationOfProject = durationOfProject;
 	}
-//	public List<ProjectInfo> getProjectInfo() {
-//		return projectInfo;
-//	}
-//
-//	public void setProjectInfo(List<ProjectInfo> projectInfo) {
-//		this.projectInfo = projectInfo;
-//	}
+	public List<ProjectInfo> getProjectInfo() {
+		return projectInfo;
+	}
+
+	public void setProjectInfo(List<ProjectInfo> projectInfo) {
+		this.projectInfo = projectInfo;
+	}
 //	public List<TagClouds> getTagClouds() {
 //		return tagClouds;
 //	}
