@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<script src="js/employee.js"></script>
+
 <title>Insert title here</title>
 </head>
 <body>
-<h1>HELLO WORLD</h1>
+<h1>HELLO</h1>
+
+	<div ng-controller="EmployeeController">
+		<div ng-repeat="employee in employees">
+			<p>ID: {{employee.idEmployee}}</p>
+			<p>Name: {{employee.nameEmployee}}</p>
+			<p></p>
+		</div>
+	</div>
+
+
 
 </body>
 </html>

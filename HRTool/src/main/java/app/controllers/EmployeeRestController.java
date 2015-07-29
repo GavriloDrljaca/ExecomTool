@@ -14,14 +14,14 @@ import app.repository.EmployeeRepository;
 
 
 @RestController
-//@RequestMapping("/employees/{username}")
+@RequestMapping("/employees/{username}")
 public class EmployeeRestController {
 		
 	@Autowired
 	EmployeeRepository employeeRepository;
 	
 
-	//@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	Optional<Employee> readEmployee(@PathVariable String username)
 	{
 		this.validateEmployee(username);
