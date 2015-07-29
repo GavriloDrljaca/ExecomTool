@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html ng-app>
-<head>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-<script src="js/employee.js"></script>
+<html>
 
-<title>Insert title here</title>
-</head>
-<body>
-<h1>HELLO</h1>
+  <head>
+    <title>DOM Test</title>
+    <script src="http://code.angularjs.org/1.0.8/angular.js"></script>
+    <script src="js/angular-google-plus.js"></script>
+    <script>
+    
+    var app = angular.module('app', ['googleplus']);
 
-	<div ng-controller="EmployeeController">
-		<div ng-repeat="employee in employees">
-			<p>ID: {{employee.idEmployee}}</p>
-			<p>Name: {{employee.nameEmployee}}</p>
-			<p></p>
-		</div>
-	</div>
+    app.config(['GooglePlusProvider', function(GooglePlusProvider) {
+         GooglePlusProvider.init({
+           clientId: '282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com',
+           apiKey: 'AIzaSyDIx-ON-faT2UCTaJz_7HbRsPgN55r62uw'
+         });
+    }]);
 
+    app.controller('AuthCtrl', ['$scope', 'GooglePlus', function ($scope, GooglePlus) {
+        $scope.login = function () {
+          GooglePlus.login().then(function (authResult) {
+              console.log(authResult);
+  
+              GooglePlus.getUser().then(function (user) {
+                  console.log(user);
+              });
+          }, function (err) {
+              console.log(err);
+          });
+        };
+    }])
+    </script>
+  </head>
 
+  <body ng-app="app" ng-controller="AuthCtrl">
+    <a href="javascript:void(0);" ng-click="login()">Login with Google Plus</a>
+  </body>
 
-</body>
 </html>
