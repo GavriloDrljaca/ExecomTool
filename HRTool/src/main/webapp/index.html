@@ -9,7 +9,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
     
-    var app = angular.module('app', ['googleplus']);
+    var app = angular.module('app', ['googleplus' , 'ngRoute']);
 
     app.config(['GooglePlusProvider', function(GooglePlusProvider) {
          GooglePlusProvider.init({
