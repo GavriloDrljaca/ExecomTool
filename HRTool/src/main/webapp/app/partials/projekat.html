@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>HR Tool</title>
+
+<script src="../js/angular.js"></script>
+<script src = "../js/angular-animate.js"></script>
+<script src = "../js/angular-aria.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.0/angular-material.js"></script>
+<script src = "../js/angular-route.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../app.js"></script>
+<script src="../services/pocetnaService.js"></script>
+<script src="../controllers/projectController.js"></script>
+<script src="../services/projectService.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<div ng-controller="projectController">
+<div class="container">
+<table ng-show="true" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Svi projekti</th>     
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="project in projects">
+      <td>{{ project.nameProject }}</td>
+      <td>{{ project.durationOfProject }}</td>
+      <td ng-repeat="projectInfo in project.projectinfo">{{ projectInfo.employee.nameEmployee }} {{ projectInfo.employee.email }}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</html>
