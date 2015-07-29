@@ -7,7 +7,7 @@
     <script src="js/angular-google-plus.js"></script>
     <script>
     
-    var app = angular.module('app', ['googleplus']);
+    var app = angular.module('app', ['googleplus' , 'ngRoute']);
 
     app.config(['GooglePlusProvider', function(GooglePlusProvider) {
          GooglePlusProvider.init({
