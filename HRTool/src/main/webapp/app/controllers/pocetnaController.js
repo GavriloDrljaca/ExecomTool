@@ -13,6 +13,7 @@ app.controller('pocetnaController', function( $scope, $window, $mdDialog, pocetn
 		$scope.selectedEmployee = emp;
 	    $mdDialog.show({
 	      controller: 'employeeController',
+	      controllerAs: 'empCtrl',
 	      templateUrl: 'app/partials/employeeDialog.html',
 	      parent: angular.element(document.body),
 	      targetEvent: ev,
