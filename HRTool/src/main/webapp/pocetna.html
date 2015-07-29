@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+
+<script src="app/js/angular.js"></script>
+<script src = "app/js/angular-animate.js"></script>
+<script src = "app/js/angular-aria.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.0/angular-material.js"></script>
+<script src = "app/js/angular-route.js"></script>
+<script src="app/js/jquery.min.js"></script>
+<script src="app/app.js"></script>
+<script src="app/controllers/pocetnaController.js"></script>
+<script src="app/controllers/employeeController.js"></script>
+<script src="app/services/pocetnaService.js"></script>
+<script src="app/services/employeeService.js"></script>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+</head>
+<body>
+
+	<div ng-controller="pocetnaController">
+	
+
+	<div class="dialog-demo-content" layout="row" layout-wrap>
+		<md-button class="md-primary md-raised" ng-click="showAlert($event)"
+			flex flex-md="100"> Alert Dialog </md-button>
+		<md-button class="md-primary md-raised" ng-click="showConfirm($event)"
+			flex flex-md="100"> Confirm Dialog </md-button>
+		<md-button class="md-primary md-raised"
+			ng-click="showAdvanced($event)" flex flex-md="100">
+		Custom Dialog </md-button>
+	</div>
+	<div ng-if="alert">
+		<br /> <b layout="row" layout-align="center center" class="md-padding">
+			{{alert}} </b>
+	</div>
+	ovo je ang {{5+5 }}
+</div>
+
+
+</body>
+</html>
+
+<!-- 
+<script src="http://code.angularjs.org/1.0.8/angular.js"></script>
+<script src="app/js/angular.js"></script>
+ -->

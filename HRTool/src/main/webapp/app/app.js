@@ -3,4 +3,4 @@
  * created by Gavrilo Drljaca
  */
 
-var HRTool = angular.module('HRTool', ['ngRoute']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial']);
