@@ -2,6 +2,14 @@
 <html ng-app="app">
 <head>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <script src="app/js/angular.js"></script>
 <script src = "app/js/angular-animate.js"></script>
@@ -20,18 +28,25 @@
 <body>
 
 	<div ng-controller="pocetnaController">
-	
-	<table>
-		<tr ng-repeat="emp in employees">
-			<td>{{ emp.nameEmployee }} </td>
-			<td>
-				<md-button class="md-primary md-raised"
-				ng-click="showAdvanced($event, emp)" flex flex-md="100">
-				Vise imformacija </md-button>		
-			</td>
-		</tr>
+	<div class="container">
+	<table class="table table-striped table-hover">
+		<thead>
+   			 <tr>
+   				 <th><h3>Ime i prezime</h3></th>
+   			 </tr>
+  		</thead>
+		<tbody>	
+			<tr ng-repeat="emp in employees">
+				<td>{{ emp.nameEmployee }} </td>
+				<td>
+					<md-button class="md-primary md-raised"
+					ng-click="showAdvanced($event, emp)" flex flex-md="100">
+					Vise imformacija </md-button>		
+				</td>
+			</tr>
+		</tbody>
 	</table>
-
+	</div>
 
 </div>
 
