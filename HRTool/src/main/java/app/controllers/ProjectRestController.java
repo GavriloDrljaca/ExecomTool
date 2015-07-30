@@ -45,12 +45,11 @@ public class ProjectRestController {
 	public Project getProject(@RequestParam("id") int id) {
 		return projectRepository.findOne(id);
 	}
-	
-	@RequestMapping("/saveProject")
+	@RequestMapping(value = "/saveProject", method = RequestMethod.POST)
 	public Project saveProject(@RequestParam("project") Project p) {
 		return projectRepository.save(p);
 	}
-	@RequestMapping("/deleteProject")
+	@RequestMapping(value = "/deleteProject", method = RequestMethod.POST)
 	public Iterable<Project> deleteProject(@RequestParam("idProject") int idProject) {
 		projectRepository.delete(idProject);
 		return projectRepository.findAll();

@@ -65,12 +65,12 @@ public class EmployeeRestController {
 		return this.projectRepository.findAll(idProjects);
 	}
 	
-	@RequestMapping("/saveemployee")
+	@RequestMapping(value = "/saveemployee", method = RequestMethod.POST)
 	public void saveEmployee(@RequestParam("employee") Employee e) {
 		System.out.println("save employee");
 		employeeRepository.save(e);
 	}
-	@RequestMapping("/deleteemployee") 
+	@RequestMapping(value = "/deleteemployee", method = RequestMethod.POST) 
 	public void deleteEmployee(@RequestParam("idEmployee") int idEmployee) {
 		employeeRepository.delete(idEmployee);
 	}
