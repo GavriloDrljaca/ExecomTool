@@ -13,12 +13,14 @@ app.controller('employeeController', function ($rootScope, $scope, $window, $mdD
 	 $scope.activeForm = "none";
 	 $scope.currEmp = selectedEmployee;
 	 
+	 
 	 //Date d = new Date("dd-MM-YYYY");
-	 d = Date(parseInt(selectedEmployee.dateOfBirth));
-	 d.format = "dd-MM-YYYY";
-	 d.toLocalFormat()
+	 dateBirth.date = Date(parseInt(selectedEmployee.dateOfBirth));
+	 //d.format = "dd-MM-YYYY";
+	 //d.toLocalFormat("dd-MM-YYYY")
+	 dateBirth.dateAsString = $filter('date')(d, "dd-MM-yyyy");
 	// d = Date(day, month, year)
-	 alert(d);
+	 alert(dateAsString);
 	 $scope.hide = function() {
 		    $mdDialog.hide();
 		  };
