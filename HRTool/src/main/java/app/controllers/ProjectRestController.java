@@ -50,4 +50,8 @@ public class ProjectRestController {
 	public Project saveProject(@RequestParam("project") Project p) {
 		return projectRepository.save(p);
 	}
+	@RequestMapping("/deleteProject")
+	public void deleteProject(@RequestParam("idProject") int idProject) {
+		projectRepository.delete(idProject);
+	}
 }
