@@ -3,11 +3,11 @@
  */
 app.factory('projectInfoFactory', function($http) {
 	
-	var factory() = {};
+	var factory = {};
 	
 	factory.getEmployeeForProject = function(idProject) {
-		return $http.get('/projectinfo/projecteployee', [idProject])
-	}
+		return $http.get('/projectinfo/projectemployee', [idProject])
+	};
 	
 	return factory;
 });
