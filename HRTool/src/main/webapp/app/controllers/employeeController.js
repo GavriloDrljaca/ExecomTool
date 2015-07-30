@@ -2,7 +2,7 @@
  * Employee controller created by: Gavrilo Drljaca
  */
 
-app.controller('employeeController', function($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeFactory) {
+app.controller('employeeController', function($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
 	function init() {
 
 		$scope.activeForm = "none";
@@ -21,7 +21,7 @@ app.controller('employeeController', function($rootScope, $scope, $window, $mdDi
 		$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 		//
 		
-		employeeFactory.saveEmployee($scope.currEmp).success(function(){
+		employeeService.saveEmployee($scope.currEmp).success(function(){
 			alert("USPEH!");
 		});
 		
