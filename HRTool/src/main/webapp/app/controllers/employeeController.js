@@ -9,11 +9,18 @@ app.controller('employeeController', function($rootScope, $scope, $window, $mdDi
 	}
 
 	$scope.activeForm = "none";
-	$scope.currEmp = selectedEmployee;
+	$scope.currRealDeal = selectedEmployee;
 	
+	$scope.currEmp = $scope.currRealDeal;
 	//Date of Birth
-	$scope.dateBirth = new Date(parseInt(selectedEmployee.dateOfBirth));
-	$scope.dateOfBirth = $filter('date')($scope.dateBirth , 'yyyy-MM-dd');
+	$scope.dateBirth = new Date(selectedEmployee.dateOfBirth);
+	
+	//startDate
+	$scope.startDate = new Date($scope.currEmp.startDate);
+	//endDate
+	$scope.endDate = new Date($scope.currEmp.endDate);
+	//startDate from booklet
+	$scope.startDateFromBooklet = new Date($scope.currEmp.startDateFromBooklet);
 	
 	$scope.saveEmployee = function(){
 		
@@ -21,7 +28,7 @@ app.controller('employeeController', function($rootScope, $scope, $window, $mdDi
 		$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 		//
 		
-		employeeService.saveEmployee($scope.currEmp).success(function(){
+		employeeService.save($scope.currEmp).success(function(){
 			alert("USPEH!");
 		});
 		

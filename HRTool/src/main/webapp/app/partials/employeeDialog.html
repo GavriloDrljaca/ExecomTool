@@ -1,55 +1,71 @@
 <md-dialog aria-label="Employee" flex="100">
-  <form>
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <h2>Employee</h2>
-      <span flex></span>
-		<md-button class="md-button" ng-click="answer('not applicable')">
-        X
-      </md-button>
+<form>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<md-divider></md-divider>
+		<h2>{{currEmp.nameEmployee}}</h2>
+		<!-- 
     </div>
-  </md-toolbar>
-  <md-dialog-content>
-    <div>
-    <!-- Dodaj EMPLOYEEE -->
-      <h2>{{currEmp.nameEmployee}}</h2>
-    </div>
-    <div class = "md-actions" layout = "row"><md-button ng-click = "showForm('basic')" class=" md-raised md-primary">Basic info</md-button>
-    <md-button ng-click = "showForm('contact')" class=" md-raised md-primary">Contact info</md-button>
-    <md-button ng-click = "showDate('sf')" class=" md-raised md-primary">Employment info</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Work experience</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Personal development </md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Social skills and competences</md-button>
+        <div class = "md-actions" layout = "row">
+	    <md-button ng-click = "showForm('basic')" class=" md-raised md-primary">Basic info</md-button>
+	    <md-button ng-click = "showForm('contact')" class=" md-raised md-primary">Contact info</md-button>
+	    <md-button ng-click = "showForm('employInfo')" class=" md-raised md-primary">Employment info</md-button>
+	    <md-button ng-click = "" class=" md-raised md-primary">Work experience</md-button>
+	    <md-button ng-click = "showForm('develop')" class=" md-raised md-primary">Personal development </md-button>
+	    <md-button ng-click = "showForm('skills')" class=" md-raised md-primary">Social skills and competences</md-button>
     
     </div>
-    <span flex></span>
-    <div ng-show ="activeForm == 'basic'" class = "form-group">
-	<h3>Basic information</h3>
+  -->
+	</div>
+	</md-toolbar>
+
+	<md-dialog-content> <md-tabs md-dynamic-height
+		md-border-bottom> <md-tab label="Basic info">
+		 <md-content class="md-padding">
+			<div data-ng-include
+				data-src="'app/partials/employeeBasicInfoTab.html'">
+			</div>
+		</md-content> </md-tab>
 	
-    <form >
-    <md-content layout-padding layout="column" layout-sm="column">
-    	<md-input-container md-no-float = "true">
-    	<label>Name:</label><input type = "text" ng-model = "currEmp.nameEmployee">
-    	</md-input-container>
-    	<md-input-container>
-    	<label>Gender:</label><input type = "text" ng-model = "currEmp.gender">
-    	</md-input-container>
-    	<md-input-container>
-    	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >
- 		</md-input-container>
- 	</md-content>
-    </form>
- 	<md-button ng-click = "saveEmployee()" class = "md-raised">Save</md-button>
-    </div>
-  </md-dialog-content>
-  <div class="md-actions" layout="row">
-    <span flex></span>
-    <md-button ng-click="answer('not useful')" class="md-primary">
-     Not Useful
-    </md-button>
-    <md-button ng-click="answer('useful')" class="md-primary">
-      Useful
-    </md-button>
-  </div>
-  </form>
+	 <md-tab label="Contact info">
+	
+	 		<md-content class="md-padding">
+			<div data-ng-include
+					data-src="'app/partials/employeeContactInfoTab.html'"></div>
+			</md-content>
+		</md-tab> 	
+		 <md-tab label="Employment info">
+	 		<md-content class="md-padding">
+			<div data-ng-include
+					data-src="'app/partials/employeeEmploymentInfoTab.html'"></div>
+			</md-content>
+		</md-tab> 	
+		 <md-tab label="Work experience">
+	 		<md-content class="md-padding">
+			<div data-ng-include
+					data-src="'app/partials/employeeWorkExperienceTab.html'"></div>
+			</md-content>
+		</md-tab> 	
+		<md-tab label="Personal Development">
+	 		<md-content class="md-padding">
+			<div data-ng-include
+					data-src="'app/partials/employeeDevelopmentTab.html'"></div>
+			</md-content>
+		</md-tab>	
+		<md-tab label="Social skills and competences">
+	 		<md-content class="md-padding">
+			<div data-ng-include
+					data-src="'app/partials/employeeSkillsTab.html'"></div>
+			</md-content>
+		</md-tab>	
+	</md-tabs>
+	
+	</md-dialog-content>
+	<div class="md-actions" layout="row">
+		<span flex></span>
+		<md-button ng-click="saveEmployee()" class="md-primary">Save</md-button>
+		<md-button ng-click="answer('useful')" class="md-primary">
+		Exit </md-button>
+	</div>
+</form>
 </md-dialog>

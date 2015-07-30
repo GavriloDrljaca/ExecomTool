@@ -1,0 +1,18 @@
+<!-- BASIC INFORMATION -->
+    <div id = "basic" ng-show ="activeForm == 'basic' || activeForm == 'none'" class = "form-group">
+	<h3>Basic information</h3>
+    <form >
+    <md-content layout-padding layout="column" layout-sm="column">
+    	<md-input-container md-no-float = "true">
+    	<label>Name:</label><input type = "text" ng-model = "currEmp.nameEmployee">
+    	</md-input-container>
+    	<md-input-container>
+    	<label>Gender:</label><input type = "text" ng-model = "currEmp.gender">
+    	</md-input-container>
+    	<md-input-container>
+    	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >
+ 		</md-input-container>
+ 	</md-content>
+    </form>
+ 	
+    </div>
