@@ -50,13 +50,13 @@ public class EmployeeRestController {
 	
 	
 	@RequestMapping(value = "/{username:.+}/projectinfos", method = RequestMethod.GET)
-	public List<ProjectInfo> getProjectInfos(int idEmployee) {
-		return this.employeeRepository.findOne(idEmployee).getProjectInfos();
+	public List<ProjectInfo> getProjectInfos(@PathVariable("username") String username) {
+		return this.employeeRepository.findByUsername(username).getProjectInfos();
 	}
 	
 	@RequestMapping(value = "/{username:.+}/projects", method = RequestMethod.GET)
-	public Iterable<Project> getProjects(int idEmployee) {
-		List<ProjectInfo> projectInfos = this.employeeRepository.findOne(idEmployee).getProjectInfos();
+	public Iterable<Project> getProjects(@PathVariable("username") String  username) {
+		List<ProjectInfo> projectInfos = this.employeeRepository.findByUsername(username).getProjectInfos();
 		List<Integer> idProjects = new ArrayList<Integer>();
 		for(ProjectInfo pi : projectInfos) {
 			idProjects.add(pi.getProject().getIdProject());
