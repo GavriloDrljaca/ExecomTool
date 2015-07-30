@@ -14,4 +14,6 @@ app.factory('employeeFactory', function($http){
 	factory.getEmployees = function(){
 		return $http.get('/employees');
 	};
+	
+	return factory;
 });

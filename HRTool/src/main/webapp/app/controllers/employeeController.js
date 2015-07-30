@@ -13,8 +13,12 @@ app.controller('employeeController', function ($rootScope, $scope, $window, $mdD
 	 $scope.activeForm = "none";
 	 $scope.currEmp = selectedEmployee;
 	 
-	 $scope.DateBirth = $filter('jsDate')(date, "dd-mm-yyyy");
-	 alert($scope.DateBirth);
+	 //Date d = new Date("dd-MM-YYYY");
+	 d = Date(parseInt(selectedEmployee.dateOfBirth));
+	 d.format = "dd-MM-YYYY";
+	 d.toLocalFormat()
+	// d = Date(day, month, year)
+	 alert(d);
 	 $scope.hide = function() {
 		    $mdDialog.hide();
 		  };
@@ -28,7 +32,13 @@ app.controller('employeeController', function ($rootScope, $scope, $window, $mdD
      $scope.showForm = function(forma){
     	 $scope.activeForm = forma;
      }
-     
+     /*
+      * function toJSONLocal (date) {
+	    var local = new Date(date);
+	    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	    return local.toJSON().slice(0, 10);
+	}
+      */
      
 		  
 	});
