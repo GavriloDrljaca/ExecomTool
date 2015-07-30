@@ -51,7 +51,9 @@ public class ProjectRestController {
 		return projectRepository.save(p);
 	}
 	@RequestMapping("/deleteProject")
-	public void deleteProject(@RequestParam("idProject") int idProject) {
+	public Iterable<Project> deleteProject(@RequestParam("idProject") int idProject) {
 		projectRepository.delete(idProject);
+		return projectRepository.findAll();
 	}
+	
 }
