@@ -11,12 +11,15 @@ app.controller('employeeController', function($rootScope, $scope, $window,
 
 	$scope.activeForm = "none";
 	$scope.currEmp = selectedEmployee;
-
-	dat = new Date(selectedEmployee.dateOfBirth);
-
-	$scope.dateOfBirth = $filter('date')(dat, 'yyyy-MM-dd');
-	$scope.dateBirth = new Date($scope.dateOfBirth);
-	alert($scope.dateBirth);
+	
+	//Date of Birth
+	$scope.dateBirth = new Date(parseInt(selectedEmployee.dateOfBirth));
+	$scope.dateOfBirth = $filter('date')($scope.dateBirth , 'yyyy-MM-dd');
+	
+	$scope.saveEmployee(){
+		
+	}
+	//CLOSING DIALOG
 	$scope.hide = function() {
 		$mdDialog.hide();
 	};
@@ -31,7 +34,8 @@ app.controller('employeeController', function($rootScope, $scope, $window,
 		$scope.activeForm = forma;
 	}
 	$scope.showDate = function(bla){
-		alert($scope.dateBirth);
+		alert($scope.dateOfBirth);
+		alert(new Date($scope.DateOfBirth))
 	}
 	/*
 	 * function toJSONLocal (date) { var local = new Date(date);
