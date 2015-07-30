@@ -11,7 +11,7 @@ import app.repository.ProjectRepository;
 
 @RestController
 @RepositoryEventHandler(ProjectInfo.class)
-@RequestMapping("/projectinfo")
+@RequestMapping
 public class ProjectInfoRestController {
 
 	@Autowired
