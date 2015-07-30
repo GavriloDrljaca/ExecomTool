@@ -46,6 +46,23 @@
 			</tr>
 		</tbody>
 	</table>
+	<table class="table table-striped table-hover">
+		<thead>
+   			 <tr>
+   				 <th><h3>Naziv projekta</h3></th>
+   			 </tr>
+  		</thead>
+		<tbody>	
+			<tr ng-repeat="project in projects">
+				<td>{{ project.nameProject }} </td>
+				<td>
+					<md-button class="md-primary md-raised"
+					ng-click="showAdvanced($event, project)" flex flex-md="100">
+					Vise imformacija </md-button>		
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	</div>
 
 </div>
