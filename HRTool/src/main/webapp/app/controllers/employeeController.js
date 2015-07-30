@@ -16,7 +16,8 @@ app.controller('employeeController', function($rootScope, $scope, $window,
 	$scope.dateBirth = new Date(parseInt(selectedEmployee.dateOfBirth));
 	$scope.dateOfBirth = $filter('date')($scope.dateBirth , 'yyyy-MM-dd');
 	
-	$scope.saveEmployee(){
+	$scope.saveEmployee = function(){
+		
 		//saving (new) DateOfBirth
 		$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 		//
