@@ -1,4 +1,4 @@
-app.controller('pocetnaController', function( $scope, $window, $mdDialog, pocetnaFactory) {
+app.controller('pocetnaController', function( $scope, $window, $mdDialog, startPageFactory, employeeFactory, projectFactory) {
 	 
 	function init(){
 		pocetnaFactory.getEmployees().success(function(data){
