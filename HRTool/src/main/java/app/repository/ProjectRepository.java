@@ -9,4 +9,5 @@ import app.model.Project;
 public interface ProjectRepository extends CrudRepository<Project, Integer> {
 
 	Project findByNameProject(String projectName);
+	Project findByIdProject(int id);
 }

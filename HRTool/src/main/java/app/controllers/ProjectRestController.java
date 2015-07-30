@@ -20,8 +20,13 @@ public class ProjectRestController {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-
 	@RequestMapping(method = RequestMethod.GET)
+	Iterable<Project> readProjects(){
+		return this.projectRepository.findAll();
+	}
+	
+	
+	@RequestMapping(value = "/{projectName}", method = RequestMethod.GET)
 	Project readProject(@PathVariable String projectName)
 	{
 		this.validateProject(projectName);
@@ -34,16 +39,6 @@ public class ProjectRestController {
 		if(this.projectRepository.findByNameProject(projectName)==null)
 				throw new ProjectNotFoundException(projectName);
 
-	}
-	
-	@RequestMapping("/getAll")
-	public Iterable<Project> findAll() {
-		return projectRepository.findAll();
-	}
-	
-	@RequestMapping("/getProject")
-	public Project getProject(@RequestParam("id") int id) {
-		return projectRepository.findOne(id);
 	}
 	
 	@RequestMapping("/saveProject")

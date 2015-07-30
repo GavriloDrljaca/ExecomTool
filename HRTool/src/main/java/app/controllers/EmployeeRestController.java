@@ -37,7 +37,6 @@ public class EmployeeRestController {
 	@RequestMapping(value = "/{username:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	Employee readEmployee(@PathVariable("username") String username){
-		System.out.println(username);
 		this.validateEmployee(username);
 		return this.employeeRepository.findByUsername(username);
 	}

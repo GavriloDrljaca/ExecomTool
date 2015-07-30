@@ -10,5 +10,4 @@ import app.model.Employee;
 public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
 
 	Employee findByUsername(String username);
-	
 }

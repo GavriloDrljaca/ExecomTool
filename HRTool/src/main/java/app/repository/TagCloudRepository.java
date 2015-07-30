@@ -10,5 +10,5 @@ import app.model.TagCloud;
 public interface TagCloudRepository extends CrudRepository<TagCloud, Integer> {
 	
 	TagCloud findByNameTagCloud(String tagCloudName);
-
+	Iterable<TagCloud> findByTipTagCloud(String tagCloudType);
 }
