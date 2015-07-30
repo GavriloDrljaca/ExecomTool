@@ -1,17 +1,15 @@
 /**
  * 
  */
-app.controller('projectController', function($scope, $window, $mdDialog, selectedProject, projectInfoFactory){
+app.controller('projectController', function($scope, $window, $mdDialog, selectedProject, projectInfoFactory, projectFactory){
 		
 	$scope.selectedProject = selectedProject;	
 	
-	function init() {
+	$scope.init = function() {
 		projectInfoFactory.getEmployeeForProject(selectedProject.idProject).success(function (data) {
 			$scope.employees = data;
-		})
+		});
 	}
-	
-	init();
 	
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);

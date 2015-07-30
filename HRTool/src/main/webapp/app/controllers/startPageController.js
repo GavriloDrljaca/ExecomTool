@@ -2,7 +2,7 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 
 	$scope.init = function() {
 		employeeService.list().success(function(data) {
-			$scope.employees = data;
+			$scope.employees = data._embedded.employees;
 		})
 
 		projectService.list().success(function(data) {
