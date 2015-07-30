@@ -1,12 +1,12 @@
 /**
  * 
  */
-app.controller('projectController', function($scope, $window, $mdDialog, selectedProject, projectInfoFactory, projectFactory){
+app.controller('projectController', function($scope, $window, $mdDialog, selectedProject, projectInfoService){
 		
 	$scope.selectedProject = selectedProject;	
 	
 	$scope.init = function() {
-		projectInfoFactory.getEmployeeForProject(selectedProject.idProject).success(function (data) {
+		projectInfoService.getEmployeesForProject(selectedProject.idProject).success(function (data) {
 			$scope.employees = data;
 		});
 	}
