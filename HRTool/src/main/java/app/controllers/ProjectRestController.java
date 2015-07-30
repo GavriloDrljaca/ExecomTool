@@ -39,7 +39,7 @@ public class ProjectRestController {
 	@RequestMapping("/getAll")
 	public Iterable<Project> findAll() {
 		return projectRepository.findAll();
-	}
+	} 
 	
 	@RequestMapping("/getProject")
 	public Project getProject(@RequestParam("id") int id) {

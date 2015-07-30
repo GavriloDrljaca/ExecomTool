@@ -43,7 +43,7 @@ public class EmployeeRestController {
 		return this.employeeRepository.findByUsername(username);
 	}
 	
-	
+	 
 	private void validateEmployee(String username) {
 		if(this.employeeRepository.findByUsername(username) == null) throw
 				 new UserNotFoundException(username);
