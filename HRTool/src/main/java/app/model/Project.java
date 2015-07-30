@@ -26,7 +26,7 @@ public class Project {
 	@ManyToMany(cascade=CascadeType.ALL)  
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
 	private List<TagCloud> tagClouds;
-
+	
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL)
 	private List<ProjectInfo> projectInfo;
 //	
