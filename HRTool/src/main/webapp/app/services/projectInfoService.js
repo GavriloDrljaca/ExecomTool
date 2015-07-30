@@ -1,13 +1,15 @@
 /**
  * 
  */
-app.factory('projectInfoFactory', function($http) {
+app.service('projectInfoService', function($http) {
 	
-	var factory = {};
+	return{	
+		/*getEmployeesForProject: function(idProject) {
+			return $http.get('/projectinfo/projectemployee', [idProject])
+		},*/
 	
-	factory.getEmployeeForProject = function(idProject) {
-		return $http.get('/projectinfo/projectemployee', [idProject])
-	};
-	
-	return factory;
+		getProjectInfosForProject: function(id) {
+			return $http.get('/projectInfosForProject', [id])
+		}
+	}	
 });
