@@ -16,6 +16,10 @@ app.factory('projectFactory', function($http) {
 	factory.saveProject = function(project) {
 		return $http.post('/projects/saveProject', [project])
 	};
+	
+	factory.deleteProject = function(id) {
+		return $http.post('/projects/deleteProject', [id])
+	}
 
 	return factory;
 });
