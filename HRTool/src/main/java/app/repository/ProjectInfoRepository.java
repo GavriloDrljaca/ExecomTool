@@ -11,5 +11,5 @@ import app.model.ProjectInfo;
 public interface ProjectInfoRepository extends JpaRepository<ProjectInfo, Integer> {
 	
 	ProjectInfo findByProjectAndEmployee(Project project, Employee employee);
-
+ 
 }

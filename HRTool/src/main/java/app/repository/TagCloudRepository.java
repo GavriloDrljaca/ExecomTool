@@ -10,6 +10,6 @@ import app.model.TagCloud;
 @Repository
 public interface TagCloudRepository extends JpaRepository<TagCloud, Integer> {
 	
-	TagCloud findByNameTagCloud(String tagCloudName);
+	TagCloud findByNameTagCloud(String tagCloudName); 
 
 }

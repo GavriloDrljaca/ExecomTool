@@ -10,6 +10,6 @@ import app.model.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-	Employee findByUsername(String username);
+	Employee findByUsername(String username); 
 	
 }
