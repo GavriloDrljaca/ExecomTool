@@ -1,17 +1,8 @@
 /**
  * 
  */
-app.controller('projectController', function($scope, $window, projectFactory){
+app.controller('projectController', function($scope, $window, selectedProject){
 		
-	
-	function init(){
-		
-		projectFactory.getAllProjects().success(function (data) {
-			$scope.projects = data;
-		});
-	}
-	
-	init();
-	
+	$scope.selectedProject = selectedProject;	
 	
 });

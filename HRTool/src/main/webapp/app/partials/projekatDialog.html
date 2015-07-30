@@ -10,9 +10,10 @@
 	<md-dialog-content>
 		<div>{{ selectedProject.nameProject }}</div>
 		<div>
-			<label>Trajanje projekta (u nedeljama): </label><label>{{ selectedProject.durationOfProject }}</label>
+			<label>Trajanje projekta (u nedeljama): </label><input type="text" value="{{ selectedProject.durationOfProject }}"/><br/>	
+			<label>Tehonologije koje su korištne na projektu:</label><br/>
 			<div ng-repeat="technolgy in selectedProject.tagClouds">
-				<label>Tehonologije koje su korištne na projektu:</label><br/>
+				<label>{{ technology.nameTagCloud }}</label><br/>
 			</div>
 			<div ng-repeat="projectInfo in selectedProject.projectInfo">
 				<label>Zaposleni na projektu:</label><br/>
