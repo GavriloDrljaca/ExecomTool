@@ -15,27 +15,25 @@
 </table>
 
 <h3>Novi zaposleni:</h3>
-<md-content layout-padding="">
+
 <form name="projectForm">
 	<md-input-container> <label>Description</label> <input
-		md-maxlength="30" required="" name="description"
+		md-maxlength="30" required name="description"
 		ng-model="project.description">
 	<div ng-messages="projectForm.description.$error">
-		<div data-ng-message="required">This is required.</div>
-		<div data-ng-message="md-maxlength">The name has to be less than 30
+		<div ng-message="required">This is required.</div>
+		<div ng-message="md-maxlength">The name has to be less than 30
 			characters long.</div>
 	</div>
 	</md-input-container>
-
 	<md-input-container> <label>Client Name</label> <input
-		required="" name="clientName" ng-model="project.clientName">
+		required name="clientName" ng-model="project.clientName">
 	<div ng-messages="projectForm.clientName.$error">
 		<div ng-message="required">This is required.</div>
 	</div>
 	</md-input-container>
-
 	<md-input-container> <label>Hourly Rate
-		(USD)</label> <input required="" type="number" step="any" name="rate"
+		(USD)</label> <input required type="number" step="any" name="rate"
 		ng-model="project.rate" min="800" max="4999">
 	<div ng-messages="projectForm.rate.$error">
 		<div ng-message="required">
@@ -49,4 +47,3 @@
 	</div>
 	</md-input-container>
 </form>
-</md-content>
