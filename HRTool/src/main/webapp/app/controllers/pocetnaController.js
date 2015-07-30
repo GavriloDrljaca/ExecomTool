@@ -32,16 +32,16 @@ app.controller('pocetnaController', function( $scope, $window, $mdDialog, pocetn
 	    });
 	  };
 	  
-	  $scope.showProject = function(ev, emp) {
-			$scope.selectedEmployee = emp;
+	  $scope.showProject = function(ev, prj) {
+			$scope.selectedProject = prj;
 		    $mdDialog.show({
-		      controller: 'employeeController',
-		      controllerAs: 'empCtrl',
-		      templateUrl: 'app/partials/employeeDialog.html',
+		      controller: 'projectController',
+		      controllerAs: 'prjCtrl',
+		      templateUrl: 'app/partials/projekatDialog.html',
 		      parent: angular.element(document.body),
 		      targetEvent: ev,
 		      locals: {
-		          selectedEmployee: $scope.selectedEmployee
+		          selectedProject: $scope.selectedProject
 		        }
 		    })
 		    .then(function(answer) {
