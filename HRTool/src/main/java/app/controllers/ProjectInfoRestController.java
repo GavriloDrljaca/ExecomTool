@@ -30,11 +30,11 @@ public class ProjectInfoRestController {
 	}
 	
 	@RequestMapping("/projectemployee")
-	public List<Employee> getAllEmployeesByProject(@RequestParam("idProject") String idProject) {
+	public List<Employee> getAllEmployeesByProject(@RequestParam("idProject") int idProject) {
 		List<Employee> employees= new ArrayList<Employee>();
 		Iterable<ProjectInfo> projectInfos = projectInfoRepository.findAll();
 		for(ProjectInfo pi : projectInfos) {
-			if(pi.getProject().getIdProject() == Integer.parseInt(idProject)) {
+			if(pi.getProject().getIdProject() == idProject) {
 				employees.add(pi.getEmployee());
 			}
 		}
