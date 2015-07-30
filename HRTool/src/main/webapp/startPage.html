@@ -23,6 +23,8 @@
 	src="http://cdn.jsdelivr.net/angularjs/1.3.5/angular-route.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.0/angular-material.js"></script>
+	
+<script type="text/javascript" src="https://rawgit.com/betsol/angular-input-date/master/src/angular-input-date.js"></script>
 <script src="app/js/jquery.min.js"></script>
 <script src="app/app.js"></script>
 <script src="app/controllers/startPageController.js"></script>
@@ -39,47 +41,19 @@
 	<div ng-controller="startPageController">
 		
 			
-			<md-tabs md-dynamic-height="" md-border-bottom=""> <md-tab
+		<md-tabs md-dynamic-height="" md-border-bottom=""> <md-tab
 				label="Employees"> <md-content class="md-padding">
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th><h3>Ime i prezime</h3></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="emp in employees">
-						<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee
-							}}</td>
-						<td><md-button class="md-primary md-raised"
-								ng-click="deleteEmployee(emp)" flex flex-md="100">
-							Obrisi zaposlenog </md-button></td>
-					</tr>
-				</tbody>
-			</table>
-
+			 <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
 			</md-content>
 			 </md-tab> 
 			
-			<md-tab label="Projects">
+		<md-tab label="Projects">
 			 <md-content class="md-padding">
-
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th><h3>Naziv projekta</h3></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="project in projects">
-						<td ng-click="showProject($event, project)">{{ project.nameProject }}</td>
-						<td><md-button class="md-primary md-raised"
-								ng-click="deleteProject(project)" flex flex-md="100">
-							Obrisi projekat </md-button></td>
-					</tr>
-				</tbody>
-			</table>
-			</md-content> </md-tab> </md-tabs>
+                <div data-ng-include data-src="'app/partials/projectTab.html'"></div>
+			
+			</md-content> 
+		</md-tab> 
+		</md-tabs>
 
 
 		</div>
