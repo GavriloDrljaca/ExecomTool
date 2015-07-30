@@ -49,7 +49,7 @@ public class Application implements CommandLineRunner {
 		// EMPLOYEE PETAR
 		Employee emp = new Employee();
 		emp.setNameEmployee("Petar Petrovic");
-		emp.setGender("m");
+		emp.setGender("Male");
 		try {
 			emp.setDateOfBirth(sdf.parse("1969-11-11"));
 		} catch (ParseException e) {
@@ -110,7 +110,7 @@ public class Application implements CommandLineRunner {
 		// EMPLOYEE Snezana
 		emp = new Employee();
 		emp.setNameEmployee("Snezana Maric");
-		emp.setGender("z");
+		emp.setGender("Female");
 		try {
 			emp.setDateOfBirth(sdf.parse("1985-11-11"));
 		} catch (ParseException e) {
@@ -164,7 +164,7 @@ public class Application implements CommandLineRunner {
 		// EMPLOYEE Milos
 		emp = new Employee();
 		emp.setNameEmployee("Milos Milosevic");
-		emp.setGender("m");
+		emp.setGender("Male");
 		try {
 			emp.setDateOfBirth(sdf.parse("1989-11-11"));
 		} catch (ParseException e) {
@@ -219,7 +219,7 @@ public class Application implements CommandLineRunner {
 		// EMPLOYEE Nemanja
 		emp = new Employee();
 		emp.setNameEmployee("Nemanja Milutinovic");
-		emp.setGender("m");
+		emp.setGender("Male");
 		try {
 			emp.setDateOfBirth(sdf.parse("1992-05-21"));
 		} catch (ParseException e) {

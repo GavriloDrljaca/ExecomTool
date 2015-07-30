@@ -8,7 +8,9 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 		projectService.list().success(function(data) {
 			$scope.projects = data._embedded.projects;
 		})
+
 	}
+	
 
 	$scope.updateProject = function(pr){
 		pr.nameProject = "Test";

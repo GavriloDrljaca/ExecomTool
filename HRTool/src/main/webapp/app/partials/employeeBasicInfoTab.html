@@ -7,7 +7,10 @@
     	<label>Name:</label><input type = "text" ng-model = "currEmp.nameEmployee">
     	</md-input-container>
     	<md-input-container>
-    	<label>Gender:</label><input type = "text" ng-model = "currEmp.gender">
+    		<md-select placeholder = "Gender" ng-model = "currEmp.gender">
+    			<md-option value = "Female">Female</md-option>
+    			<md-option value = "Male">Male</md-option>								
+			</md-select>
     	</md-input-container>
     	<md-input-container>
     	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >

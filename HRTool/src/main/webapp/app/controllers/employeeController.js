@@ -28,7 +28,7 @@ app.controller('employeeController', function($rootScope, $scope, $window, $mdDi
 		$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 		//
 		
-		employeeService.save($scope.currEmp).success(function(){
+		employeeService.update($scope.currEmp).success(function(){
 			alert("USPEH!");
 		});
 		
