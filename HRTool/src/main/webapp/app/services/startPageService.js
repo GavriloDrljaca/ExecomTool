@@ -1,5 +1,5 @@
 
-app.factory('pocetnaFactory', function($http){
+app.factory('startPageFactory', function($http){
 	
 	var factory = {};
 	
