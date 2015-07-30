@@ -1,12 +1,20 @@
 /**
- * Employee controller
- * created by: Gavrilo Drljaca
+ * Employee controller created by: Gavrilo Drljaca
  */
 
 
-app.controller('employeeController', function ($rootScope, $scope, $window, selectedEmployee){
-		$scope.activeForm = "nijedna";
-		$scope.selectedEmployee = selectedEmployee 
+app.controller('employeeController', function ($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter){
+	function init(){
+		
+			$scope.activeForm = "none";
+		}
+		
+	
+	 $scope.activeForm = "none";
+	 $scope.currEmp = selectedEmployee;
+	 
+	 $scope.DateBirth = $filter('jsDate')(date, "dd-mm-yyyy");
+	 alert($scope.DateBirth);
 	 $scope.hide = function() {
 		    $mdDialog.hide();
 		  };
@@ -20,5 +28,7 @@ app.controller('employeeController', function ($rootScope, $scope, $window, sele
      $scope.showForm = function(forma){
     	 $scope.activeForm = forma;
      }
+     
+     
 		  
 	});
