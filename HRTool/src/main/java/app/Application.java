@@ -44,6 +44,7 @@ public class Application implements CommandLineRunner {
 	
 	public void addEmployees() {
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+		
 
 		// EMPLOYEE PETAR
 		Employee emp = new Employee();
@@ -201,6 +202,61 @@ public class Application implements CommandLineRunner {
 		emp.setContractType("na neodredjeno");
 		emp.setCommunication(3);
 		emp.setFastLearning(4);
+		emp.setOpenToChange(5);
+		emp.setTeamPlayer(3);
+		emp.setProactiveCommunication(4);
+		emp.setInterpersonalSkills(5);
+		emp.setKnowledgeSharing(3);
+		emp.setJudgement(4);
+		emp.setDecisionMaking(5);
+		emp.setInfluencing(3);
+		emp.setLeadership(4);
+		emp.setCoaching(5);
+		emp.setOrganizationalSkills(3);
+		empRep.save(emp);
+		
+		
+		// EMPLOYEE Nemanja
+		emp = new Employee();
+		emp.setNameEmployee("Nemanja Milutinovic");
+		emp.setGender("m");
+		try {
+			emp.setDateOfBirth(sdf.parse("1992-05-21"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		emp.setAddress("Polgar Andrasa 42a, Novi Sad");
+		emp.setPhoneNumber("0645555555");
+		emp.setEmail("nemanja.milutinovicc@gmail.com");
+		emp.setEmergencyPhoneNumber("021488599");
+		try {
+			emp.setStartDate(sdf.parse("2010-01-01"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		emp.setUsername("nemanja.milutinovicc");
+		emp.setIdCardNumber("555555555");
+		emp.setPassportNumber("504400500");
+		emp.setYearsOfWorkingExpInExecom(5);
+		emp.setYearsOfWorking(5);
+		emp.setPlaceOfBirth("Zajecar");
+		emp.setTrainingLearningPriority("srednja");
+		emp.setLicencesCertificates("Microsoft Licence, Cisco licence");
+		emp.setAwards("Inter in Execom");
+		emp.setContractType("na neodredjeno");
+		emp.setCommunication(3);
+		emp.setFastLearning(3);
 		emp.setOpenToChange(5);
 		emp.setTeamPlayer(3);
 		emp.setProactiveCommunication(4);

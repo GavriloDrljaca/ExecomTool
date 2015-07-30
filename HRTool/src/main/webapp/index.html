@@ -7,43 +7,26 @@
     <script src="http://code.angularjs.org/1.0.8/angular.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
-    
-    <!--  Login via google - over angular controller
-    <script>
-    var app = angular.module('app', ['googleplus' , 'ngRoute']);
 
-    app.config(['GooglePlusProvider', function(GooglePlusProvider) {
-         GooglePlusProvider.init({
-           clientId: '282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com',
-           apiKey: 'AIzaSyDIx-ON-faT2UCTaJz_7HbRsPgN55r62uw'
-         });
-    }]);
-	
-    
-    app.controller('AuthCtrl', ['$scope', 'GooglePlus', function ($scope, GooglePlus) {
-        $scope.login = function () {
-          GooglePlus.login().then(function (authResult) {
-              console.log(authResult);
-  
-              GooglePlus.getUser().then(function (user) {
-                  console.log(user);
-              });
-          }, function (err) {
-              console.log(err);
-          });
-        };
-        
-    }])
-    </script> -->
   </head>
+    
 
-  <body ng-app="app" ng-controller="AuthCtrl">
-    <a href="javascript:void(0);" ng-click="login()">Login with Google Plus</a>
-    
-    <p>
-    
-    
-    <a href="#" onclick="signOut();">Sign out</a>
+ <p>
+ <div class="g-signin2" data-onsuccess="onSignIn" ng-controller=""></div>
+ </p>
+	 <script>
+	 function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+			
+		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		  console.log('Name: ' + profile.getName());
+		  console.log('Image URL: ' + profile.getImageUrl());
+		  console.log('Email: ' + profile.getEmail());
+		}
+	 </script>
+	 
+<p>
+  <a href="#" onclick="signOut();">Sign out</a>
 	<script>
 		  function signOut() {
 		    var auth2 = gapi.auth2.getAuthInstance();
@@ -53,44 +36,48 @@
 		    
 		  }
 	</script>
- </p>
- 
- <p>
- <div class="g-signin2" data-onsuccess="onSignIn" ng-controller=""></div>
- </p>
-	 <script>
-	 function onSignIn(googleUser) {
-		  var profile = googleUser.getBasicProfile();
+</p> 
+	 
+<p>    
+    <a href="#" onclick="revokeAllScopes();">Revoke all scopes</a>
+	<script>
+	function revokeAllScopes() {
+		  var auth2 = gapi.auth2.getAuthInstance();
 
-		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-		  console.log('Name: ' + profile.getName());
-		  console.log('Image URL: ' + profile.getImageUrl());
-		  console.log('Email: ' + profile.getEmail());
+		    auth2.signOut().then(function () {
+		      console.log('User signed out.');
+		    });
+		  auth2.disconnect();
+		} 
+	</script>
+</p>
+	 
+<p>
+	<a href="#" onclick="makeApiCall();">Make API call</a>
+	<script>
+	function makeApiCall() {
+		
+		if(gapi.client == null) alert('null');
+		
+		  gapi.client.load('plus', 'v1').then(function() {
+		    var request = gapi.client.plus.people.get({
+		        'userId': 'me'
+		          });
+		    request.then(function(resp) {
+		      var heading = document.createElement('h4');
+		      var image = document.createElement('img');
+		      image.src = resp.result.image.url;
+		      heading.appendChild(image);
+		      heading.appendChild(document.createTextNode(resp.result.displayName));
+
+		      document.getElementById('content').appendChild(heading);
+		    }, function(reason) {
+		      console.log('Error: ' + reason.result.error.message);
+		    });
+		  });
 		}
-	 </script>
-	<div ng-controller="AppCtrl" class="md-padding">
-  <p class="inset">
-    Open a dialog over the app's content. Press escape or click outside to close the dialog and
-    send focus back to the triggering button.
-  </p>
-  <div class="dialog-demo-content" layout="row" layout-wrap>
-    <md-button class="md-primary md-raised" ng-click="showAlert($event)" flex flex-md="100">
-      Alert Dialog
-    </md-button>
-    <md-button class="md-primary md-raised" ng-click="showConfirm($event)" flex flex-md="100">
-      Confirm Dialog
-    </md-button>
-    <md-button class="md-primary md-raised" ng-click="showAdvanced($event)" flex flex-md="100">
-      Custom Dialog
-    </md-button>
-  </div>
-  <div ng-if="alert">
-    <br/>
-    <b layout="row" layout-align="center center" class="md-padding">
-      {{alert}}
-    </b>
-  </div>
-</div> 
+	</script>
+</p>
 	 
 	 
 	 
