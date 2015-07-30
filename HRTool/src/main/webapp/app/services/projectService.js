@@ -8,6 +8,9 @@ app.service('projectService', function($http) {
 		},
 		delete: function(project) {
 			return $http.delete(project._links.self.href);
+		},
+		update: function(project){
+			return $http.put(project._links.self.href, project)
 		}
 	}
 });

@@ -10,7 +10,13 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 		})
 	}
 
-	
+	$scope.updateProject = function(pr){
+		pr.nameProject = "Test";
+		projectService.update(pr).success(function(data){
+			
+		})
+		
+	}
 
 	$scope.deleteProject = function(project){
 		projectService.delete(project).success(function(data){

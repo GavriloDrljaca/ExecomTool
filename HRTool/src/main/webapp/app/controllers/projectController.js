@@ -6,7 +6,7 @@ app.controller('projectController', function($scope, $window, $mdDialog, selecte
 	$scope.selectedProject = selectedProject;	
 	
 	$scope.init = function() {
-		projectInfoService.getEmployeesForProject(selectedProject.idProject).success(function (data) {
+		projectInfoService.getEmployeeForProject(selectedProject.idProject).success(function (data) {
 			$scope.employees = data;
 		});
 	}
