@@ -15,14 +15,16 @@
 			<div ng-repeat="technolgy in selectedProject.tagClouds">
 				<label>{{ technology.nameTagCloud }}</label><br/>
 			</div>
-			<div ng-repeat="projectInfo in selectedProject.projectInfo">
-				<label>Zaposleni na projektu:</label><br/>
-				<label>projectInfo.employee.nameEmployee</label><br/>
-				<label>projectInfo.employee.email</label><br/>
-				<label>Uloga zaposlenog:</label><br/>
-				<label>projectInfo.jobResponsibilities</label><br/>
-				<label>Iskustvo na projektu ???</label><br/>
-				<label>projectInfo.projectExp</label><br/>
+            <label>Zaposleni na projektu:</label>
+			<div ng-repeat="emp in eployees">
+                <label>emp.nameEmployee</label>
+                <label>emp.email</label><br/>
+				<div ng-repeat="projectInfo in selectedProject.projectInfo">
+					<label>Uloga zaposlenog:</label>
+					<label>projectInfo.jobResponsibilities</label><br/>
+					<label>Iskustvo na projektu:</label>
+					<label>projectInfo.projectExp</label><br/>
+			</div>
 			</div>
 		</div>
 	</md-dialog-content>

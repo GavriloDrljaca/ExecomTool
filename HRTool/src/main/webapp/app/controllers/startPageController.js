@@ -36,7 +36,7 @@ app.controller('startPageController', function($scope, $window, $mdDialog,
 		$mdDialog.show({
 			controller : 'projectController',
 			controllerAs : 'prjCtrl',
-			templateUrl : 'app/partials/projekatDialog.html',
+			templateUrl : 'app/partials/projectDialog.html',
 			parent : angular.element(document.body),
 			targetEvent : ev,
 			locals : {
