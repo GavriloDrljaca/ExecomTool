@@ -67,6 +67,7 @@ public class EmployeeRestController {
 	
 	@RequestMapping("/saveemployee")
 	public void saveEmployee(@RequestParam("employee") Employee e) {
+		System.out.println("save employee");
 		employeeRepository.save(e);
 	}
 	@RequestMapping("/deleteemployee") 
