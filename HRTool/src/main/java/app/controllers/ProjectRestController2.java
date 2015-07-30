@@ -22,7 +22,7 @@ public class ProjectRestController2 {
 	}
 	
 	@RequestMapping(value = "/{idProject}", method = RequestMethod.DELETE)
-	public void saveProject(@RequestParam("idProject") int idProject) {
+	public void deleteProject(@RequestParam("idProject") int idProject) {
 		projectRepository.delete(idProject);
 	}
 	
