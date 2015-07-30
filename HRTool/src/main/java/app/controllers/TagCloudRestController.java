@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.model.Project;
 import app.model.TagCloud;
 import app.repository.TagCloudRepository;
 
-
+@RepositoryEventHandler(TagCloud.class)
 @RestController
 public class TagCloudRestController {
 
 	@Autowired
 	TagCloudRepository tagCloudRepository;
 	
-	@RequestMapping(value = "/tiptagcloud", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/tiptagcloud", method = RequestMethod.GET)
 	public List<TagCloud> getTagCloudByTip(String tipTagCloud) {
 		Iterable<TagCloud> tagClouds = this.tagCloudRepository.findAll();
 		List<TagCloud> listTagCloud = new ArrayList<TagCloud>();
@@ -37,6 +39,6 @@ public class TagCloudRestController {
 	@RequestMapping(value = "/savetagcloud", method = RequestMethod.GET)
 	public TagCloud saveTagCloud(TagCloud tc) {
 		return this.tagCloudRepository.save(tc);
-	}
+	}*/
 	
 }

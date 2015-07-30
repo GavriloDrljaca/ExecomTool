@@ -6,6 +6,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="project in projects">
+                        <td>{{ project.idProject }}</td>
                         <td ng-click="showProject($event, project)">{{ project.nameProject }}</td>
                         <td><md-button class="md-primary md-raised"
                                 ng-click="deleteProject(project)" flex flex-md="100">

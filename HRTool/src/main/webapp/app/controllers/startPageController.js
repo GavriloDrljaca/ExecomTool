@@ -1,18 +1,30 @@
-app.controller('startPageController', function($scope, $window, $mdDialog,
-		startPageFactory, employeeFactory, projectFactory) {
+app.controller('startPageController', function($scope, $window, $mdDialog, startPageFactory, employeeFactory, projectService) {
 
-	function init() {
+	$scope.init = function() {
 		employeeFactory.getEmployees().success(function(data) {
 			$scope.employees = data;
 		})
 
-		projectFactory.getAllProjects().success(function(data) {
-			$scope.projects = data;
+		projectService.list().success(function(data) {
+			$scope.projects = data._embedded.projects;
 		})
 	}
 
-	init();
+	
 
+	$scope.deleteProject = function(project){
+		
+		projectService.delete(project).success(function(data){
+		
+		})
+	}
+	
+	$scope.deleteEmployee = function(id){
+		employeeFactory.deleteEmployee(id).success(function(data){
+			$scope.employees = data;
+		})
+	}
+	
 	$scope.showEmployee = function(ev, emp) {
 		$scope.selectedEmployee = emp;
 		$mdDialog.show({
