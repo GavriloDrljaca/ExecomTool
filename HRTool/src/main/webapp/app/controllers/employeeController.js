@@ -3,7 +3,7 @@
  */
 
 app.controller('employeeController', function($rootScope, $scope, $window,
-		$mdDialog, selectedEmployee, $filter) {
+		$mdDialog, selectedEmployee, $filter, employeeFactory) {
 	function init() {
 
 		$scope.activeForm = "none";
@@ -17,6 +17,14 @@ app.controller('employeeController', function($rootScope, $scope, $window,
 	$scope.dateOfBirth = $filter('date')($scope.dateBirth , 'yyyy-MM-dd');
 	
 	$scope.saveEmployee(){
+		//saving (new) DateOfBirth
+		$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
+		//
+		
+		employeeFactory.saveEmployee($scope.currEmp).success(function(){
+			alert("USPEH!");
+		});
+		
 		
 	}
 	//CLOSING DIALOG
