@@ -49,7 +49,7 @@ public class EmployeeRestController {
 	
 	
 	@RequestMapping(value = "/{username:.+}/projectinfos", method = RequestMethod.GET)
-	public List<ProjectInfo> getProjectInfos(@PathVariable("username") String username) {
+	public Iterable<ProjectInfo> getProjectInfos(@PathVariable("username") String username) {
 		return this.employeeRepository.findByUsername(username).getProjectInfos();
 	}
 	
