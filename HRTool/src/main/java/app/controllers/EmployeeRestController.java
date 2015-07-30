@@ -1,14 +1,13 @@
 package app.controllers;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.controllers.http.response.UserNotFoundException;
@@ -20,7 +19,7 @@ import app.repository.ProjectRepository;
 
 
 @RestController
-@RequestMapping("/employees/{username}")
+@RequestMapping("/employees")
 public class EmployeeRestController {
 		
 	@Autowired
@@ -29,31 +28,33 @@ public class EmployeeRestController {
 	@Autowired
 	ProjectRepository projectRepository;
 	
-
+	
 	@RequestMapping(method = RequestMethod.GET)
-	Optional<Employee> readEmployee(@PathVariable String username)
-	{
+	Iterable<Employee> readEmployee() {
+		return this.employeeRepository.findAll();
+	}
+
+	@RequestMapping(value = "/{username:.+}", method = RequestMethod.GET)
+	@ResponseBody
+	Employee readEmployee(@PathVariable("username") String username){
+		System.out.println(username);
 		this.validateEmployee(username);
 		return this.employeeRepository.findByUsername(username);
 	}
 	
 	
 	private void validateEmployee(String username) {
-		this.employeeRepository.findByUsername(username).orElseThrow(
-				() -> new UserNotFoundException(username));
+		if(this.employeeRepository.findByUsername(username) == null) throw
+				 new UserNotFoundException(username);
 	}
 	
-	@RequestMapping("/employees")
-	private Iterable<Employee> returnEmployees(){
-		return employeeRepository.findAll();
-	}
 	
-	@RequestMapping(value = "/projectinfos", method = RequestMethod.GET)
+	@RequestMapping(value = "/{username:.+}/projectinfos", method = RequestMethod.GET)
 	public List<ProjectInfo> getProjectInfos(int idEmployee) {
 		return this.employeeRepository.findOne(idEmployee).getProjectInfos();
 	}
 	
-	@RequestMapping(value = "/projects", method = RequestMethod.GET)
+	@RequestMapping(value = "/{username:.+}/projects", method = RequestMethod.GET)
 	public Iterable<Project> getProjects(int idEmployee) {
 		List<ProjectInfo> projectInfos = this.employeeRepository.findOne(idEmployee).getProjectInfos();
 		List<Integer> idProjects = new ArrayList<Integer>();
