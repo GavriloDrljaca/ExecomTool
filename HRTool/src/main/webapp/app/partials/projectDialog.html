@@ -1,0 +1,41 @@
+<md-dialog aria-label="Employee" flex="100">
+<form>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Project</h2>
+		<span flex></span>
+
+	</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div>{{ selectedProject.nameProject }}</div>
+		<div>
+			<label>Trajanje projekta (u nedeljama): </label><input type="text" value="{{ selectedProject.durationOfProject }}"/><br/>	
+			<label>Tehonologije koje su korištne na projektu:</label><br/>
+			<div ng-repeat="technolgy in selectedProject.tagClouds">
+				<label>{{ technology.nameTagCloud }}</label><br/>
+			</div>
+            <label>Zaposleni na projektu:</label>
+			<div ng-repeat="emp in eployees">
+                <label>emp.nameEmployee</label>
+                <label>emp.email</label><br/>
+				<div ng-repeat="projectInfo in selectedProject.projectInfo">
+					<label>Uloga zaposlenog:</label>
+					<label>projectInfo.jobResponsibilities</label><br/>
+					<label>Iskustvo na projektu:</label>
+					<label>projectInfo.projectExp</label><br/>
+			</div>
+			</div>
+		</div>
+	</md-dialog-content>
+  	<div class="md-actions" layout="row">
+	    <span flex></span>
+	    <md-button ng-click="answer('not useful')" class="md-primary">
+	     Not Useful
+	    </md-button>
+	    <md-button ng-click="answer('useful')" class="md-primary">
+	      Useful
+	    </md-button>
+    </div>
+</form>
+</md-dialog>

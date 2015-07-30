@@ -4,7 +4,9 @@
     <div class="md-toolbar-tools">
       <h2>Employee</h2>
       <span flex></span>
-
+		<md-button class="md-button" ng-click="answer('not applicable')">
+        X
+      </md-button>
     </div>
   </md-toolbar>
   <md-dialog-content>
@@ -13,8 +15,8 @@
       <h2>{{currEmp.nameEmployee}}</h2>
     </div>
     <div class = "md-actions" layout = "row"><md-button ng-click = "showForm('basic')" class=" md-raised md-primary">Basic info</md-button>
-    <md-button ng-click = "showForm(contact)" class=" md-raised md-primary">Contact info</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Employment info</md-button>
+    <md-button ng-click = "showForm('contact')" class=" md-raised md-primary">Contact info</md-button>
+    <md-button ng-click = "showDate('sf')" class=" md-raised md-primary">Employment info</md-button>
     <md-button ng-click = "" class=" md-raised md-primary">Work experience</md-button>
     <md-button ng-click = "" class=" md-raised md-primary">Personal development </md-button>
     <md-button ng-click = "" class=" md-raised md-primary">Social skills and competences</md-button>
@@ -22,10 +24,10 @@
     </div>
     <span flex></span>
     <div ng-show ="activeForm == 'basic'" class = "form-group">
-	<h4>Basic information</h4>
+	<h3>Basic information</h3>
 	
     <form >
-    <md-content layout-padding layout="row" layout-sm="column">
+    <md-content layout-padding layout="column" layout-sm="column">
     	<md-input-container md-no-float = "true">
     	<label>Name:</label><input type = "text" ng-model = "currEmp.nameEmployee">
     	</md-input-container>
@@ -33,14 +35,11 @@
     	<label>Gender:</label><input type = "text" ng-model = "currEmp.gender">
     	</md-input-container>
     	<md-input-container>
-    	<label>Date of birth:</label><input type = "text" ng-model ="dateBirth" >
- 		</md-input-container>	
+    	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >
+ 		</md-input-container>
  	</md-content>
     </form>
-    <!-- "currEmp.dateOfBirth | date: 'yyyy-MM-dd'"
-    {{currEmp.nameEmployee}}
-     -->
-	
+ 	<md-button ng-click = "saveEmployee()" class = "md-raised">Save</md-button>
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">
