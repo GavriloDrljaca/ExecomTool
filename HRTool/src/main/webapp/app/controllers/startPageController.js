@@ -19,7 +19,7 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 	}
 	
 	$scope.deleteEmployee = function(emp){
-		employeeFactory.deleteEmployee(emp).success(function(data){
+		employeeService.delete(emp).success(function(data){
 
 		})
 	}
