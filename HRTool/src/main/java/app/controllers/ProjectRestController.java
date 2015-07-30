@@ -46,4 +46,9 @@ public class ProjectRestController {
 	public Project getProject(@RequestParam("id") int id) {
 		return projectRepository.findOne(id);
 	}
+	
+	@RequestMapping("/saveProject")
+	public Project saveProject(@RequestParam("project") Project p) {
+		return projectRepository.save(p);
+	}
 }
