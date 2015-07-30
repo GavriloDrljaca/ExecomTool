@@ -1,7 +1,7 @@
-app.controller('startPageController', function($scope, $window, $mdDialog, startPageFactory, employeeFactory, projectService) {
+app.controller('startPageController', function($scope, $window, $mdDialog, startPageFactory, employeeService, projectService) {
 
 	$scope.init = function() {
-		employeeFactory.getEmployees().success(function(data) {
+		employeeService.list().success(function(data) {
 			$scope.employees = data;
 		})
 
@@ -13,15 +13,14 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 	
 
 	$scope.deleteProject = function(project){
-		
 		projectService.delete(project).success(function(data){
 		
 		})
 	}
 	
-	$scope.deleteEmployee = function(id){
-		employeeFactory.deleteEmployee(id).success(function(data){
-			$scope.employees = data;
+	$scope.deleteEmployee = function(emp){
+		employeeFactory.deleteEmployee(emp).success(function(data){
+
 		})
 	}
 	

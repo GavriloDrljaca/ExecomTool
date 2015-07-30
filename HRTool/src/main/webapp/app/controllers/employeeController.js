@@ -2,8 +2,7 @@
  * Employee controller created by: Gavrilo Drljaca
  */
 
-app.controller('employeeController', function($rootScope, $scope, $window,
-		$mdDialog, selectedEmployee, $filter, employeeFactory) {
+app.controller('employeeController', function($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeFactory) {
 	function init() {
 
 		$scope.activeForm = "none";
