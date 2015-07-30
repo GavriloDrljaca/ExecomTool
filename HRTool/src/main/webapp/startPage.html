@@ -37,7 +37,10 @@
 <body>
 
 	<div ng-controller="startPageController">
-		<div class="container">
+		
+			
+			<md-tabs md-dynamic-height="" md-border-bottom=""> <md-tab
+				label="Employees"> <md-content class="md-padding">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -48,10 +51,15 @@
 					<tr ng-repeat="emp in employees">
 						<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee
 							}}</td>
-
+						<td><md-button class="md-primary md-raised"
+								ng-click="deleteEmployee(emp)" flex flex-md="100">
+							Obrisi </md-button></td>
 					</tr>
 				</tbody>
 			</table>
+
+
+			</md-content> </md-tab> <md-tab label="Projects"> <md-content class="md-padding">
 
 			<table class="table table-striped table-hover">
 				<thead>
@@ -68,9 +76,10 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
+			</md-content> </md-tab> </md-tabs>
 
-	</div>
+
+		</div>
 
 
 </body>
