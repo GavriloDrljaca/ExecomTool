@@ -8,22 +8,31 @@
 	</div>
 	</md-toolbar>
 	<md-dialog-content ng-init="init()">
-		<div>{{ selectedProject.nameProject }}</div>
-		<div>
-			<label>Trajanje projekta (u nedeljama): </label><input type="text" value="{{ selectedProject.durationOfProject }}"/><br/>	
-			<label>Tehonologije koje su korištne na projektu:</label><br/>
-			<div ng-repeat="technolgy in selectedProject.tagClouds">
-				<label>{{ technology.nameTagCloud }}</label><br/>
-			</div><br/>
-            <label>Zaposleni na projektu:</label><br/><br/>
-			<div ng-repeat="emp in employees">
+	    <md-input-container md-no-float="true">
+            <label>Project name: </label><input type="text" ng-model="selectedProject.nameProject"/>
+	    </md-input-container>
+		<div>	
+	        <md-input-container md-no-float = "true">
+	           <label>Trajanje projekta (u nedeljama): </label><input type="number" ng-model="selectedProject.durationOfProject"/><br/>   
+	        </md-input-container>
+	        <md-input-container md-no-float="true">
+                <div ng-repeat="technolgy in selectedProject.tagClouds">
+                    <label>{{ technology.nameTagCloud }}</label>
+                </div>
+            </md-input-container>
+            <label style="font-size: 20px">Zaposleni na projektu:</label><br/><br/>
+            <div ng-repeat="emp in employees">
                 <label> {{ emp.nameEmployee }}</label>
                 <label> {{ emp.email }}</label><br/>
-				<label> Uloga zaposlenog:</label>
-				<label> {{ emp.resp }}</label><br/>
-				<label> Iskustvo na projektu:</label>
-				<label> {{ emp.prExp }}</label><br/><br/>
-			</div>
+                <md-input-container md-no-float = "true">
+                    <label> Uloga zaposlenog:</label>
+                    <input type="text" ng-model="projInfos[$index].jobResponsibilities"/><br/> 
+                </md-input-container>
+                <md-input-container md-no-float = "true">
+                    <label> Iskustvo na projektu:</label>
+                    <input type="text" ng-model="projInfos[$index].projectExp"/><br/><br/> 
+                </md-input-container>
+            </div>           
 		</div>
 	</md-dialog-content>
   	<div class="md-actions" layout="row">
