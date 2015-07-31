@@ -28,9 +28,14 @@ app.controller('employeeController',
 
 				// saving (new) DateOfBirth
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
-				//
-
-				employeeService.save($scope.currEmp).success(function() {
+				//saving (new) StartDate
+				$scope.currEmp.startDate = $scope.startDate;
+				//saving (new) endDate
+				$scope.currEmp.endDate = $scope.endDate;
+				//saving (new) startDateFromBooklet
+				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+				
+				employeeService.update($scope.currEmp).success(function() {
 					alert("USPEH!");
 				});
 
