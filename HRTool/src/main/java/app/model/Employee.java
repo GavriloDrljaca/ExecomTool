@@ -20,6 +20,10 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEmployee;
 	
+	
+	private EmployeeRole employeeRole;
+	private String googleId;
+	
 	private String nameEmployee;
 	private String gender;
 	private Date dateOfBirth;
@@ -308,6 +312,12 @@ public class Employee {
 	public void setProjectInfos(List<ProjectInfo> projectInfos) {
 		this.projectInfos = projectInfos;
 	}
+	public EmployeeRole getEmployeeRole() {
+		return employeeRole;
+	}
+	public void setEmployeeRole(EmployeeRole employeeRole) {
+		this.employeeRole = employeeRole;
+	}
 	@Override
 	public String toString() {
 		return "Employee [idEmployee=" + idEmployee + ", nameEmployee=" + nameEmployee + ", gender=" + gender
@@ -324,6 +334,12 @@ public class Employee {
 				+ knowledgeSharing + ", judgement=" + judgement + ", decisionMaking=" + decisionMaking
 				+ ", influencing=" + influencing + ", leadership=" + leadership + ", coaching=" + coaching
 				+ ", organizationalSkills=" + organizationalSkills + ", tagClouds=" + tagClouds + "]";
+	}
+	public String getGoogleId() {
+		return googleId;
+	}
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
 	}
 	
 	
