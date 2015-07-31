@@ -63,9 +63,11 @@
 	</md-dialog-content>
 	<div class="md-actions" layout="row">
 		<span flex></span>
-		<md-button ng-click="saveEmployee()" class="md-primary">Save</md-button>
+		<md-button ng-hide="newEmployee" ng-click="saveEmployee()" class="md-primary">Update</md-button>
+		<md-button ng-show="newEmployee" ng-click="createEmployee()" class="md-primary">Create</md-button>
 		<md-button ng-click="answer('useful')" class="md-primary">
 		Exit </md-button>
+		<md-button ng-hide="newEmployee" ng-click="deleteEmployee(currEmp)" class="md-primary">Delete permenantly</md-button>
 	</div>
 </form>
 </md-dialog>

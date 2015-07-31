@@ -1,4 +1,4 @@
-<md-dialog ng-init="init()" aria-label="Employee" flex="100">
+<md-dialog ng-controller="projectController" aria-label="Employee" flex="100">
 <form>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
@@ -7,7 +7,7 @@
 
 	</div>
 	</md-toolbar>
-	<md-dialog-content>
+	<md-dialog-content ng-init="init()">
 		<div>{{ selectedProject.nameProject }}</div>
 		<div>
 			<label>Trajanje projekta (u nedeljama): </label><input type="text" value="{{ selectedProject.durationOfProject }}"/><br/>	
@@ -16,10 +16,10 @@
 				<label>{{ technology.nameTagCloud }}</label><br/>
 			</div>
             <label>Zaposleni na projektu:</label>
-			<div ng-repeat="emp in eployees">
+			<div ng-repeat="emp in employees">
                 <label>emp.nameEmployee</label>
                 <label>emp.email</label><br/>
-				<div ng-repeat="projectInfo in selectedProject.projectInfo">
+				<div ng-repeat="projectInfo in projectInfos">
 					<label>Uloga zaposlenog:</label>
 					<label>projectInfo.jobResponsibilities</label><br/>
 					<label>Iskustvo na projektu:</label>

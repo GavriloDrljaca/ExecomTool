@@ -1,10 +1,11 @@
 app.service('projectService', function($http) {
+	var url = '/projects';
 	return {	
 		list: function() {
-			return $http.get('/projects');
+			return $http.get(url);
 		},
 		save: function(project) {
-			return $http.post('/projects', project);
+			return $http.post(url, project);
 		},
 		delete: function(project) {
 			return $http.delete(project._links.self.href);

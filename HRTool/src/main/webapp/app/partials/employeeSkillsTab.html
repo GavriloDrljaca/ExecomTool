@@ -1,49 +1,106 @@
 <!-- SOCIAL SKILLS AND COMPETENCES -->
 
 	<div id="skills" class="form-group sliderdemoBasicUsage"">
-		<h3>Social and competences SLIDER NE RADI KAKO TREBA ZBOG JQUERY-a</h3>
-		<md-content layout-padding layout="column" layout-sm="column">
-		<md-input-container md-no-float="true"> <label>Communication:</label>
-		<input type="number" ng-model="currEmp.communication" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true">
-		<div>
+		<h3>Social and competences</h3>
+		
+		<div layout>
 		<div flex="10" layout layout-align="center center">
-			<span class="md-body-1">Fast learning</span>
-				<md-slider flex md-discrete="" ng-model="currEmp.fastLearning"  step="1" min="1" max="5" aria-label="rating">
+			<span class="md-body-1">Communication: </span>
+		</div>
+				<md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.communication"  step="1" min="1" max="5" aria-label="rating">
 	      		</md-slider>
-	      </div>
-	      </div>
-		<!-- <input type="number" ng-model="currEmp.fastLearning" min="1" max="5"> -->
-		</md-input-container> <md-input-container md-no-float="true"> <label>Open
-			to change:</label>
-		<input type="number" ng-model="currEmp.openToChange" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Team
-			player:</label>
-		<input type="number" ng-model="currEmp.teamPlayer" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Proactive
-			communication:</label>
-		<input type="number" ng-model="currEmp.proactiveCommunication" min="1"
-			max="5"> </md-input-container> <md-input-container md-no-float="true">
-		<label>Interpersonal skills:</label>
-		<input type="number" ng-model="currEmp.interpersonalSkills" min="1"
-			max="5"> </md-input-container> <md-input-container md-no-float="true">
-		<label>Knowledge sharing:</label>
-		<input type="number" ng-model="currEmp.knowledgeSharing" min="1"
-			max="5"> </md-input-container> <md-input-container md-no-float="true">
-		<label>Judgement:</label>
-		<input type="number" ng-model="currEmp.judgement" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Decision
-			making:</label>
-		<input type="number" ng-model="currEmp.decisionMaking" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Influencing:</label>
-		<input type="number" ng-model="currEmp.influencing" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Leadership:</label>
-		<input type="number" ng-model="currEmp.leadership" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Coaching:</label>
-		<input type="number" ng-model="currEmp.coaching" min="1" max="5">
-		</md-input-container> <md-input-container md-no-float="true"> <label>Organizational
-			skills:</label>
-		<input type="number" ng-model="currEmp.organizationalSkills" min="1"
-			max="5"> </md-input-container> </md-content>
-
+	    
+	    </div>
+	    <div layout>
+	    <div flex="10" layout layout-align="center center">
+			<span class="md-body-1">Fast learning: </span></div>
+				<md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.fastLearning"  step="1" min="1" max="5" aria-label="rating">
+	      		</md-slider>
+	    </div>
+	    
+	    <div layout>
+		    <div flex="10" layout layout-align="center center">
+				<span class="md-body-1">Open to change: </span>
+			</div>	
+			<md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.openToChange"  step="1" min="1" max="5" aria-label="rating">
+	      	</md-slider>
+	    
+	   	</div>
+	   	<div layout>
+	    	<div flex="10" layout layout-align="center center">
+			<span class="md-body-1">Team player: </span>
+			</div>
+			<md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.teamPlayer"  step="1" min="1" max="5" aria-label="rating">
+	  		</md-slider>
+	   </div>
+	   
+	   <div layout>
+	   		<div flex="10" layout layout-align="center center">
+			<span class="md-body-1">Proactive communication:</span>
+			</div>
+			<md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.proactiveCommunication"  step="1" min="1" max="5" aria-label="rating">
+	   		</md-slider>
+	   </div>
+	 
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Interpersonal skills: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.interpersonalSkills"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>   
+	   
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Knowledge sharing: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.knowledgeSharing"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>   
+	   
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Judgement: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.judgement"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Decision making: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.decisionMaking"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+	   
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Influencing: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.influencing"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+	   
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Leadership: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.leadership"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Coaching: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.coaching"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+	   <div layout>  
+	     <div flex="10" layout layout-align="center center">
+	  	     <span class="md-body-1">Organizational skills: </span>
+	     </div>
+	     <md-slider flex class="md-primary" md-discrete="" ng-model="currEmp.organizationalSkills"  step="1" min="1" max="5" aria-label="rating">
+	     </md-slider>
+	   </div>
+		
 	</div>
