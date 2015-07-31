@@ -16,7 +16,41 @@
 
 <h3>Novi zaposleni:</h3>
 
-<form name="projectForm">
+<form>
+	<md-content layout-padding layout="column" layout-sm="column">
+	<md-input-container md-no-float="true"> <label>Name:</label>
+	<input type="text" required ng-model="currEmp.nameEmployee"> </md-input-container> <md-input-container>
+	<md-select placeholder="Gender" ng-model="currEmp.gender">
+	<md-option value="Female">Female</md-option> <md-option value="Male">Male</md-option>
+	</md-select> </md-input-container> <md-input-container> <label>Date of
+		birth:</label> <input type="date" ng-model="dateBirth"> </md-input-container> </md-content>
+	<md-content layout-padding layout="column" layout-sm="column">
+	<md-input-container md-no-float="true"> <label>Adress:</label>
+	<input type="text" ng-model="currEmp.address"> </md-input-container> <md-input-container>
+	<label>Phone number:</label> <input type="text"
+		ng-model="currEmp.phoneNumber"> </md-input-container> <md-input-container>
+	<label>Personal email:</label> <input type="text"
+		ng-model="currEmp.email"> </md-input-container> <md-input-container>
+	<label>Emergency phone number:</label> <input type="text"
+		ng-model="currEmp.emergencyPhoneNumber"> </md-input-container> <md-input-container>
+	<label>Place of birth:</label> <input type="text"
+		ng-model="currEmp.placeOfBirth"> </md-input-container> </md-content>
+	<md-content layout-padding layout="column" layout-sm="column">
+	<md-input-container md-no-float="true"> <label>Start
+		date:</label> <input type="date" ng-model="startDate"> </md-input-container> <md-input-container>
+	<label>Start day from employment booklet:</label> <input type="date"
+		ng-model="startDateFromBooklet"> </md-input-container> <md-input-container>
+	<label>Username:</label> <input type="text" ng-model="currEmp.username">
+	</md-input-container> <md-input-container> <label>Position:</label> <input
+		type="text"> </md-input-container> <md-input-container> <label>Id
+		card number:</label> <input type="text" ng-model="currEmp.idCardNumber">
+	</md-input-container> <md-input-container> <label>Passport
+		number:</label> <input type="text" ng-model="currEmp.passportNumber">
+	</md-input-container> </md-content>
+</form>
+
+
+<!--<form name="projectForm">
 	<md-input-container> <label>Description</label> <input
 		md-maxlength="30" required name="description"
 		ng-model="project.description">
@@ -46,4 +80,4 @@
 			ridiculous. I doubt event Bill Clinton could afford that.</div>
 	</div>
 	</md-input-container>
-</form>
+</form>-->
