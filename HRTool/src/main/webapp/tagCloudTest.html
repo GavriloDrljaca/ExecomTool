@@ -32,20 +32,27 @@
 </head>
 <body>
 <h2>Tag clouds test!</h2>
+<div ng-controller = "tagCloudController as ctrl" ng-init = "init()">
+<h2>CHIPS</h2>
 
-<div ng-controller = "tagCloudController" ng-init = "init()">
-<table>
-<tr ng-repeat = "tagC in tagClouds">
-<td>{{tagC.nameTagCloud}}</td>
-<td>{{tagC.tipTagCloud}}</td>
+ <md-chips ng-model="employeeTagClouds" md-autocomplete-snap="" md-require-match="">
+      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+       md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
+       placeholder="Search for a technologie">
+       
+        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+      </md-autocomplete>
+      <md-chip-template>
+        <span>
+          <strong>{{$chip.nameTagCloud}}</strong>
+          <em>({{$chip.tipTagCloud}})</em>
+        </span>
+      </md-chip-template>
+  </md-chips>
 
-</tr>
-
-</table>
-
-
-
+<md-button ng-click="saveTag()">Save</md-button>
 </div>
+
 
 </body>
 </html>

@@ -11,6 +11,11 @@ app.service('tagCloudService', function($http){
 		},
 		delete: function(tagCloud){
 			return $http.delete(emp._links.self.href)
+		},
+		saveTag: function(tagClouds){
+			alert("save2");
+			return $http.post('/employees/1/tagClouds', tagClouds);
+
 		}
 	}
 	

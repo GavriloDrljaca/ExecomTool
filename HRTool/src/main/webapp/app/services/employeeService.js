@@ -12,6 +12,12 @@ app.service('employeeService', function($http){
 		},
 		delete: function(emp){
 			return $http.delete(emp._links.self.href)
+		},
+		getById: function(id){
+			return $http.get(url+"/"+id)
+		},
+		getEmployeeTagClouds: function(employee){
+			return $http.get(employee._links.tagClouds.href);
 		}
 	}
 });

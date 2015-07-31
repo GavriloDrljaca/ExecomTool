@@ -486,9 +486,7 @@ public class Application implements CommandLineRunner {
 	}
 
 	public void addTagsToEmployee() {
-		Employee e = (Employee) empRep.findOne(1);
-		TagCloud tc = tagRep.findOne(1);
-		
+		  Employee e = (Employee) empRep.findOne(1);
 		  e.getTagClouds().add(tagRep.findOne(1));
 		  e.getTagClouds().add(tagRep.findOne(2));
 		  e.getTagClouds().add(tagRep.findOne(3));
