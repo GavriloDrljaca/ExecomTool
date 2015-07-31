@@ -1,4 +1,4 @@
-<md-dialog ng-controller="projectController" aria-label="Employee" flex="100">
+<md-dialog aria-label="Employee" flex="100">
 <form>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
@@ -14,27 +14,22 @@
 			<label>Tehonologije koje su korištne na projektu:</label><br/>
 			<div ng-repeat="technolgy in selectedProject.tagClouds">
 				<label>{{ technology.nameTagCloud }}</label><br/>
-			</div>
-            <label>Zaposleni na projektu:</label>
+			</div><br/>
+            <label>Zaposleni na projektu:</label><br/><br/>
 			<div ng-repeat="emp in employees">
-                <label>emp.nameEmployee</label>
-                <label>emp.email</label><br/>
-				<div ng-repeat="projectInfo in projectInfos">
-					<label>Uloga zaposlenog:</label>
-					<label>projectInfo.jobResponsibilities</label><br/>
-					<label>Iskustvo na projektu:</label>
-					<label>projectInfo.projectExp</label><br/>
-			    </div>
+                <label> {{ emp.nameEmployee }}</label>
+                <label> {{ emp.email }}</label><br/>
+				<label> Uloga zaposlenog:</label>
+				<label> {{ emp.resp }}</label><br/>
+				<label> Iskustvo na projektu:</label>
+				<label> {{ emp.prExp }}</label><br/><br/>
 			</div>
 		</div>
 	</md-dialog-content>
   	<div class="md-actions" layout="row">
 	    <span flex></span>
-	    <md-button ng-click="answer('not useful')" class="md-primary">
-	     Not Useful
-	    </md-button>
 	    <md-button ng-click="answer('useful')" class="md-primary">
-	      Useful
+	      EXIT
 	    </md-button>
     </div>
 </form>
