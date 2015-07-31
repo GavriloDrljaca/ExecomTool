@@ -52,10 +52,14 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 				selectedEmployee : $scope.selectedEmployee
 			}
 		}).then(function(answer) {
-			
+			employeeService.list().success(function(data){
+				$scope.employees = data._embedded.employees;
+				$scope.newEmployee ={};
+			})
 		}, function() {
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
+				$scope.newEmployee ={};
 			})
 		});
 	};

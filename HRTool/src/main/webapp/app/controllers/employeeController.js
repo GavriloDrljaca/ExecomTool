@@ -27,6 +27,9 @@ app.controller('employeeController',
 					$scope.currEmp.startDateFromBooklet);
 
 			$scope.createEmployee = function(){
+				if ($scope.currEmp.nameEmployee == "" || angular.equals($scope.currEmp.nameEmployee,undefined)){
+					$scope.currEmp.nameEmployee = "No name";
+				}
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 				$scope.currEmp.startDate = $scope.startDate;
 				$scope.currEmp.endDate = $scope.endDate;
@@ -37,7 +40,9 @@ app.controller('employeeController',
 				});	
 			}
 			$scope.saveEmployee = function() {
-
+				if ($scope.currEmp.nameEmployee == ""){
+					$scope.currEmp.nameEmployee = "No name";
+				}
 				// saving (new) DateOfBirth
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 				//saving (new) StartDate
@@ -48,7 +53,7 @@ app.controller('employeeController',
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 				
 				employeeService.update($scope.currEmp).success(function() {
-					alert("USPEH!");
+					$mdDialog.cancel();
 				});
 
 			}

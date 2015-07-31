@@ -1,16 +1,15 @@
-<table class="table table-striped table-hover">
+<table border="1">
 	<thead>
 		<tr>
 			<th><h3>Ime i prezime</h3></th>
 		</tr>
 	</thead>
 	<tbody>
-	    <tr><td ng-click="showEmployee($event, newEmployee)">New entry</td></tr>
+		<tr>
+			<td ng-click="showEmployee($event, newEmployee)">New entry</td>
+		</tr>
 		<tr ng-repeat="emp in employees">
 			<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee }}</td>
 		</tr>
 	</tbody>
 </table>
-            <td><md-button class="md-primary md-raised"
-                    ng-click="deleteEmployee(emp)" flex flex-md="100">
-                Obrisi zaposlenog </md-button></td>
