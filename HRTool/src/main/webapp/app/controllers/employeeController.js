@@ -4,11 +4,13 @@
 
 app.controller('employeeController',
 		function($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
-			function init() {
 
-				$scope.activeForm = "none";
+			if (angular.equals(selectedEmployee, {})){
+				$scope.newEmployee = true;
+			}else{
+				$scope.newEmployee = false;
 			}
-
+			
 			$scope.activeForm = "none";
 			$scope.currRealDeal = selectedEmployee;
 
@@ -24,6 +26,16 @@ app.controller('employeeController',
 			$scope.startDateFromBooklet = new Date(
 					$scope.currEmp.startDateFromBooklet);
 
+			$scope.createEmployee = function(){
+				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
+				$scope.currEmp.startDate = $scope.startDate;
+				$scope.currEmp.endDate = $scope.endDate;
+				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+				
+				employeeService.create($scope.currEmp).success(function() {
+					$mdDialog.cancel();
+				});	
+			}
 			$scope.saveEmployee = function() {
 
 				// saving (new) DateOfBirth
@@ -39,6 +51,12 @@ app.controller('employeeController',
 					alert("USPEH!");
 				});
 
+			}
+			
+			$scope.deleteEmployee = function(employee){
+				employeeService.delete(employee).success(function(data){
+					$mdDialog.cancel();
+				})
 			}
 			// CLOSING DIALOG
 			$scope.hide = function() {

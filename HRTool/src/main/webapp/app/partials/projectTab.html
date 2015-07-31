@@ -7,9 +7,6 @@
 	<tbody>
 		<tr ng-repeat="pr in projects">
 			<td ng-click="showProject($event, pr)">{{ pr.nameProject }}</td>
-			<td><md-button class="md-primary md-raised"
-					ng-click="deleteProject(pr)" flex flex-md="100"> Obrisi
-				projekat </md-button></td>
 		</tr>
 	</tbody>
 </table>

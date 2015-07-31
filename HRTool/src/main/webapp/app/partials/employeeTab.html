@@ -5,79 +5,12 @@
 		</tr>
 	</thead>
 	<tbody>
+	    <tr><td ng-click="showEmployee($event, newEmployee)">New entry</td></tr>
 		<tr ng-repeat="emp in employees">
 			<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee }}</td>
-			<td><md-button class="md-primary md-raised"
-					ng-click="deleteEmployee(emp)" flex flex-md="100">
-				Obrisi zaposlenog </md-button></td>
 		</tr>
 	</tbody>
 </table>
-
-<h3>Novi zaposleni:</h3>
-
-<form>
-	<md-content layout-padding layout="column" layout-sm="column">
-	<md-input-container md-no-float="true"> <label>Name:</label>
-	<input type="text" required ng-model="currEmp.nameEmployee"> </md-input-container> <md-input-container>
-	<md-select placeholder="Gender" ng-model="currEmp.gender">
-	<md-option value="Female">Female</md-option> <md-option value="Male">Male</md-option>
-	</md-select> </md-input-container> <md-input-container> <label>Date of
-		birth:</label> <input type="date" ng-model="dateBirth"> </md-input-container> </md-content>
-	<md-content layout-padding layout="column" layout-sm="column">
-	<md-input-container md-no-float="true"> <label>Adress:</label>
-	<input type="text" ng-model="currEmp.address"> </md-input-container> <md-input-container>
-	<label>Phone number:</label> <input type="text"
-		ng-model="currEmp.phoneNumber"> </md-input-container> <md-input-container>
-	<label>Personal email:</label> <input type="text"
-		ng-model="currEmp.email"> </md-input-container> <md-input-container>
-	<label>Emergency phone number:</label> <input type="text"
-		ng-model="currEmp.emergencyPhoneNumber"> </md-input-container> <md-input-container>
-	<label>Place of birth:</label> <input type="text"
-		ng-model="currEmp.placeOfBirth"> </md-input-container> </md-content>
-	<md-content layout-padding layout="column" layout-sm="column">
-	<md-input-container md-no-float="true"> <label>Start
-		date:</label> <input type="date" ng-model="startDate"> </md-input-container> <md-input-container>
-	<label>Start day from employment booklet:</label> <input type="date"
-		ng-model="startDateFromBooklet"> </md-input-container> <md-input-container>
-	<label>Username:</label> <input type="text" ng-model="currEmp.username">
-	</md-input-container> <md-input-container> <label>Position:</label> <input
-		type="text"> </md-input-container> <md-input-container> <label>Id
-		card number:</label> <input type="text" ng-model="currEmp.idCardNumber">
-	</md-input-container> <md-input-container> <label>Passport
-		number:</label> <input type="text" ng-model="currEmp.passportNumber">
-	</md-input-container> </md-content>
-</form>
-
-
-<!--<form name="projectForm">
-	<md-input-container> <label>Description</label> <input
-		md-maxlength="30" required name="description"
-		ng-model="project.description">
-	<div ng-messages="projectForm.description.$error">
-		<div ng-message="required">This is required.</div>
-		<div ng-message="md-maxlength">The name has to be less than 30
-			characters long.</div>
-	</div>
-	</md-input-container>
-	<md-input-container> <label>Client Name</label> <input
-		required name="clientName" ng-model="project.clientName">
-	<div ng-messages="projectForm.clientName.$error">
-		<div ng-message="required">This is required.</div>
-	</div>
-	</md-input-container>
-	<md-input-container> <label>Hourly Rate
-		(USD)</label> <input required type="number" step="any" name="rate"
-		ng-model="project.rate" min="800" max="4999">
-	<div ng-messages="projectForm.rate.$error">
-		<div ng-message="required">
-			You've got to charge something! You can't just <b>give away</b> a
-			Missile Defense System.
-		</div>
-		<div ng-message="min">You should charge at least $800 an hour.
-			This job is a big deal... if you mess up, everyone dies!</div>
-		<div ng-message="max">$5,000 an hour? That's a little
-			ridiculous. I doubt event Bill Clinton could afford that.</div>
-	</div>
-	</md-input-container>
-</form>-->
+            <td><md-button class="md-primary md-raised"
+                    ng-click="deleteEmployee(emp)" flex flex-md="100">
+                Obrisi zaposlenog </md-button></td>

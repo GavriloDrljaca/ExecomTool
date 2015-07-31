@@ -1,5 +1,6 @@
 app.controller('startPageController', function($scope, $window, $mdDialog, startPageFactory, employeeService, projectService) {
 
+	
 	$scope.init = function() {
 		employeeService.list().success(function(data) {
 			$scope.employees = data._embedded.employees;
@@ -8,10 +9,17 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 		projectService.list().success(function(data) {
 			$scope.projects = data._embedded.projects;
 		})
-
+		
+		$scope.newEmployee = {};
 	}
 	
-
+	
+	$scope.submit = function(){
+		employeeService.create($scope.currEmp).success(function(data){
+			
+		})
+	}
+	
 	$scope.updateProject = function(pr){
 		pr.nameProject = "Test";
 		projectService.update(pr).success(function(data){
@@ -32,21 +40,23 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 		})
 	}
 	
-	$scope.showEmployee = function(ev, emp) {
-		$scope.selectedEmployee = emp;
+	$scope.showEmployee = function(event, employee) {
+		$scope.selectedEmployee = employee;
 		$mdDialog.show({
 			controller : 'employeeController',
 			controllerAs : 'empCtrl',
 			templateUrl : 'app/partials/employeeDialog.html',
 			parent : angular.element(document.body),
-			targetEvent : ev,
+			targetEvent : event,
 			locals : {
 				selectedEmployee : $scope.selectedEmployee
 			}
 		}).then(function(answer) {
-			$scope.alert = 'You said the information was "' + answer + '".';
+			
 		}, function() {
-			$scope.alert = 'You cancelled the dialog.';
+			employeeService.list().success(function(data){
+				$scope.employees = data._embedded.employees;
+			})
 		});
 	};
 
