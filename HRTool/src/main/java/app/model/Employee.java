@@ -24,8 +24,6 @@ public class Employee {
 	private EmployeeRole employeeRole;
 	private String googleId;
 	
-	private String hhh;
-	
 	private String nameEmployee;
 	private String gender;
 	private Date dateOfBirth;
