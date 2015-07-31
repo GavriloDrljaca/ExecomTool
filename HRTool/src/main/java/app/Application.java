@@ -2,6 +2,8 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +14,7 @@ import app.model.Employee;
 import app.model.Project;
 import app.model.ProjectInfo;
 import app.model.TagCloud;
+import app.model.TagCloudEnum;
 import app.repository.EmployeeRepository;
 import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
@@ -39,12 +42,12 @@ public class Application implements CommandLineRunner {
 		addProjects();
 		addTagClouds();
 		addProjectInfos();
-		
+		addTagsToEmployee();
+
 	}
-	
+
 	public void addEmployees() {
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
-		
 
 		// EMPLOYEE PETAR
 		Employee emp = new Employee();
@@ -214,8 +217,7 @@ public class Application implements CommandLineRunner {
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
 		empRep.save(emp);
-		
-		
+
 		// EMPLOYEE Nemanja
 		emp = new Employee();
 		emp.setNameEmployee("Nemanja Milutinovic");
@@ -295,149 +297,156 @@ public class Application implements CommandLineRunner {
 		TagCloud tc = new TagCloud();
 
 		tc.setNameTagCloud("Java");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
+
+		/*
+		 * Employee e = (Employee) empRep.findOne(1);
+		 * 
+		 * List<Employee> employees = new ArrayList<>(); employees.add(e);
+		 * tc.setEmployees(employees);
+		 */
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("C#");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("C++");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("mySQL");
-		tc.setTipTagCloud("database");
+		tc.setTipTagCloud(TagCloudEnum.Database);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Oracle");
-		tc.setTipTagCloud("database");
+		tc.setTipTagCloud(TagCloudEnum.Database);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Windows");
-		tc.setTipTagCloud("OS");
+		tc.setTipTagCloud(TagCloudEnum.OS);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("UBUNTU");
-		tc.setTipTagCloud("OS");
+		tc.setTipTagCloud(TagCloudEnum.OS);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Server");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Desktop");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Web");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Eclipse");
-		tc.setTipTagCloud("IDE");
+		tc.setTipTagCloud(TagCloudEnum.IDE);
 		tagRep.save(tc);
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Microsoft Visual Studio");
-		tc.setTipTagCloud("IDE");
+		tc.setTipTagCloud(TagCloudEnum.IDE);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("xml");
-		tc.setTipTagCloud("technologie");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Spring");
-		tc.setTipTagCloud("technologie");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Team leader");
-		tc.setTipTagCloud("job role");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Software engineer");
-		tc.setTipTagCloud("job role");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Army");
-		tc.setTipTagCloud("industry");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Comercial");
-		tc.setTipTagCloud("industry");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
-		tc.setNameTagCloud("Army");
-		tc.setTipTagCloud("industry");
+		tc.setNameTagCloud("Naval");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("High School");
-		tc.setTipTagCloud("education");
+		tc.setTipTagCloud(TagCloudEnum.Education);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("master");
-		tc.setTipTagCloud("education");
+		tc.setTipTagCloud(TagCloudEnum.Education);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("English");
-		tc.setTipTagCloud("foreign languages");
+		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("CEO");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Project manager");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("HR manager");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 	}
@@ -451,16 +460,14 @@ public class Application implements CommandLineRunner {
 		pi.setJobResponsibilities("frontend");
 		pi.setProjectExp("Learned a lot about frontend");
 		/*
-		Employee emp  = empRep.findOne(1);
-		emp.getProjectInfos().add(pi);
-		empRep.save(emp);
-		Project p = projRep.findOne(2);
-		p.getProjectInfo().add(pi);
-		projRep.save(p);*/
+		 * Employee emp = empRep.findOne(1); emp.getProjectInfos().add(pi);
+		 * empRep.save(emp); Project p = projRep.findOne(2);
+		 * p.getProjectInfo().add(pi); projRep.save(p);
+		 */
 		projInfoRep.save(pi);
-		
+
 		pi = new ProjectInfo();
-		
+
 		pi.setEmployee(empRep.findOne(2));
 		pi.setProject(projRep.findOne(2));
 		pi.setJobResponsibilities("backend");
@@ -475,6 +482,19 @@ public class Application implements CommandLineRunner {
 		pi.setProjectExp("Learned a lot about backend");
 
 		projInfoRep.save(pi);
+
+	}
+
+	public void addTagsToEmployee() {
+		Employee e = (Employee) empRep.findOne(1);
+		TagCloud tc = tagRep.findOne(1);
 		
+		  e.getTagClouds().add(tagRep.findOne(1));
+		  e.getTagClouds().add(tagRep.findOne(2));
+		  e.getTagClouds().add(tagRep.findOne(3));
+		  e.getTagClouds().add(tagRep.findOne(4));
+		 
+
+		 empRep.save(e);
 	}
 }

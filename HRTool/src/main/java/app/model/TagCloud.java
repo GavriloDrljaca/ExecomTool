@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,18 +13,19 @@ import javax.persistence.ManyToMany;
 @Entity
 public class TagCloud {
 	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idTagCloud;
 	
 	private String nameTagCloud;
 	
-	private String tipTagCloud;
+	private TagCloudEnum tipTagCloud;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="tagClouds")
 	private List<Project> projects;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="tagClouds")
 	private List<Employee> employees;
 	
 	public TagCloud(){
@@ -59,10 +61,10 @@ public class TagCloud {
 	public void setNameTagCloud(String nameTagCloud) {
 		this.nameTagCloud = nameTagCloud;
 	}
-	public String getTipTagCloud() {
+	public TagCloudEnum getTipTagCloud() {
 		return tipTagCloud;
 	}
-	public void setTipTagCloud(String tipTagCloud) {
+	public void setTipTagCloud(TagCloudEnum tipTagCloud) {
 		this.tipTagCloud = tipTagCloud;
 	}
 //	public List<TagClouds> getTagClouds() {
