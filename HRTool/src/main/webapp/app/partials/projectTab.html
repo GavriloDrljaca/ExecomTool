@@ -1,14 +1,10 @@
-<table class="table table-striped table-hover">
-	<thead>
-		<tr>
-			<th><h3>Projekat</h3></th>
-		</tr>
-	</thead>
-	<tbody>
+<table border="1">
+	<tr>
+		<th><h3>Projekat</h3></th>
+	</tr>
 		<tr ng-repeat="pr in projects">
-			<td ng-click="showProject($event, pr)">{{ pr.nameProject }}</td>
-		</tr>
-	</tbody>
+		<td ng-click="showProject($event, pr)">{{ pr.nameProject }}</td>
+	</tr>
 </table>
 
 
