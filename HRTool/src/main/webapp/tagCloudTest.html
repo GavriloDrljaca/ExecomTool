@@ -35,7 +35,7 @@
 <div ng-controller = "tagCloudController as ctrl" ng-init = "init()">
 <h2>CHIPS</h2>
 
- <md-chips ng-model="employeeTagClouds" md-autocomplete-snap="" md-require-match="">
+ <md-chips ng-model="employeeTechnologieTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
       <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
        md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
        placeholder="Search for a technologie">
@@ -49,10 +49,32 @@
         </span>
       </md-chip-template>
   </md-chips>
+  
+   <md-chips ng-model="employeeDatabaseTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+       md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
+       placeholder="Search for a technologie">
+       
+        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+      </md-autocomplete>
+      <md-chip-template>
+        <span>
+          <strong>{{$chip.nameTagCloud}}</strong>
+          <em>({{$chip.tipTagCloud}})</em>
+        </span>
+      </md-chip-template>
+  </md-chips>
 
-<md-button ng-click="saveTag()">Save</md-button>
+<md-button ng-click="saveTags()">Save</md-button>
+
+<div>
+<h2>Add new tagCloud</h2>
+
+<label>Tag cloud name</label><input id = "tagCloudName" ng-model = "newTag.nameTagCloud"><br>
+<label>Tag cloud type</label><input id = "tagCloudType" ng-model= "newTag.tipTagCloud">
+<md-button ng-click = "saveNewTag(newTag)">Save new tag</md-button>
 </div>
 
-
+</div>
 </body>
 </html>

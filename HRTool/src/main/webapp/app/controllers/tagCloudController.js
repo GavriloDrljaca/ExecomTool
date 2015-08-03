@@ -1,37 +1,80 @@
 app.controller('tagCloudController', function($scope, $window, $filter, tagCloudService, employeeService){
 	
 	$scope.init = function(){
-		tagCloudService.list().success(function(data){
-			$scope.tagClouds = data._embedded.tagClouds;
-
-		})
+		/*$scope.tagClouds = [];
+		(loadAllTags = function(tagUrl){
+			tagCloudService.list(tagUrl).success(function(data){
+				alert("success");
+				
+				console.log(data);
+				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
+				if(data._links.hasOwnProperty('next') ){
+					loadAllTags(data._links.next.href);
+				}
+				
+			})
+		})('/tagClouds');*/
 		employeeService.getById(1).success(function(data){
 
 			$scope.employee = data;
 			
-			alert($scope.employee._links.tagClouds.href);
-			/*$scope.employeeTagClouds = $scope.employee.tagClouds;
-			$scope.employeeTechnologieTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Technologie"} );
-			console.log($scope.employee);*/
+			
 			employeeService.getEmployeeTagClouds($scope.employee).success(function(data){
 				
 				$scope.employeeTagClouds = data._embedded.tagClouds;
-				$scope.employeeTagClouds[1].nameTagCloud = "BLABLABLA";
 				//TAGS BY TYPE
-				
+				//<md chips ng-model = ""
+				//Technologie
 				$scope.employeeTechnologieTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Technologie"} );
+				//POSITION
+				$scope.employeePositionTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Position"} );
+				//JobRole
+				$scope.employeeJobRoleTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"JobRole"} );
+				//Database
+				$scope.employeeDatabaseTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Database"} );
+				//IDE
+				$scope.employeeIDETags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"IDE"} );
+				//Industry
+				$scope.employeeIndustryTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Industry"} );				
+				//Platform
+				$scope.employeePlatformTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Platform"} )
+				//OS,
+				$scope.employeeOSTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"OS"} )
+				//Education
+				$scope.employeeEducationTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Education"} )
+				//ForeignLanguage
+				$scope.employeeForeignLanguageTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"ForeignLanguage"} )
 			})
 			
 		})
 	 }
+		//NEW TAG CLOUD
+		$scope.newTag = {};
+		$scope.newTag.nameTagCloud = "";
+		$scope.newTag.tipTagCloud = "";
 		
+		$scope.saveNewTag = function(newTag){
+			tagCloudService.create(newTag).success(function(){
+				alert("saved!");
+			});
+		}
 		//TAG CLOUD, CHIPS, BE CAREFUL NOT TO DUPLICATE VARIABLES !!!
-		tagCloudService.list().success(function(data){
-			$scope.tagC = data._embedded.tagClouds;
-			$scope.tagClouds = $scope.tagC;
-
-		}).success(function(){
-			//CHIPS
+		$scope.tagClouds = [];
+		(loadAllTags = function(tagUrl){
+			tagCloudService.list(tagUrl).success(function(data){
+				
+				
+				console.log(data);
+				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
+				if(data._links.hasOwnProperty('next') ){
+					loadAllTags(data._links.next.href);
+				}
+				$scope.tagC = $scope.tagClouds;
+				
+			})
+		})('/tagClouds');
+		
+			$scope.tagC = $scope.tagClouds;
 		 	var self = this;
 		 	
 		 	$scope.readonly = false;
@@ -39,7 +82,6 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		    $scope.searchText = null;
 		    $scope.querySearch = querySearch;
 		    self.vegetables = loadTags();
-		    //self.selectedVegetables = [];
 		    self.numberChips = [];
 		    self.numberChips2 = [];
 		    self.numberBuffer = '';
@@ -78,11 +120,21 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 			      
 				})
 		    }
-	    });
-		
-		$scope.saveTag = function(){
+
+		$scope.saveTags = function(){
 			alert("save");
-			tagCloudService.saveTag($scope.employeeTagClouds[4])
+			$scope.req = "";
+			$scope.newTags = [];
+			$scope.newTags = $scope.newTags.concat($scope.employeeTechnologieTags,$scope.employeePositionTags,
+					$scope.employeeJobRoleTags, $scope.employeeDatabaseTags,
+					$scope.employeeIDETags,$scope.employeeIndustryTags, $scope.employeePlatformTags,$scope.employeeOSTags , 
+					$scope.employeeEducationTags,
+					$scope.employeeForeignLanguageTags);
+			
+			for(i =0; i<$scope.newTags.length; i++){
+				$scope.req+=$scope.newTags[i]._links.self.href +"\n";
+			}
+			tagCloudService.saveTag($scope.employee._links.tagClouds.href,$scope.req)
 		}
 		
 });

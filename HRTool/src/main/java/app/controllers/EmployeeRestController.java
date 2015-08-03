@@ -3,13 +3,13 @@ package app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.controllers.http.response.UserNotFoundException;
 import app.model.Employee;
 import app.model.TagCloud;
 import app.repository.EmployeeRepository;
@@ -34,13 +34,13 @@ public class EmployeeRestController {
 	TagCloudRepository tagCloudsRepository;
 	
 	
-	@RequestMapping(value = "/{id}/tagClouds/update", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}/tagClouds/update", method = RequestMethod.POST)
 	public void updateTagClouds(@RequestParam("tipTagCloud") String tipTagCloud,
 			@RequestParam("nameTagCloud") String nameTagCloud, @PathVariable("id") String employeeId){
 		
 		Employee empl = employeeRepository.findOne(new Integer(employeeId));
-		
-		if(empl == null) throw new UsernameNotFoundException("Employee not found");
+	
+		if(empl == null) throw new UserNotFoundException("Employee not found");
 		
 		TagCloud tc = tagCloudsRepository.findByNameTagCloud(nameTagCloud);
 		if(tc == null) return;
