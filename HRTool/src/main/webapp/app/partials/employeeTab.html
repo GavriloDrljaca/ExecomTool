@@ -1,3 +1,5 @@
+<md-input-container><label>Filter employees:</label>
+            <input type="text" ng-model="filterForEmployees"> </md-input-container>
 <table border="1">
 	<thead>
 		<tr>
@@ -8,7 +10,7 @@
 		<tr>
 			<td ng-click="showEmployee($event, newEmployee)">New entry</td>
 		</tr>
-		<tr ng-repeat="emp in employees">
+		<tr ng-repeat="emp in employees | filter:filterForEmployees">
 			<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee }}</td>
 		</tr>
 	</tbody>
