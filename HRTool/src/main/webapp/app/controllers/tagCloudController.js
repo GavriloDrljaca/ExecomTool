@@ -4,9 +4,7 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		/*$scope.tagClouds = [];
 		(loadAllTags = function(tagUrl){
 			tagCloudService.list(tagUrl).success(function(data){
-				alert("success");
 				
-				console.log(data);
 				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
 				if(data._links.hasOwnProperty('next') ){
 					loadAllTags(data._links.next.href);
@@ -24,57 +22,51 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 				$scope.employeeTagClouds = data._embedded.tagClouds;
 				//TAGS BY TYPE
 				//<md chips ng-model = ""
+				$scope.tagDictionary = {};
 				//Technologie
-				$scope.employeeTechnologieTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Technologie"} );
+				$scope.tagDictionary['Technologie'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Technologie"} );
 				//POSITION
-				$scope.employeePositionTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Position"} );
+				$scope.tagDictionary['Position'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Position"} );
 				//JobRole
-				$scope.employeeJobRoleTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"JobRole"} );
+				$scope.tagDictionary['JobRoles'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"JobRole"} );
 				//Database
-				$scope.employeeDatabaseTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Database"} );
+				$scope.tagDictionary['Database'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Database"} );
 				//IDE
-				$scope.employeeIDETags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"IDE"} );
+				$scope.tagDictionary['IDE'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"IDE"} );
 				//Industry
-				$scope.employeeIndustryTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Industry"} );				
+				$scope.tagDictionary['Industry'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Industry"} );				
 				//Platform
-				$scope.employeePlatformTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Platform"} )
+				$scope.tagDictionary['Platform'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Platform"} )
 				//OS,
-				$scope.employeeOSTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"OS"} )
+				$scope.tagDictionary['OS'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"OS"} )
 				//Education
-				$scope.employeeEducationTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Education"} )
+				$scope.tagDictionary['Education'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Education"} )
 				//ForeignLanguage
-				$scope.employeeForeignLanguageTags = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"ForeignLanguage"} )
+				$scope.tagDictionary['ForeignLanguage'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"ForeignLanguage"} )
 			})
 			
 		})
 	 }
 		//NEW TAG CLOUD
-		$scope.newTag = {};
-		$scope.newTag.nameTagCloud = "";
-		$scope.newTag.tipTagCloud = "";
-		
-		$scope.saveNewTag = function(newTag){
-			tagCloudService.create(newTag).success(function(){
-				alert("saved!");
-			});
-		}
+
 		//TAG CLOUD, CHIPS, BE CAREFUL NOT TO DUPLICATE VARIABLES !!!
 		$scope.tagClouds = [];
 		(loadAllTags = function(tagUrl){
 			tagCloudService.list(tagUrl).success(function(data){
 				
 				
-				console.log(data);
 				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
 				if(data._links.hasOwnProperty('next') ){
 					loadAllTags(data._links.next.href);
 				}
+				
 				$scope.tagC = $scope.tagClouds;
 				
 			})
 		})('/tagClouds');
 		
 			$scope.tagC = $scope.tagClouds;
+			$scope.tagClouds = $scope.tagC;
 		 	var self = this;
 		 	
 		 	$scope.readonly = false;
@@ -82,15 +74,20 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		    $scope.searchText = null;
 		    $scope.querySearch = querySearch;
 		    self.vegetables = loadTags();
-		    self.numberChips = [];
-		    self.numberChips2 = [];
-		    self.numberBuffer = '';
+		    $scope.numberChips = [];
+		    $scope.numberChips2 = [];
+		    $scope.numberBuffer = '';
 	
 		    /**
 		     * Search for TAGCLOUDS
 		     */
+		    $scope.loadedAll = false;
 		    function querySearch (query, tipQuery) {
-
+		    	$scope.selectedValue = $scope.tagDictionary[tipQuery];
+		    	if(!$scope.loadedAll){
+		    		loadTags();
+		    		$scope.loadedAll=true;
+		    	}
 		      var results = query ? $scope.tagC.filter(createFilterFor(query, tipQuery)) : [];
 		      return results;
 		    }
@@ -104,15 +101,16 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		      
 		      return function filterFn(tag) {
 		    	
-		        return (tag._lowername.indexOf(lowercaseQuery) === 0) &&
-		            (tag._lowertype.indexOf(lowercaseTipQuery) === 0);
+		        return ((tag._lowername.indexOf(lowercaseQuery) === 0) ||
+		        (tag._lowertype.indexOf(lowercaseQuery) === 0) )&&
+		            (tag._lowertype.indexOf(lowercaseTipQuery) === 0) ;
 		      };
 	
 		    }
 	
 		    function loadTags() {
-	
 				return $scope.tagClouds.map(function (tc) {
+
 			        tc._lowername = tc.nameTagCloud.toLowerCase();
 			        tc._lowertype = tc.tipTagCloud.toLowerCase();
 			        
@@ -122,19 +120,39 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		    }
 
 		$scope.saveTags = function(){
-			alert("save");
 			$scope.req = "";
 			$scope.newTags = [];
-			$scope.newTags = $scope.newTags.concat($scope.employeeTechnologieTags,$scope.employeePositionTags,
-					$scope.employeeJobRoleTags, $scope.employeeDatabaseTags,
-					$scope.employeeIDETags,$scope.employeeIndustryTags, $scope.employeePlatformTags,$scope.employeeOSTags , 
-					$scope.employeeEducationTags,
-					$scope.employeeForeignLanguageTags);
+			$scope.newTags = $scope.newTags.concat($scope.tagDictionary['Technologie'],$scope.tagDictionary['Position'],
+					$scope.tagDictionary['JobRoles'], $scope.tagDictionary['Database'],
+					$scope.tagDictionary['IDE'],$scope.tagDictionary['Industry'], $scope.tagDictionary['Platform'],
+					$scope.tagDictionary['OS'] , 
+					$scope.tagDictionary['Education'],
+					$scope.tagDictionary['ForeignLanguage']);
 			
 			for(i =0; i<$scope.newTags.length; i++){
 				$scope.req+=$scope.newTags[i]._links.self.href +"\n";
 			}
 			tagCloudService.saveTag($scope.employee._links.tagClouds.href,$scope.req)
+		}
+		
+		$scope.newTag = {};
+		$scope.addNewTagCloud= function(newName, type){
+			$scope.newTag.nameTagCloud = newName;
+			$scope.newTag.tipTagCloud = type;
+			
+			tagCloudService.create($scope.newTag).success(function(data){
+				console.log(data);
+				$scope.tagClouds.push(data);
+				$scope.loadedAll = false;
+				//PUSH TO APPROPRIATE ARRAY 
+				$scope.tagDictionary[type].push(data);
+			});
+		}
+		
+		
+		
+		$scope.saveNewTag = function(newTag){
+			
 		}
 		
 });

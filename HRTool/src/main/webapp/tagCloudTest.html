@@ -35,13 +35,17 @@
 <div ng-controller = "tagCloudController as ctrl" ng-init = "init()">
 <h2>CHIPS</h2>
 
- <md-chips ng-model="employeeTechnologieTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+ <md-chips ng-model="tagDictionary['Technologie']" md-autocomplete-snap="" md-require-match="" readonly = "false">
       <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
        md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
        placeholder="Search for a technologie">
        
         <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+         <md-not-found >
+        	<span ng-click = "addNewTagCloud(searchText, 'Technologie')">No matches found for {{searchText}}, click here to add</span>
+        </md-not-found>
       </md-autocomplete>
+
       <md-chip-template>
         <span>
           <strong>{{$chip.nameTagCloud}}</strong>
@@ -50,13 +54,20 @@
       </md-chip-template>
   </md-chips>
   
-   <md-chips ng-model="employeeDatabaseTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+   <md-chips ng-model="tagDictionary['Database']" md-autocomplete-snap="" md-require-match="" readonly = "false">
       <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
        md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
-       placeholder="Search for a technologie">
+       placeholder="Search for a database">
        
         <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+        
+      
+        <md-not-found >
+        	<span ng-click = "addNewTagCloud(searchText, 'Database')">No matches found for {{searchText}}, click here to add</span>
+        </md-not-found>
+
       </md-autocomplete>
+      
       <md-chip-template>
         <span>
           <strong>{{$chip.nameTagCloud}}</strong>
@@ -65,7 +76,7 @@
       </md-chip-template>
   </md-chips>
 
-<md-button ng-click="saveTags()">Save</md-button>
+<md-button ng-click=" saveTags()">Save</md-button>
 
 <div>
 <h2>Add new tagCloud</h2>
