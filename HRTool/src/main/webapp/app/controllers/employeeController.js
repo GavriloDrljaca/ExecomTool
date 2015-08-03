@@ -30,6 +30,10 @@ app.controller('employeeController',
 			}
 			
 			$scope.showInfo = function(project, index){
+				if (!angular.equals($scope.infoToShow.projectExperiance, undefined)){
+					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
+					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
+				}
 				$scope.index = index;
 				$scope.infoToShow.projectName = project.nameProject;
 				$scope.infoToShow.projectDuration = project.durationOfProject;
@@ -78,12 +82,19 @@ app.controller('employeeController',
 				//saving (new) startDateFromBooklet
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 				
+				$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
+				$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
+				
 				employeeService.update($scope.currEmp).success(function(data){
-					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
-					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
-					$http.put($scope.projInfos[$scope.index]._links.self.href, $scope.projInfos[$scope.index]).success(function(data){	
-						$mdDialog.cancel();
-					});
+					for (i = 0; i<$scope.projInfos.length; i++){
+						$http.put($scope.projInfos[i]._links.self.href, $scope.projInfos[i]).success(function(data){
+							
+						})
+					}
+					for (i=0;i<1000;i++){
+					}
+					$mdDialog.cancel();
+					
 				});
 
 			}
