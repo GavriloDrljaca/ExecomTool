@@ -1,18 +1,18 @@
 <div>
 	<h3>Work experience</h3>
-	<form>
-			<md-content layout-padding layout="column" layout-sm="column">
-			<md-input-container md-no-float="true"> <label>Adress:</label>
-			<input type="text" ng-model="currEmp.address"> </md-input-container> <md-input-container>
-			<label>Phone number:</label>
-			<input type="text" ng-model="currEmp.phoneNumber"> </md-input-container> <md-input-container>
-			<label>Personal email:</label>
-			<input type="text" ng-model="currEmp.email"> </md-input-container> <md-input-container>
-			<label>Emergency phone number:</label>
-			<input type="text" ng-model="currEmp.emergencyPhoneNumber">
-			</md-input-container> <md-input-container> <label>Place of
-				birth:</label>
-			<input type="text" ng-model="currEmp.placeOfBirth"> </md-input-container> </md-content>
-		</form>
-
+	<div ng-repeat="proj in projects">
+	   <p ng-click="showInfo(proj, $index)">Naziv projekta: {{ proj.nameProject }}, trajanje projekta u nedeljama: {{ proj.durationOfProject }}</p>
+	</div>
+	<form></md-content>
+        <!-- <md-input-container><label>Project name:</label>
+            <input type="text" ng-model="infoToShow.projectName"> </md-input-container> 
+        <md-input-container><label>Project duration in weeks:</label>
+            <input type="text" ng-model="infoToShow.projectDuration"> </md-input-container> </md-content> -->
+        <p>Project name: {{ infoToShow.projectName }} </p>
+        <p>Project duration in weeks: {{ infoToShow.projectDuration }} </p>
+        <md-input-container><label>Job responsibilities:</label>
+            <input type="text" ng-model="infoToShow.jobResponsibilities"> </md-input-container> </md-content>
+        <md-input-container><label>Project excperiance:</label>
+            <input type="text" ng-model="infoToShow.projectExperiance"> </md-input-container> </md-content>
+	</form>
 </div>

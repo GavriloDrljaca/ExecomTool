@@ -1,5 +1,4 @@
-app.controller('startPageController', function($scope, $window, $mdDialog, startPageFactory, employeeService, projectService) {
-
+app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService) {
 	
 	$scope.init = function() {
 		employeeService.list().success(function(data) {
@@ -18,14 +17,6 @@ app.controller('startPageController', function($scope, $window, $mdDialog, start
 		employeeService.create($scope.currEmp).success(function(data){
 			
 		})
-	}
-	
-	$scope.updateProject = function(pr){
-		pr.nameProject = "Test";
-		projectService.update(pr).success(function(data){
-			
-		})
-		
 	}
 
 	$scope.deleteProject = function(project){

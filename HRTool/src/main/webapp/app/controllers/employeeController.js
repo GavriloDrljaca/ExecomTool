@@ -1,14 +1,40 @@
-/**
- * Employee controller created by: Gavrilo Drljaca
- */
-
 app.controller('employeeController',
-		function($rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
+		function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
 
 			if (angular.equals(selectedEmployee, {})){
 				$scope.newEmployee = true;
 			}else{
 				$scope.newEmployee = false;
+			}
+
+			$scope.init = function(){
+				$scope.infoToShow = {};
+				$scope.getProjects();
+			}
+			
+			$scope.getProjects = function(){
+				$scope.projects = [];
+				$scope.projInfos = {};
+				$http.get(selectedEmployee._links.projectInfos.href).success(function (data) {
+					if(data._embedded != undefined) {
+						$scope.projInfos = data._embedded.projectInfoes;
+					} else {
+						$scope.projInfos = {};
+					}
+					for(i = 0; i<$scope.projInfos.length; i++) {
+						$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
+							$scope.projects.push(data);
+						});
+					}
+				});
+			}
+			
+			$scope.showInfo = function(project, index){
+				$scope.index = index;
+				$scope.infoToShow.projectName = project.nameProject;
+				$scope.infoToShow.projectDuration = project.durationOfProject;
+				$scope.infoToShow.jobResponsibilities = $scope.projInfos[index].jobResponsibilities;
+				$scope.infoToShow.projectExperiance = $scope.projInfos[index].projectExp;
 			}
 			
 			$scope.activeForm = "none";
@@ -52,8 +78,12 @@ app.controller('employeeController',
 				//saving (new) startDateFromBooklet
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 				
-				employeeService.update($scope.currEmp).success(function() {
-					$mdDialog.cancel();
+				employeeService.update($scope.currEmp).success(function(data){
+					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
+					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
+					$http.put($scope.projInfos[$scope.index]._links.self.href, $scope.projInfos[$scope.index]).success(function(data){	
+						$mdDialog.cancel();
+					});
 				});
 
 			}
