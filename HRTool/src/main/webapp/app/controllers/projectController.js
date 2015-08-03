@@ -1,44 +1,61 @@
-app.controller('projectController', function($http, $scope, $mdDialog, selectedProject, employeeService){
+app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedProject', 'projectService', 'projectInfoService', 'employeeService', function($http, $scope, $mdDialog, selectedProject, projectService, projectInfoService, employeeService){
 		
-	$scope.selectedProject = selectedProject;	
-	 
+	$scope.selectedProject = selectedProject;
+	
 	$scope.init = function() {
 		getEmployees();
-		getAllEmployees();
-	}
+		getOtherEmployees($scope.employees);
+	};
 	
 	function getEmployees() {
 
 		$scope.employees = [];
 		$scope.projInfos = {};
-		$http.get(selectedProject._links.projectInfo.href).success(function (data) {
+		projectInfoService.getForProject(selectedProject).success(function (data) {
 			if(data._embedded != undefined) {
 				$scope.projInfos = data._embedded.projectInfoes;
 			} else {
 				$scope.projInfos = {};
 			}
 			for(i = 0; i<$scope.projInfos.length; i++) {
-				$http.get($scope.projInfos[i]._links.employee.href).success(function (data) {
+				projectInfoService.getOne($scope.projInfos[i]).success(function (data) {
 					$scope.employees.push(data);
 				});
 			}
 		});
-	}
+	};
 	
-	function getAllEmployees() {
-		employeeService.list().then(function(data) {
-			$scope.otherEmployees = data.data._embedded.employees;
-			for(i=0; i<$scope.employees.lenght; i++) {
-				removable = $scope.otherEmployees.indexOf($scope.employees[i]);
+	function getOtherEmployees(employees) {
+		employeeService.list().success(function(data) {
+			console.log(data);
+			$scope.otherEmployees = data._embedded.employees;
+			console.log(employees.length);
+			for(i=0; i<employees.length; i++) {
+				removable = $scope.otherEmployees.indexOf(employees[i]);
 				if(removable>0) {
 					$scope.otherEmployees.splice(removable,1);
 				};
 			};
-			console.log($scope.otherEmployees);
 		});		
-	}
+	};
+	
+	$scope.updateProject = function() {
+		projInfos = [];
+		console.log($scope.projInfos.length);
+		for (i=0; i<$scope.projInfos.length; i++) {
+			console.log($scope.projInfos[i]);
+			projInfos[i] = $scope.projInfos[i];
+			console.log(projInfos[i]);
+			projInfos[i].jobResponsibilities = $scope.projInfos[i].jobResponsibilities;
+			projInfos[i].projectExp = $scope.projInfos[i].projectExp;
+			projectInfoService.update(projInfos[i]);
+		};
+		selectedProject.nameProject = $scope.selectedProject.nameProject;
+		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
+		projectService.update(selectedProject);
+	};
 	
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
-	}
-});
+	};
+}]);

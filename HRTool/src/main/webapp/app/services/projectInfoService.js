@@ -15,6 +15,13 @@ app.service('projectInfoService', function($http) {
 		},
 		delete: function(projectInfo){
 			return $http.delete(projectInfo._links.self.href)
+		},
+		getOne: function(projectInfo){
+			return $http.get(projectInfo._links.employee.href);
+		},
+		getForProject: function(project){
+			return $http.get(project._links.projectInfo.href);
 		}
+		
 	}
 });
