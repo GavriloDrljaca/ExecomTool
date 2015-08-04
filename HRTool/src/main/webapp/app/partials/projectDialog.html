@@ -41,7 +41,7 @@
 	            </div>
             </div>
             <div>
-               <md-select ng-show="updateable" placeholder="Zaposleni" ng-model="otherEmps">
+               <md-select ng-show="updateable" placeholder="Zaposleni" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
                    <md-option ng-repeat="e in otherEmployees" value="{{ $index }}">{{ e.nameEmployee }}</md-option>
                </md-select>
                <div>
@@ -68,6 +68,7 @@
 	    <md-button ng-click="answer('useful')" class="md-primary">
 	      EXIT
 	    </md-button>
+	    <md-button ng-click="deleteProject()" class="md-primary">DELETE FOREVER</md-button>
     </div>
 </form>
 </md-dialog>

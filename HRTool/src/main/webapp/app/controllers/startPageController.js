@@ -10,6 +10,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 		
 		$scope.newEmployee = {};
+		$scope.newProject = {};
 	}
 	
 	
@@ -67,9 +68,15 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 				selectedProject : $scope.selectedProject
 			}
 		}).then(function(answer) {
-			$scope.alert = 'You said the information was "' + answer + '".';
+			projectService.list().success(function(data){
+				$scope.projects = data._embedded.projects;
+				$scope.newProject ={};
+			})
 		}, function() {
-			$scope.alert = 'You cancelled the dialog.';
+			projectService.list().success(function(data){
+				$scope.projects = data._embedded.projects;
+				$scope.newProject ={};
+			})
 		});
 	};
 });
