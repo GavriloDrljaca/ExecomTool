@@ -42,7 +42,7 @@
        
         <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
          <md-not-found >
-        	<span ng-click = "addNewTagCloud(searchText, 'Technologie')">No matches found for {{searchText}}, click here to add</span>
+        	<span ng-click = "addNewTagCloud(searchText, 'Technologie')">Click here to add new technologie ({{searchText}})</span>
         </md-not-found>
       </md-autocomplete>
 
@@ -83,7 +83,7 @@
 
 <label>Tag cloud name</label><input id = "tagCloudName" ng-model = "newTag.nameTagCloud"><br>
 <label>Tag cloud type</label><input id = "tagCloudType" ng-model= "newTag.tipTagCloud">
-<md-button ng-click = "saveNewTag(newTag)">Save new tag</md-button>
+<md-button ng-click = "addNewTagCloud(newTag.nameTagCloud, newTag.tipTagCloud)">Save new tag</md-button>
 </div>
 
 </div>

@@ -12,9 +12,32 @@
 			<label>Start day from employment booklet:</label>
 			<input type="date" ng-model="startDateFromBooklet"> </md-input-container> <md-input-container>
 			<label>Username:</label>
-			<input type="text" ng-model="currEmp.username"> </md-input-container> <md-input-container>
-			<label>Position:</label>
-			<input type="text"> </md-input-container> <md-input-container>
+			<input type="text" ng-model="currEmp.username"> </md-input-container>
+			</form>
+			<h5>Position</h5>
+			 <md-chips ng-model="tagDictionary['Position']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+				       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
+				       placeholder="Search for a position">
+				       
+				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+				         <md-not-found >
+				        	<span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+				        	Click here to add new position ({{searchText}})</span>
+				        </md-not-found>
+				      </md-autocomplete>
+				
+				      <md-chip-template>
+				        <span>
+				          <strong>{{$chip.nameTagCloud}}</strong>
+				          <em>({{$chip.tipTagCloud}})</em>
+				        </span>
+				      </md-chip-template>
+			  </md-chips>
+			 <form>
+			<md-content layout-padding layout="column" layout-sm="column">
+			<!-- <label>Position:</label>
+			<input type="text"> </md-input-container>--> 
 			<label>Id card number:</label>
 			<input type="text" ng-model="currEmp.idCardNumber"> </md-input-container> <md-input-container>
 			<label>Passport number:</label>

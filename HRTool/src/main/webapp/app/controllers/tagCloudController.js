@@ -60,13 +60,13 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 					loadAllTags(data._links.next.href);
 				}
 				
-				$scope.tagC = $scope.tagClouds;
+				//$scope.tagC = $scope.tagClouds;
 				
 			})
 		})('/tagClouds');
 		
-			$scope.tagC = $scope.tagClouds;
-			$scope.tagClouds = $scope.tagC;
+			//$scope.tagC = $scope.tagClouds;
+			//$scope.tagClouds = $scope.tagC;
 		 	var self = this;
 		 	
 		 	$scope.readonly = false;
@@ -88,7 +88,7 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		    		loadTags();
 		    		$scope.loadedAll=true;
 		    	}
-		      var results = query ? $scope.tagC.filter(createFilterFor(query, tipQuery)) : [];
+		      var results = query ? $scope.tagClouds.filter(createFilterFor(query, tipQuery)) : [];
 		      return results;
 		    }
 	
@@ -139,11 +139,14 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		$scope.addNewTagCloud= function(newName, type){
 			$scope.newTag.nameTagCloud = newName;
 			$scope.newTag.tipTagCloud = type;
-			
+			/*if($scope.checkDuplicate(newName, type)){
+				return;
+			}*/
 			tagCloudService.create($scope.newTag).success(function(data){
-				console.log(data);
 				$scope.tagClouds.push(data);
+				//$scope.tagC.push(data);
 				$scope.loadedAll = false;
+				loadTags();
 				//PUSH TO APPROPRIATE ARRAY 
 				$scope.tagDictionary[type].push(data);
 			});
@@ -151,8 +154,17 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		
 		
 		
-		$scope.saveNewTag = function(newTag){
+		$scope.checkDuplicate = function(name, type){
+			$scope.nonUnique = false;
+			angular.forEach($scope.tagDictionary[type], function(value, key){
+				if(value.nameTagCloud == name){
+					$scope.nonUnique = true;
+				}
+				
+				
+			});
 			
+			return $scope.nonUnique;
 		}
 		
 });

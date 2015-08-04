@@ -1,7 +1,7 @@
 app.service('tagCloudService', function($http){
 	return{
 		create: function(tagCloud){
-			alert(tagCloud.nameTagCloud);
+
 			return $http.post('/tagClouds', tagCloud);
 		},
 		update: function(tagCloud){
@@ -14,11 +14,6 @@ app.service('tagCloudService', function($http){
 			return $http.delete(emp._links.self.href)
 		},
 		saveTag: function(empUrl, tagClouds){
-			
-			/*alert("save2");
-			return $http.post('/employees/1/tagClouds', tagClouds);*/
-			alert(empUrl);
-			alert(tagClouds);
 			return $http({
 				url: empUrl,
 				data: tagClouds,
