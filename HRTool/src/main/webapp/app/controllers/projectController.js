@@ -3,7 +3,13 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 	$scope.selectedProject = selectedProject;
 	
 	$scope.init = function() {
-		getEmployees();
+		if (!angular.equals(selectedProject, undefined)){
+			$scope.newProject = false;
+			getEmployees();
+		}else{
+			$scope.updateable = true;
+			$scope.newProject = true;
+		}
 		getOtherEmployees($scope.employees);
 	};
 	
@@ -29,13 +35,15 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		employeeService.list().success(function(data) {
 			console.log(data);
 			$scope.otherEmployees = data._embedded.employees;
-			console.log(employees.length);
-			for(i=0; i<employees.length; i++) {
-				removable = $scope.otherEmployees.indexOf(employees[i]);
-				if(removable>0) {
-					$scope.otherEmployees.splice(removable,1);
+			if (!$scope.newProject){
+				console.log(employees.length);
+				for(i=0; i<employees.length; i++) {
+					removable = $scope.otherEmployees.indexOf(employees[i]);
+					if(removable>0) {
+						$scope.otherEmployees.splice(removable,1);
+					};
 				};
-			};
+			}
 		});		
 	};
 	

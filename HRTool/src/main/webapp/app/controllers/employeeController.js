@@ -2,31 +2,39 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 			if (angular.equals(selectedEmployee, {})){
 				$scope.newEmployee = true;
+				$scope.firstTimeCliced = true;
 			}else{
 				$scope.newEmployee = false;
 			}
 
 			$scope.init = function(){
+				if (angular.equals(selectedEmployee, {})){
+					$scope.newEmployee = true;
+					$scope.firstTimeClicked = true;
+				}else{
+					$scope.newEmployee = false;
+					$scope.firstTimeClicked = false;
+				}
 				$scope.infoToShow = {};
 				$scope.getProjects();
-				$scope.firstTimeClicked = false;
 			}
 			
 			$scope.getProjects = function(){
 				$scope.projects = [];
 				$scope.projInfos = {};
-				$http.get(selectedEmployee._links.projectInfos.href).success(function (data) {
-					if(data._embedded != undefined) {
-						$scope.projInfos = data._embedded.projectInfoes;
-					} else {
-						$scope.projInfos = {};
-					}
-					for(i = 0; i<$scope.projInfos.length; i++) {
-						$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
-							$scope.projects.push(data);
-						});
-					}
-				});
+				if (selectedEmployee._links!=undefined)	
+					$http.get(selectedEmployee._links.projectInfos.href).success(function (data) {
+						if(data._embedded != undefined) {
+							$scope.projInfos = data._embedded.projectInfoes;
+						} else {
+							$scope.projInfos = {};
+						}
+						for(i = 0; i<$scope.projInfos.length; i++) {
+							$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
+								$scope.projects.push(data);
+							});
+						}
+					});
 			}
 			
 			$scope.showInfo = function(project, index){

@@ -30,13 +30,13 @@
 	            <div>
 		            <md-input-container md-no-float = "true">
 			            <label> Role of employee:</label>
-			            <input type="text" ng-model="projInfos[$index].jobResponsibilities" ng-disabled="!updateable"/><br/> 
+			            <input type="text" ng-model="projInfos[$index].jobResponsibilities" ng-disabled="!updateable || newProject"/><br/> 
 		            </md-input-container>
 	            </div>
 	            <div>
 		            <md-input-container md-no-float = "true">
 			            <label> Experience of employee on the project:</label>
-			            <input type="text" ng-model="projInfos[$index].projectExp" ng-disabled="!updateable"/><br/><br/> 
+			            <input type="text" ng-model="projInfos[$index].projectExp" ng-disabled="!updateable || newProject"/><br/><br/> 
 	                </md-input-container>
 	            </div>
             </div>
@@ -45,13 +45,13 @@
                    <md-option ng-repeat="e in otherEmployees" value="{{ $index }}">{{ e.nameEmployee }}</md-option>
                </md-select>
                <div>
-                    <md-input-container ng-show="updateable" md-no-float = "true">
+                    <md-input-container ng-show="updateable || newProject" md-no-float = "true">
                         <label> Job responsibilities of employee:</label>
                         <input type="text" ng-model="jobResponsibilities"/><br/> 
                     </md-input-container>
                 </div>
                 <div>
-                    <md-input-container ng-show="updateable" md-no-float = "true">
+                    <md-input-container ng-show="updateable || newProject" md-no-float = "true">
                         <label> Experience of employee on the project:</label>
                         <input type="text" ng-model="projectExp" /><br/><br/> 
                     </md-input-container>
@@ -62,8 +62,9 @@
 	</md-dialog-content>
   	<div class="md-actions" layout="row">
 	    <span flex></span>
-	    <md-checkbox ng-model="updateable">Updateable</md-checkbox>
-	    <md-button ng-show="updateable" ng-click="updateProject()" class="md-primary">Update</md-button>
+	    <md-checkbox ng-show="!newProject" ng-model="updateable">Updateable</md-checkbox>
+	    <md-button ng-show="updateable && !newProject" ng-click="updateProject()" class="md-primary">Update</md-button>
+	    <md-button ng-show="newProject" ng-click="createProject()" class="md-primary">Create</md-button>
 	    <md-button ng-click="answer('useful')" class="md-primary">
 	      EXIT
 	    </md-button>
