@@ -434,7 +434,7 @@ public class Application implements CommandLineRunner {
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("CEO");
-		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
