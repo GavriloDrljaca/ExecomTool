@@ -1,5 +1,4 @@
-app.controller('employeeController',
-		function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
+app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService) {
 
 			if (angular.equals(selectedEmployee, {})){
 				$scope.newEmployee = true;
@@ -10,6 +9,7 @@ app.controller('employeeController',
 			$scope.init = function(){
 				$scope.infoToShow = {};
 				$scope.getProjects();
+				$scope.firstTimeClicked = false;
 			}
 			
 			$scope.getProjects = function(){
@@ -30,6 +30,8 @@ app.controller('employeeController',
 			}
 			
 			$scope.showInfo = function(project, index){
+				if ($scope.firstTimeClicked == false)
+					$scope.firstTimeClicked = true;
 				if (!angular.equals($scope.infoToShow.projectExperiance, undefined)){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
@@ -90,8 +92,6 @@ app.controller('employeeController',
 						$http.put($scope.projInfos[i]._links.self.href, $scope.projInfos[i]).success(function(data){
 							
 						})
-					}
-					for (i=0;i<1000;i++){
 					}
 					$mdDialog.cancel();
 					

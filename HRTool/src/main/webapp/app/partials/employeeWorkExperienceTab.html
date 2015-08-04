@@ -11,8 +11,8 @@
         <p>Project name: {{ infoToShow.projectName }} </p>
         <p>Project duration in weeks: {{ infoToShow.projectDuration }} </p>
         <md-input-container><label>Job responsibilities:</label>
-            <input type="text" ng-model="infoToShow.jobResponsibilities"> </md-input-container> </md-content>
+            <input type="text" ng-model="infoToShow.jobResponsibilities" ng-disabled="!firstTimeClicked"> </md-input-container> </md-content>
         <md-input-container><label>Project excperiance:</label>
-            <input type="text" ng-model="infoToShow.projectExperiance"> </md-input-container> </md-content>
+            <input type="text" ng-model="infoToShow.projectExperiance" ng-disabled="!firstTimeClicked"> </md-input-container> </md-content>
 	</form>
 </div>
