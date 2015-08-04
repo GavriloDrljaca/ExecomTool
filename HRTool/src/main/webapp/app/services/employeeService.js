@@ -1,12 +1,6 @@
 app.service('employeeService', function($http){
 	url = '/employees';
 	return{
-		testGet: function(employee){
-			return $http.get('/employees/testEmployeeGet');
-		},
-		test: function(employee){
-			return $http.post('/employees/testEmployee', employee);
-		},
 		create: function(employee){
 			return $http.post(url, employee)
 		},
