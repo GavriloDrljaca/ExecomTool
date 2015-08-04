@@ -1,17 +1,24 @@
-<md-input-container><label>Filter employees:</label>
-            <input type="text" ng-model="filterForEmployees"> </md-input-container>
-<table border="1">
-	<thead>
-		<tr>
-			<th><h3>Ime i prezime</h3></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td ng-click="showEmployee($event, newEmployee)">New entry</td>
-		</tr>
-		<tr ng-repeat="emp in employees | filter:filterForEmployees">
-			<td ng-click="showEmployee($event, emp)">{{ emp.nameEmployee }}</td>
-		</tr>
-	</tbody>
-</table>
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <h3>
+        <span>Employees</span>
+      </h3>
+    </div> 
+</md-toolbar>
+<md-content>
+    <md-list>   
+        <md-list-item class="md-3-line"></md-list-item>
+	        <md-input-container>
+		        <label>Filter employees:</label>
+		        <input type="text" ng-model="filterForEmployees">
+	        </md-input-container>
+        </md-list-item>
+        <md-list-item class="md-3-line" ng-click="showEmployee($event, newEmployee)">New entry</md-list-item>
+        <md-list-item class="md-3-line" ng-click="showEmployee($event, emp)" ng-repeat="emp in employees | filter:filterForEmployees">
+	        <div class="md-list-item-text">
+	          <h3>{{ emp.nameEmployee }}</h3>
+	        </div>
+        </md-list-item>
+        <md-divider></md-divider>
+    </md-list>
+</md-content>
