@@ -23,6 +23,8 @@ public class Project {
 	private String nameProject;
 	private Date startDate;
 	private int durationOfProject;
+	private boolean execom;
+	private String companyName;
 	
 	@ManyToMany(cascade=CascadeType.ALL)  
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
@@ -60,6 +62,18 @@ public class Project {
 	}
 	public void setDurationOfProject(int durationOfProject) {
 		this.durationOfProject = durationOfProject;
+	}
+	public boolean isExecom() {
+		return execom;
+	}
+	public void setExecom(boolean execom) {
+		this.execom = execom;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public Set<ProjectInfo> getProjectInfo() {
 		return projectInfo;
