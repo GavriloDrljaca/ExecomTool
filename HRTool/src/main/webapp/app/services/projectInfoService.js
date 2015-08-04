@@ -21,6 +21,24 @@ app.service('projectInfoService', function($http) {
 		},
 		getForProject: function(project){
 			return $http.get(project._links.projectInfo.href);
+		},
+		saveProject: function(projectInfo, projectUrl){
+			return $http({
+				url: projectInfo._links.project.href,
+				data: projectUrl,
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
+		},
+		saveEmployee: function(projectInfo, employeeUrl){
+			return $http({
+				url: projectInfo._links.employee.href,
+				data: employeeUrl,
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
 		}
 		
 	}
