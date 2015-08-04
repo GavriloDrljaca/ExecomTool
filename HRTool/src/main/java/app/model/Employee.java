@@ -66,10 +66,10 @@ public class Employee {
 	@JoinTable(name = "TagCloudEmp", joinColumns = @JoinColumn(name = "idEmployee"), inverseJoinColumns = @JoinColumn(name = "idTagCloud"))
 	private Set<TagCloud> tagClouds;
 
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	private Set<ProjectInfo> projectInfos;
 
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	private Set<EmploymentInfo> empInfos;
 
 	public int getIdEmployee() {

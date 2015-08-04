@@ -2,8 +2,6 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,11 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import app.model.Employee;
+import app.model.EmploymentInfo;
 import app.model.Project;
 import app.model.ProjectInfo;
 import app.model.TagCloud;
 import app.model.TagCloudEnum;
 import app.repository.EmployeeRepository;
+import app.repository.EmploymentInfoRepository;
 import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
@@ -31,7 +31,8 @@ public class Application implements CommandLineRunner {
 	ProjectInfoRepository projInfoRep;
 	@Autowired
 	ProjectRepository projRep;
-
+	@Autowired
+	EmploymentInfoRepository empInfoRep;
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
 	}
@@ -43,6 +44,7 @@ public class Application implements CommandLineRunner {
 		addTagClouds();
 		addProjectInfos();
 		addTagsToEmployee();
+		addEmploymentInfos();
 
 	}
 
@@ -64,19 +66,7 @@ public class Application implements CommandLineRunner {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("ppetar@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2000-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			emp.setEndDate(sdf.parse("2010-05-05"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("1995-06-06"));
@@ -125,12 +115,7 @@ public class Application implements CommandLineRunner {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("smaric@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
@@ -179,12 +164,7 @@ public class Application implements CommandLineRunner {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("mmilosevic@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2010-01-01"));
@@ -234,12 +214,7 @@ public class Application implements CommandLineRunner {
 		emp.setEmail("nemanja.milutinovicc@gmail.com");
 		//emp.setEmail("");
 		emp.setEmergencyPhoneNumber("0000000000");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
@@ -495,5 +470,43 @@ public class Application implements CommandLineRunner {
 		 
 
 		 empRep.save(e);
+	}
+	public void addEmploymentInfos(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		EmploymentInfo empInfo = new EmploymentInfo();
+		
+		empInfo.setCompanyName("DMS");
+		try {
+			empInfo.setStartDate(sdf.parse("2005-01-01"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			empInfo.setEndDate(sdf.parse("2008-01-01"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		empInfo.setEmployee(empRep.findOne(1));
+		
+		empInfoRep.save(empInfo);
+		
+		empInfo = new EmploymentInfo();
+		
+		empInfo.setCompanyName("Execom");
+		try {
+			empInfo.setStartDate(sdf.parse("2008-01-04"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		empInfo.setEmployee(empRep.findOne(1));
+		
+		empInfoRep.save(empInfo);
+		
 	}
 }

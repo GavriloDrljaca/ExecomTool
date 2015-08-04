@@ -79,11 +79,11 @@
 <md-button ng-click=" saveTags()">Save</md-button>
 
 <div>
-<h2>Add new tagCloud</h2>
+<h2>Add picture</h2>
+<input type="file" onchange="previewFile()"><br>
+<img src="preview.src" height="200" alt="Image preview...">
+<md-button ng-click = "previewFile()">Save</md-button>
 
-<label>Tag cloud name</label><input id = "tagCloudName" ng-model = "newTag.nameTagCloud"><br>
-<label>Tag cloud type</label><input id = "tagCloudType" ng-model= "newTag.tipTagCloud">
-<md-button ng-click = "addNewTagCloud(newTag.nameTagCloud, newTag.tipTagCloud)">Save new tag</md-button>
 </div>
 
 </div>

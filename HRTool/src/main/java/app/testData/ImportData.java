@@ -45,19 +45,7 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("ppetar@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2000-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		try {
-			emp.setEndDate(sdf.parse("2010-05-05"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("1995-06-06"));
@@ -106,12 +94,7 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("smaric@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
@@ -160,12 +143,6 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("mmilosevic@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2010-01-01"));
@@ -215,12 +192,7 @@ public class ImportData {
 			emp.setPhoneNumber("0645555555");
 			emp.setEmail("nemanja.milutinovicc@gmail.com");
 			emp.setEmergencyPhoneNumber("021488599");
-			try {
-				emp.setStartDate(sdf.parse("2010-01-01"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 
 			try {
 				emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));

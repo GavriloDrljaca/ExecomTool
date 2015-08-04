@@ -166,5 +166,36 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 			
 			return $scope.nonUnique;
 		}
+		$scope.addPicture = function(){
+			  var f = document.getElementById('file').files[0],
+			  
+			  r = new FileReader();
+			  r.onloadend = function(e){
+				  
+			    var data = e.target.result;
+			    //send you binary data via $http or $resource or do anything else with it
+			  }
+			  r.readAsBinaryString(f);
+			  //$scope.pic = f;
+			}
+		 $scope.previewFile = function (){
+			 alert("opa");
+		        $scope.preview = document.querySelector('img'); //selects the query named img
+		       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+		       var reader  = new FileReader();
+
+		       reader.onloadend = function () {
+		           $scope.preview.src = reader.result;
+		       }
+
+		       if (file) {
+		           reader.readAsDataURL(file); //reads the data as a URL
+		       } else {
+		           $scope.preview.src = "";
+		       }
+		  }
+
+		  $scope.previewFile();
+		
 		
 });
