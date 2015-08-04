@@ -21,49 +21,7 @@ import app.repository.TagCloudRepository;
 @RequestMapping("/employees")
 @RepositoryEventHandler(Employee.class)
 public class EmployeeRestController {
-		
-	
-	@Autowired
-	EmployeeRepository employeeRepository;
-	
-	@Autowired
-	ProjectRepository projectRepository;
-	
-	
-	@Autowired
-	TagCloudRepository tagCloudsRepository;
-	
-	
-	@RequestMapping(value = "{id}/tagClouds/update", method = RequestMethod.POST)
-	public void updateTagClouds(@RequestParam("tipTagCloud") String tipTagCloud,
-			@RequestParam("nameTagCloud") String nameTagCloud, @PathVariable("id") String employeeId){
-		
-		Employee empl = employeeRepository.findOne(new Integer(employeeId));
-	
-		if(empl == null) throw new UserNotFoundException("Employee not found");
-		
-		TagCloud tc = tagCloudsRepository.findByNameTagCloud(nameTagCloud);
-		if(tc == null) return;
-		
-		boolean okToAdd = true;
-		
-		for(TagCloud tci : empl.getTagClouds()){
-			
-			if(tci.getTipTagCloud().name().equals(tipTagCloud) && tci.getNameTagCloud().equals(nameTagCloud))
-				okToAdd = false;
-		}
-		
-		if(okToAdd)
-		{
-			TagCloud ntc = new TagCloud();
-			ntc.setNameTagCloud(nameTagCloud);
-			ntc.setTipTagCloud(tc.getTipTagCloud());
-			empl.getTagClouds().add(ntc);
-			employeeRepository.save(empl);
-		}
-		
-		
-	}
+
 	 
 }
 

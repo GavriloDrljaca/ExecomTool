@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 
 @Entity
 public class Employee {
@@ -30,7 +32,11 @@ public class Employee {
 	private Date dateOfBirth;
 	private String address;
 	private String phoneNumber;
+	
+	@Column(unique=true)
 	private String email;
+
+	
 	private String emergencyPhoneNumber;
 	private Date startDate;
 	private Date endDate;
@@ -95,8 +101,10 @@ public class Employee {
 	
 	
 	public Employee() {
-
+		
 	}
+	
+	
 	public int getIdEmployee() {
 		return idEmployee;
 	}

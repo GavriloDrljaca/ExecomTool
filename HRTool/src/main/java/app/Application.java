@@ -232,7 +232,8 @@ public class Application implements CommandLineRunner {
 		emp.setAddress("Polgar Andrasa 42a, Novi Sad");
 		emp.setPhoneNumber("0645555555");
 		emp.setEmail("nemanja.milutinovicc@gmail.com");
-		emp.setEmergencyPhoneNumber("021488599");
+		//emp.setEmail("");
+		emp.setEmergencyPhoneNumber("0000000000");
 		try {
 			emp.setStartDate(sdf.parse("2010-01-01"));
 		} catch (ParseException e) {
@@ -434,7 +435,7 @@ public class Application implements CommandLineRunner {
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("CEO");
-		tc.setTipTagCloud(TagCloudEnum.Position);
+		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
