@@ -1,6 +1,6 @@
 package app.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,28 +22,27 @@ public class TagCloud {
 	private TagCloudEnum tipTagCloud;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	private List<Project> projects;
+	private Set<Project> projects;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	private List<Employee> employees;
+	private Set<Employee> employees;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	private Set<EmploymentInfo> employmentInfos;
 
-	public TagCloud() {
-
-	}
-
-	public List<Employee> getEmployees() {
+	public Set<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(Set<Employee> employees) {
 		this.employees = employees;
 	}
 
-	public List<Project> getProjects() {
+	public Set<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(List<Project> projects) {
+	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
 
@@ -70,16 +69,12 @@ public class TagCloud {
 	public void setTipTagCloud(TagCloudEnum tipTagCloud) {
 		this.tipTagCloud = tipTagCloud;
 	}
-	// public List<TagClouds> getTagClouds() {
-	// return tagClouds;
-	// }
-	// public void setTagClouds(List<TagClouds> tagClouds) {
-	// this.tagClouds = tagClouds;
-	// }
-	// public List<TagCloudEmp> getTagCloudEmps() {
-	// return tagCloudEmps;
-	// }
-	// public void setTagCloudEmps(List<TagCloudEmp> tagCloudEmps) {
-	// this.tagCloudEmps = tagCloudEmps;
-	// }
+
+	public Set<EmploymentInfo> getEmploymentInfos() {
+		return employmentInfos;
+	}
+
+	public void setEmploymentInfos(Set<EmploymentInfo> employmentInfos) {
+		this.employmentInfos = employmentInfos;
+	}
 }

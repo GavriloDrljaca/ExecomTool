@@ -29,10 +29,6 @@ public class ProjectInfo {
 	private String jobResponsibilities;
 	private String projectExp;
 	
-	public ProjectInfo(){
-		
-	}
-	
 	public Project getProject() {
 		return project;
 	}
