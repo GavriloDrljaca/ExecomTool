@@ -1,13 +1,24 @@
-<table border="1">
-	<tr>
-		<th><h3>Projekat</h3></th>
-	</tr>
-		<tr ng-repeat="pr in projects">
-		<td ng-click="showProject($event, pr)">{{ pr.nameProject }}</td>
-	</tr>
-</table>
-
-
-<md-button class="md-primary md-raised"
-	ng-click="updateProject(projects[0])" flex flex-md="100">
-Update </md-button>
+<md-toolbar>
+   <div class="md-toolbar-tools">
+     <h3>
+       <span>Projects</span>
+     </h3>
+   </div>
+</md-toolbar>
+<md-content>
+   <md-list>  
+       <md-list-item class="md-3-line"></md-list-item>
+           <md-input-container>
+               <label>Filter projects:</label>
+               <input type="text" ng-model="filterForProjects">
+           </md-input-container>
+       </md-list-item>
+       <md-list-item class="md-3-line" ng-click="showProject($event, newProject)">New entry</md-list-item>
+       <md-list-item class="md-3-line" ng-click="showProject($event, pr)" ng-repeat="pr in projects | filter:filterForProjects">
+           <div class="md-list-item-text">
+             <h3>{{ pr.nameProject }}</h3>
+           </div>
+       </md-list-item>
+       <md-divider></md-divider>
+   </md-list>
+</md-content>
