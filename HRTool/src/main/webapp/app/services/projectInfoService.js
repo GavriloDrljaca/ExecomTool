@@ -2,7 +2,7 @@
  * 
  */
 app.service('projectInfoService', function($http) {
-	url = '/projectInfoes';
+	var url = '/projectInfoes';
 	return{
 		create: function(projectInfo){
 			return $http.post(url, projectInfo)

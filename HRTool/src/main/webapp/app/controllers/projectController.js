@@ -10,7 +10,7 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 			$scope.updateable = true;
 			$scope.newProject = true;
 		}
-		getOtherEmployees($scope.employees);
+		
 	};
 	
 	function getEmployees() {
@@ -28,10 +28,12 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 					$scope.employees.push(data);
 				});
 			}
+			getOtherEmployees($scope.employees);
 		});
 	};
 	
 	function getOtherEmployees(employees) {
+		//$http.get('/employees').success(function(data) {
 		employeeService.list().success(function(data) {
 			console.log(data);
 			$scope.otherEmployees = data._embedded.employees;

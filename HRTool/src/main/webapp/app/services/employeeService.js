@@ -1,5 +1,5 @@
 app.service('employeeService', function($http){
-	url = '/employees';
+	var url = '/employees';
 	return{
 		create: function(employee){
 			return $http.post(url, employee)

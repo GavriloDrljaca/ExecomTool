@@ -18,7 +18,7 @@ import app.repository.TagCloudRepository;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/employees")
 @RepositoryEventHandler(Employee.class)
 public class EmployeeRestController {
 		
