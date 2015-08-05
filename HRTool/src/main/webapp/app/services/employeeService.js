@@ -18,6 +18,9 @@ app.service('employeeService', function($http){
 		},
 		getEmployeeTagClouds: function(employee){
 			return $http.get(employee._links.tagClouds.href);
+		},
+		getEmploymentInfos : function(employee){
+			return $http.get(employee._links.empInfos.href);
 		}
 	}
 });

@@ -3,7 +3,7 @@
  * created by Gavrilo Drljaca
  */
 
-var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ng']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ng', 'flow']);
 
 app.filter("jsDate", function () {
     return function (x) {

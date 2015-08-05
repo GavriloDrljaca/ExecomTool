@@ -12,6 +12,7 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 				
 			})
 		})('/tagClouds');*/
+		$scope.empPic = "";
 		employeeService.getById(1).success(function(data){
 
 			$scope.employee = data;
@@ -179,7 +180,7 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 			  //$scope.pic = f;
 			}
 		 $scope.previewFile = function (){
-			 alert("opa");
+			 //alert("opa");
 		        $scope.preview = document.querySelector('img'); //selects the query named img
 		       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
 		       var reader  = new FileReader();
@@ -194,8 +195,11 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		           $scope.preview.src = "";
 		       }
 		  }
+		
+		 $scope.imageUploaded = function(serverResponse){
+			 //alert(serverResponse);
+			 $scope.empPic = serverResponse;
+			 console.log($scope.empPic);
+		 }
 
-		  $scope.previewFile();
-		
-		
 });

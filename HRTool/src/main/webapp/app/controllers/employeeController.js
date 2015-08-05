@@ -11,22 +11,42 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				if (angular.equals(selectedEmployee, {})){
 					$scope.newEmployee = true;
 					$scope.firstTimeClicked = true;
-					//TAGCLOUDS ARE EMPTY!!
+					// TAGCLOUDS ARE EMPTY!!
 					$scope.initEmptyTagClouds();
+					// INIT EMPLOYMENT INFOES
+					$scope.employmentInfos = [];
 				}else{
 					$scope.newEmployee = false;
 					$scope.firstTimeClicked = false;
-					//FILL THE TAGCLOUDS
+					// FILL THE TAGCLOUDS
 					$scope.fillTagClouds();
+					// LOAD EMPLOYMENT INFOES
+					$scope.loadEmploymentInfo(selectedEmployee);
 					
 				}
 				$scope.infoToShow = {};
 				$scope.getProjects();
+				// $scope.loadEmploymentInfo();
 				
 				
 			}
 			
-			//Da spreci automatsko sortiranje ng-repeata
+			$scope.loadEmploymentInfo = function(employee){
+				employeeService.getEmploymentInfos(employee).success(function(data){
+					if(data.hasOwnProperty('_embedded')){
+						if(data._embedded.hasOwnProperty('employmentInfoes')){
+							$scope.employmentInfos = data._embedded.employmentInfoes;
+						}else{
+							$scope.employmentInfos = [];
+						}
+					}else{
+						$scope.employmentInfos = [];
+					}
+					
+				});
+			}
+			
+			// Da spreci automatsko sortiranje ng-repeata
 			$scope.objectKeys = function(obj){
 				  return Object.keys(obj);
 			}
@@ -49,7 +69,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					});
 			}
 			
-			//Sluzi za prikazivanje projectInfo-a u employeeWorkExperiance tab-u
+			// Sluzi za prikazivanje projectInfo-a u employeeWorkExperiance
+			// tab-u
 			$scope.showInfo = function(project, index){
 				if ($scope.firstTimeClicked == false)
 					$scope.firstTimeClicked = true;
@@ -101,11 +122,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 				// saving (new) DateOfBirth
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
-				//saving (new) StartDate
+				// saving (new) StartDate
 				$scope.currEmp.startDate = $scope.startDate;
-				//saving (new) endDate
+				// saving (new) endDate
 				$scope.currEmp.endDate = $scope.endDate;
-				//saving (new) startDateFromBooklet
+				// saving (new) startDateFromBooklet
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
@@ -125,24 +146,20 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 			}
 			
-			/*$scope.showConfirm = function(ev, employee) {
-				console.log($rootScope.employees);
-				// Appending dialog to document.body to cover sidenav in docs app
-				var confirm = $mdDialog.confirm()
-			      .parent(angular.element(document.body))
-			      .title('Are you sure you want to delete employee ' + employee.nameEmployee + ' ?')
-			      .content(employee.nameEmployee + ' will be deleted permanently!')
-			      .ariaLabel('Unlucky ' + employee.nameEmployee + ' :(')
-			      .ok('Yes')
-			      .cancel('No')
-			      .targetEvent(ev);
-			    $mdDialog.show(confirm).then(function() {
-			    	console.log("delete");
-			    	employeeService.delete(employee).success(function (data) {
-			    	    $mdDialog.cancel();
-				    });
-				});
-			};*/
+			/*
+			 * $scope.showConfirm = function(ev, employee) {
+			 * console.log($rootScope.employees); // Appending dialog to
+			 * document.body to cover sidenav in docs app var confirm =
+			 * $mdDialog.confirm() .parent(angular.element(document.body))
+			 * .title('Are you sure you want to delete employee ' +
+			 * employee.nameEmployee + ' ?') .content(employee.nameEmployee + '
+			 * will be deleted permanently!') .ariaLabel('Unlucky ' +
+			 * employee.nameEmployee + ' :(') .ok('Yes') .cancel('No')
+			 * .targetEvent(ev); $mdDialog.show(confirm).then(function() {
+			 * console.log("delete");
+			 * employeeService.delete(employee).success(function (data) {
+			 * $mdDialog.cancel(); }); }); };
+			 */
 			
 			$scope.deleteEmployee = function(emp) {
 				if($window.confirm("Do you really want to delete " + emp.nameEmployee + " ?")) {
@@ -175,7 +192,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			 * local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
 			 * return local.toJSON().slice(0, 10); }
 			 */
-			//TAGCLOUD: FILL tagCLOUDS
+			// TAGCLOUD: FILL tagCLOUDS
 			$scope.fillTagClouds = function(){
 				console.log(selectedEmployee);
 				employeeService.getEmployeeTagClouds(selectedEmployee).success(function(data){
@@ -187,62 +204,62 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						
 					}else{
 					$scope.employeeTagClouds = data._embedded.tagClouds;
-					//TAGS BY TYPE
-					//<md chips ng-model = ""
+					// TAGS BY TYPE
+					// <md chips ng-model = ""
 					$scope.tagDictionary = {};
-					//Technologie
+					// Technologie
 					$scope.tagDictionary['Technologie'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Technologie"} );
-					//POSITION
+					// POSITION
 					$scope.tagDictionary['Position'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Position"} );
-					//JobRole
+					// JobRole
 					$scope.tagDictionary['JobRoles'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"JobRole"} );
-					//Database
+					// Database
 					$scope.tagDictionary['Database'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Database"} );
-					//IDE
+					// IDE
 					$scope.tagDictionary['IDE'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"IDE"} );
-					//Industry
+					// Industry
 					$scope.tagDictionary['Industry'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Industry"} );				
-					//Platform
+					// Platform
 					$scope.tagDictionary['Platform'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Platform"} )
-					//OS,
+					// OS,
 					$scope.tagDictionary['OS'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"OS"} )
-					//Education
+					// Education
 					$scope.tagDictionary['Education'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"Education"} )
-					//ForeignLanguage
+					// ForeignLanguage
 					$scope.tagDictionary['ForeignLanguage'] = $filter('filter')($scope.employeeTagClouds, {tipTagCloud :"ForeignLanguage"} )
 					}
 				})
 			}
-			//TAGCLOUD: init if tagClouds are empty
+			// TAGCLOUD: init if tagClouds are empty
 			$scope.initEmptyTagClouds = function(){
 
 				$scope.employeeTagClouds =[];
-				//TAGS BY TYPE
-				//<md chips ng-model = ""
+				// TAGS BY TYPE
+				// <md chips ng-model = ""
 				$scope.tagDictionary = {};
-				//Technologie
+				// Technologie
 				$scope.tagDictionary['Technologie'] = [];
-				//POSITION
+				// POSITION
 				$scope.tagDictionary['Position'] = [];
-				//JobRole
+				// JobRole
 				$scope.tagDictionary['JobRoles'] = [];
-				//Database
+				// Database
 				$scope.tagDictionary['Database'] = [];
-				//IDE
+				// IDE
 				$scope.tagDictionary['IDE'] = [];
-				//Industry
+				// Industry
 				$scope.tagDictionary['Industry'] = [];				
-				//Platform
+				// Platform
 				$scope.tagDictionary['Platform'] = [];
-				//OS,
+				// OS,
 				$scope.tagDictionary['OS'] = [];
-				//Education
+				// Education
 				$scope.tagDictionary['Education'] = [];
-				//ForeignLanguage
+				// ForeignLanguage
 				$scope.tagDictionary['ForeignLanguage'] = [];
 			}
 			
-			//TAGCLOUD: EVERYTHING FOR CHIPS AND AUTOCOMPLETE
+			// TAGCLOUD: EVERYTHING FOR CHIPS AND AUTOCOMPLETE
 			$scope.tagClouds = [];
 			(loadAllTags = function(tagUrl){
 				tagCloudService.list(tagUrl).success(function(data){
@@ -253,13 +270,13 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						loadAllTags(data._links.next.href);
 					}
 					
-					//$scope.tagC = $scope.tagClouds;
+					// $scope.tagC = $scope.tagClouds;
 					
 				})
 			})('/tagClouds');
 			
-				//$scope.tagC = $scope.tagClouds;
-				//$scope.tagClouds = $scope.tagC;
+				// $scope.tagC = $scope.tagClouds;
+				// $scope.tagClouds = $scope.tagC;
 			 	var self = this;
 			 	
 			 	$scope.readonly = false;
@@ -272,8 +289,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			    $scope.numberBuffer = '';
 		
 			    /**
-			     * Search for TAGCLOUDS
-			     */
+				 * Search for TAGCLOUDS
+				 */
 			    $scope.loadedAll = false;
 			    function querySearch (query, tipQuery) {
 			    	$scope.selectedValue = $scope.tagDictionary[tipQuery];
@@ -286,8 +303,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			    }
 		
 			    /**
-			     * Create filter function for a query string
-			     */
+				 * Create filter function for a query string
+				 */
 			    function createFilterFor(query, tipQuery) {
 			      var lowercaseQuery = angular.lowercase(query);
 			      var lowercaseTipQuery = angular.lowercase(tipQuery);
@@ -332,15 +349,15 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.addNewTagCloud= function(newName, type){
 				$scope.newTag.nameTagCloud = newName;
 				$scope.newTag.tipTagCloud = type;
-				/*if($scope.checkDuplicate(newName, type)){
-					return;
-				}*/
+				/*
+				 * if($scope.checkDuplicate(newName, type)){ return; }
+				 */
 				tagCloudService.create($scope.newTag).success(function(data){
 					$scope.tagClouds.push(data);
-					//$scope.tagC.push(data);
+					// $scope.tagC.push(data);
 					$scope.loadedAll = false;
 					loadTags();
-					//PUSH TO APPROPRIATE ARRAY 
+					// PUSH TO APPROPRIATE ARRAY
 					$scope.tagDictionary[type].push(data);
 				});
 			}

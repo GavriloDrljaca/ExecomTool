@@ -4,15 +4,23 @@
 		<form>
 
 			<md-content layout-padding layout="column" layout-sm="column">
-			<md-input-container md-no-float="true"> <label>Start
-				date:</label>
-			<input type="date" ng-model="startDate"> </md-input-container> <md-input-container>
-			<label>End date:</label>
-			<input type="date" ng-model="endDate"> </md-input-container> <md-input-container>
-			<label>Start day from employment booklet:</label>
-			<input type="date" ng-model="startDateFromBooklet"> </md-input-container> <md-input-container>
-			<label>Username:</label>
-			<input type="text" ng-model="currEmp.username"> </md-input-container>
+			<md-input-container>
+				<label>Username:</label>
+				<input type="text" ng-model="currEmp.username"> 
+			</md-input-container>
+			 <md-input-container>
+				<label>Start day from employment booklet:</label>
+				<input type="date" ng-model="startDateFromBooklet">
+			  </md-input-container>
+			<md-input-container>
+				<label>Id card number:</label>
+				<input type="text" ng-model="currEmp.idCardNumber"> 
+			</md-input-container>
+			 <md-input-container>
+				<label>Passport number:</label>
+				<input type="text" ng-model="currEmp.passportNumber">
+			</md-input-container>
+			 </md-content>
 			</form>
 			<h5>Position</h5>
 			 <md-chips ng-model="tagDictionary['Position']" md-autocomplete-snap="" md-require-match="" readonly = "false">
@@ -34,14 +42,26 @@
 				        </span>
 				      </md-chip-template>
 			  </md-chips>
-			 <form>
+		
+		<h2>ALL FIRMS:</h2>
+		<md-divider></md-divider>
+		<div ng-repeat = "empInfo in employmentInfos">
+		<form>
 			<md-content layout-padding layout="column" layout-sm="column">
-			<!-- <label>Position:</label>
-			<input type="text"> </md-input-container>--> 
-			<md-input-container>
-			<label>Id card number:</label>
-			<input type="text" ng-model="currEmp.idCardNumber"> </md-input-container> <md-input-container>
-			<label>Passport number:</label>
-			<input type="text" ng-model="currEmp.passportNumber"> </md-input-container> </md-content>
+				<md-input-container>
+					<label>Company name:</label>
+					<input type = text ng-model = "empInfo.companyName">	
+				</md-input-container>
+				<md-input-container md-no-float="true"> 
+					<label>Start date:</label>
+					<input type="date" > 
+				</md-input-container>
+				 <md-input-container>
+					<label>End date:</label>
+					<input type="date"> 
+				</md-input-container> 
+			</md-content>
 		</form>
-	</div>
+		<md-divider ng-if="!$last"></md-divider>
+
+		</div>
