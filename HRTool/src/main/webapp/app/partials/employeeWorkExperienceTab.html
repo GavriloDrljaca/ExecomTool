@@ -1,20 +1,26 @@
 <div>
 	<h3>Work experience</h3>
-	<div ng-repeat="proj in projects">
-	   <p ng-click="showInfo(proj, $index)">Naziv projekta: {{ proj.nameProject }}, trajanje projekta u nedeljama: {{ proj.durationOfProject }}</p>
-	</div>
-	<form></md-content>
+	<md-list>
+		<md-list-item class="md-3-line" ng-repeat="proj in projects">
+		   <div class="md-list-item-text" ng-click="showInfo(proj, $index)">Project name: {{ proj.nameProject }}, duration of project: {{ proj.durationOfProject }}</div>
+		</md-list-item>
+	</md-list>
+	<form>
         <!-- <md-input-container><label>Project name:</label>
             <input type="text" ng-model="infoToShow.projectName"> </md-input-container> 
         <md-input-container><label>Project duration in weeks:</label>
             <input type="text" ng-model="infoToShow.projectDuration"> </md-input-container> </md-content> -->
-        <p>Project name: {{ infoToShow.projectName }} </p>
-        <p>Project duration in weeks: {{ infoToShow.projectDuration }} </p>
-        <md-input-container>
-        	<label>Job responsibilities:</label>
-            <textarea  ng-model="infoToShow.jobResponsibilities" ng-disabled="!firstTimeClicked"></textarea> </md-input-container> </md-content>
-        <md-input-container>
-        	<label>Project experience:</label>
-            <textarea  ng-model="infoToShow.projectExperiance" ng-disabled="!firstTimeClicked"></textarea> </md-input-container> </md-content>
+        <div ng-show="firstTimeClicked">
+	        <p>Project name: {{ infoToShow.projectName }} </p>
+	        <p>Project duration in weeks: {{ infoToShow.projectDuration }} </p>
+	        <md-input-container>
+	        	<label>Job responsibilities:</label>
+	            <textarea  ng-model="infoToShow.jobResponsibilities"></textarea> 
+	        </md-input-container>
+	        <md-input-container>
+	        	<label>Project experience:</label>
+	            <textarea  ng-model="infoToShow.projectExperiance"></textarea>
+	        </md-input-container>
+        </div>
 	</form>
 </div>
