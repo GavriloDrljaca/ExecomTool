@@ -2,7 +2,6 @@
 <form>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<md-divider></md-divider>
 		<h2>{{currEmp.nameEmployee}}</h2>
 		<!-- 
     </div>
@@ -19,48 +18,43 @@
 	</div>
 	</md-toolbar>
 
-	<md-dialog-content> <md-tabs md-dynamic-height
-		md-border-bottom> <md-tab label="Basic info">
-		 <md-content class="md-padding">
-			<div data-ng-include
-				data-src="'app/partials/employeeBasicInfoTab.html'">
-			</div>
-		</md-content> </md-tab>
+	<md-dialog-content>
+	   <md-tabs md-dynamic-height md-border-bottom>
+	       <md-tab label="Basic info">
+		      <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeBasicInfoTab.html'"></div>
+		      </md-content>
+		   </md-tab>
 	
-	 <md-tab label="Contact info">
-	
-	 		<md-content class="md-padding">
-			<div data-ng-include
-					data-src="'app/partials/employeeContactInfoTab.html'"></div>
-			</md-content>
-		</md-tab> 	
-		 <md-tab label="Employment info">
-	 		<md-content class="md-padding">
-			<div data-ng-include
-					data-src="'app/partials/employeeEmploymentInfoTab.html'"></div>
-			</md-content>
-		</md-tab> 	
-		 <md-tab label="Work experience">
-	 		<md-content class="md-padding">
-			<div data-ng-include
-					data-src="'app/partials/employeeWorkExperienceTab.html'"></div>
-			</md-content>
-		</md-tab> 	
-		<md-tab label="Personal Development">
-	 		<md-content class="md-padding">
-			<div data-ng-include
-					data-src="'app/partials/employeeDevelopmentTab.html'"></div>
-			</md-content>
-		</md-tab>	
-		<md-tab label="Social skills and competences">
-	 		<md-content class="md-padding">
-			<div data-ng-include
+	       <md-tab label="Contact info">
+	           <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeContactInfoTab.html'"></div>
+			   </md-content>
+		   </md-tab> 	
+		   <md-tab label="Employment info">
+	 	     <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeEmploymentInfoTab.html'"></div>
+			 </md-content>
+		   </md-tab> 	
+		   <md-tab label="Work experience">
+	 	     <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeWorkExperienceTab.html'"></div>
+			 </md-content>
+		   </md-tab> 	
+		   <md-tab label="Personal Development">
+	 	     <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeDevelopmentTab.html'"></div>
+			 </md-content>
+		   </md-tab>	
+		   <md-tab label="Social skills and competences">
+             <md-content class="md-padding">
+			     <div data-ng-include
 					data-src="'app/partials/employeeSkillsTab.html'"></div>
-			</md-content>
-		</md-tab>	
-	</md-tabs>
-	
-	</md-dialog-content>
+			 </md-content>
+		   </md-tab>	
+	   </md-tabs>
+	   <md-divider></md-divider>	   
+    </md-dialog-content>
 	<div class="md-actions" layout="row">
 		<span flex></span>
 		<md-button ng-hide="newEmployee" ng-click="saveEmployee()" class="md-primary">Update</md-button>
