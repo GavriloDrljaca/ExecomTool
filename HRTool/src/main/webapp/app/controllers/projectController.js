@@ -112,9 +112,10 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
 		projectService.save(selectedProject).success(function(data){
 			selectedProject = data;
+			$scope.selectedProject = data;
 			$scope.newProject = false;
 			$scope.updateable = false;
-			getEmployees();
+			$scope.init();
 		});
 	}
 	
