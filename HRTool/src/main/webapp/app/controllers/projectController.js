@@ -10,13 +10,12 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 			$scope.projInfos = {};
 			$scope.updateable = true;
 			$scope.newProject = true;
+			$scope.employees = {};
 			getOtherEmployees();
 		}
-		
 	};
 	
 	function getEmployees() {
-
 		$scope.employees = [];
 		$scope.projInfos = {};
 		projectInfoService.getForProject(selectedProject).success(function (data) {
@@ -35,7 +34,6 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 	};
 	
 	function getOtherEmployees(employees) {
-		//$http.get('/employees').success(function(data) {
 		employeeService.list().success(function(data) {
 			console.log(data);
 			$scope.otherEmployees = data._embedded.employees;
@@ -48,11 +46,6 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 							$scope.otherEmployees.splice(k,1);
 						}
 					}
-					/*removable = 0;
-					removable = $scope.otherEmployees.indexOf(employees[i]);
-					if(removable>0) {
-						$scope.otherEmployees.splice(removable,1);
-					};*/
 				};
 			}
 		});		
@@ -79,6 +72,26 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		$scope.projectExp = "";
 		projectService.update(selectedProject);
 	};
+	
+	$scope.addEmployeeToProject = function(employeeIndex){
+		console.log(employeeIndex)
+		$scope.newProjectInfo = {};
+		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
+		$scope.newProjectInfo.projectExp = $scope.projectExp;
+		if(!angular.equals(selectedProject, {})){
+			//$scope.newProjectInfo.idProject = $scope.selectedProject._links.self.href;
+			//$scope.newProjectInfo.idEmployee = $scope.otherEmployees[employeeIndex]._links.self.href;
+			console.log($scope.selectedProject._links.self.href);
+			console.log($scope.otherEmployees[employeeIndex]._links.self.href);
+			projectInfoService.create($scope.newProjectInfo).success(function(data){
+				console.log(data);
+				var temp = data;
+				projectInfoService.saveProject(temp, $scope.selectedProject._links.self.href).success(function(data){
+					projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href);	
+				})
+			})	
+		}
+	}
 	
 	$scope.createProject = function(){
 		if ($scope.selectedProject.nameProject == "" || $scope.selectedProject.nameProject == undefined){
