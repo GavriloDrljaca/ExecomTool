@@ -1,10 +1,10 @@
 <!-- BASIC INFORMATION -->
     <div id = "basic" ng-show ="activeForm == 'basic' || activeForm == 'none'" class = "form-group">
 	<h3>Basic information</h3>
-    <form >
+    <form>
     <md-content layout-padding layout="column" layout-sm="column">
     	<md-input-container md-no-float = "true">
-    	<label>Name:</label><input required type = "text" ng-model = "currEmp.nameEmployee">
+    	   <label>Name:</label><input required type = "text" ng-model = "currEmp.nameEmployee"/>
     	</md-input-container>
     	<md-input-container>
     		<md-select placeholder = "Gender" ng-model = "currEmp.gender">
@@ -13,7 +13,8 @@
 			</md-select>
     	</md-input-container>
     	<md-input-container>
-    	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >
+    	   <label>Date of birth:</label>
+    	   <input type = "date"  ng-model = "dateBirth" />
  		</md-input-container>
  	</md-content>
     </form>
