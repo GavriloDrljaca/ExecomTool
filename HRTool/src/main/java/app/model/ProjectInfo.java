@@ -1,10 +1,14 @@
 package app.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +30,10 @@ public class ProjectInfo {
 	@JoinColumn(name="idEmployee")
 	private Employee employee;
 	
+	@ManyToMany
+	@JoinTable(name="TagCloudsPrInfo", joinColumns=@JoinColumn(name="idProjectInfo"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))
+	private Set<TagCloud> tagClouds;
+	
 	private String jobResponsibilities;
 	private String projectExp;
 	
@@ -40,6 +48,12 @@ public class ProjectInfo {
 	}
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	public Set<TagCloud> getTagClouds() {
+		return tagClouds;
+	}
+	public void setTagClouds(Set<TagCloud> tagClouds) {
+		this.tagClouds = tagClouds;
 	}
 	public String getJobResponsibilities() {
 		return jobResponsibilities;
