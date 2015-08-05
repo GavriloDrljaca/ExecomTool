@@ -53,15 +53,14 @@
 					data-src="'app/partials/employeeSkillsTab.html'" flex="50"></div>
 			 </md-content>
 		   </md-tab>	
-	   </md-tabs>
-	   <md-divider></md-divider>	   
+	   </md-tabs>   
     </md-dialog-content>
+    <md-divider></md-divider>    
 	<div class="md-actions" layout="row">
 		<span flex></span>
 		<md-button ng-hide="newEmployee" ng-click="saveEmployee()" class="md-primary">Update</md-button>
 		<md-button ng-show="newEmployee" ng-click="createEmployee()" class="md-primary">Create</md-button>
-		<md-button ng-click="answer('useful')" class="md-primary">
-		Exit </md-button>
+		<md-button ng-click="answer('useful')" class="md-primary">Exit</md-button>
 		<md-button ng-hide="newEmployee" ng-click="deleteEmployee(currEmp)" class="md-primary md-raised">Delete permenantly</md-button>
 	</div>
 </form>
