@@ -62,9 +62,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							$scope.projInfos = {};
 						}
 						for(i = 0; i<$scope.projInfos.length; i++) {
-							$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
-								$scope.projects.push(data);
-							});
+							var info = $scope.projInfos[i];
+							$http.get(info._links.project.href).success((function(i){
+								return function(data){
+									$scope.projects[i] = data;
+								}
+							})(i))
 						}
 					});
 			}
