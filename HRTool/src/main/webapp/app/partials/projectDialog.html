@@ -2,7 +2,8 @@
 <form>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>{{ selectedProject.nameProject }}</h2>
+		<h2 ng-show="!newProject">{{ selectedProject.nameProject }}</h2>
+		<h2 ng-show="newProject">Create new project</h2>
 		<span data-flex></span>
 
 	</div>
@@ -20,11 +21,12 @@
                     <label>{{ technology.nameTagCloud }}</label>
                 </div>
             </md-input-container>
-            <label style="font-size: 20px">Employees on the project:</label><br/><br/>
+            <label ng-show="!newProject" style="font-size: 20px">Employees on the project:</label><br/><br/>
             <div ng-repeat="emp in employees">
 	            <div>
 		            <label> {{ emp.nameEmployee }}</label>
 		            <label> {{ emp.email }}</label>
+		            <md-button ng-click="removeFromProject()" class="md-primary">Remove from project</md-button>
 	            </div>
 	            <br/>
 	            <div>
@@ -41,22 +43,22 @@
 	            </div>
             </div>
             <div>
-               <md-select ng-show="updateable" placeholder="Zaposleni" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
+               <md-select ng-show="updateable && !newProject" placeholder="Zaposleni" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
                    <md-option ng-repeat="e in otherEmployees" value="{{ $index }}">{{ e.nameEmployee }}</md-option>
                </md-select>
                <div>
-                    <md-input-container ng-show="updateable || newProject" md-no-float = "true">
+                    <md-input-container ng-show="updateable && !newProject" md-no-float = "true">
                         <label> Job responsibilities of employee:</label>
                         <input type="text" ng-model="jobResponsibilities"/><br/> 
                     </md-input-container>
                 </div>
                 <div>
-                    <md-input-container ng-show="updateable || newProject" md-no-float = "true">
+                    <md-input-container ng-show="updateable && !newProject" md-no-float = "true">
                         <label> Experience of employee on the project:</label>
                         <input type="text" ng-model="projectExp" /><br/><br/> 
                     </md-input-container>
                 </div>
-                <md-button ng-show="updateable" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
+                <md-button ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
             </div>
                        
 		</div>

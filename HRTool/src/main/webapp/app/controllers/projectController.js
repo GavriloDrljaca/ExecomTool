@@ -42,7 +42,6 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		});
 	};
 
-	
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {
 			$scope.otherEmployees = data._embedded.employees;
@@ -59,6 +58,8 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		});		
 	};
 	
+	
+	
 	$scope.setSelectedEmployee = function(employeeIndex){
 		$scope.selectedEmployeeIndex = employeeIndex;
 	}
@@ -70,8 +71,6 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		projInfos = [];
 		for (i=0; i<$scope.employees.length; i++) {
 			projInfos[i] = $scope.employees[i].projectInfo;
-			/*projInfos[i].jobResponsibilities = $scope.projInfos[i].jobResponsibilities;
-			projInfos[i].projectExp = $scope.projInfos[i].projectExp;*/
 			projectInfoService.update(projInfos[i]);
 		};
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
@@ -111,8 +110,11 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		};
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
-		projectService.save(selectedProject).success(function(){
-			$mdDialog.cancel();
+		projectService.save(selectedProject).success(function(data){
+			selectedProject = data;
+			$scope.newProject = false;
+			$scope.updateable = false;
+			getEmployees();
 		});
 	}
 	
