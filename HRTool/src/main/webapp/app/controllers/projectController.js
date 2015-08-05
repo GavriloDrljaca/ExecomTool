@@ -22,28 +22,31 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 	
 	function getEmployees() {
 		$scope.employees = [];
-		$scope.projInfos = {};
 		projectInfoService.getForProject(selectedProject).success(function (data) {
 			if(data._embedded != undefined) {
 				$scope.projInfos = data._embedded.projectInfoes;
+				//console.log( data);
 			} else {
 				$scope.projInfos = {};
 			}
 			for(i = 0; i<$scope.projInfos.length; i++) {
-				projectInfoService.getOne($scope.projInfos[i]).success(function (data) {
-					$scope.employees.push(data);
-				});
+				var info = $scope.projInfos[i];
+				projectInfoService.getOne(info).success((function(info, i) {
+						return function(data){
+						$scope.employees[i] = data;
+						$scope.employees[i].projectInfo = info;
+						}
+				})(info, i));
 			}
 			getOtherEmployees($scope.employees);
 		});
 	};
+
 	
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {
-			console.log(data);
 			$scope.otherEmployees = data._embedded.employees;
 			if (!$scope.newProject){
-				console.log(employees.length);
 				var temp = $scope.otherEmployees;
 				for(i=0; i<employees.length; i++) {
 					for (k=0; k<temp.length; k++){
@@ -65,10 +68,10 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 			$scope.selectedProject.nameProject = "No name given";
 		}
 		projInfos = [];
-		for (i=0; i<$scope.projInfos.length; i++) {
-			projInfos[i] = $scope.projInfos[i];
-			projInfos[i].jobResponsibilities = $scope.projInfos[i].jobResponsibilities;
-			projInfos[i].projectExp = $scope.projInfos[i].projectExp;
+		for (i=0; i<$scope.employees.length; i++) {
+			projInfos[i] = $scope.employees[i].projectInfo;
+			/*projInfos[i].jobResponsibilities = $scope.projInfos[i].jobResponsibilities;
+			projInfos[i].projectExp = $scope.projInfos[i].projectExp;*/
 			projectInfoService.update(projInfos[i]);
 		};
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
@@ -79,20 +82,17 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 	};
 	
 	$scope.addEmployeeToProject = function(employeeIndex){
-		console.log(employeeIndex)
 		$scope.newProjectInfo = {};
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
 		if(!angular.equals(selectedProject, {})){
-			//$scope.newProjectInfo.idProject = $scope.selectedProject._links.self.href;
-			//$scope.newProjectInfo.idEmployee = $scope.otherEmployees[employeeIndex]._links.self.href;
-			console.log($scope.selectedProject._links.self.href);
-			console.log($scope.otherEmployees[employeeIndex]._links.self.href);
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
-				console.log(data);
 				var temp = data;
 				projectInfoService.saveProject(temp, $scope.selectedProject._links.self.href).success(function(data){
-					projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href);	
+					projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href).success(function(){
+						$scope.otherEmployees.splice(employeeIndex,1);
+						getEmployees();
+					});	
 				})
 			})	
 		}
