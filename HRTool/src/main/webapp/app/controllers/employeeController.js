@@ -26,6 +26,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				
 			}
 			
+			//Da spreci automatsko sortiranje ng-repeata
+			$scope.objectKeys = function(obj){
+				  return Object.keys(obj);
+			}
 			
 			$scope.getProjects = function(){
 				$scope.projects = [];
@@ -45,6 +49,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					});
 			}
 			
+			//Sluzi za prikazivanje projectInfo-a u employeeWorkExperiance tab-u
 			$scope.showInfo = function(project, index){
 				if ($scope.firstTimeClicked == false)
 					$scope.firstTimeClicked = true;

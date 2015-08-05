@@ -21,10 +21,10 @@
                 </div>
             </md-input-container>
             <label style="font-size: 20px">Employees on the project:</label><br/><br/>
-            <div ng-repeat="emp in employees">
+            <div ng-repeat="key in objectKeys(employees)" ng-init="value = employees[key]">
 	            <div>
-		            <label> {{ emp.nameEmployee }}</label>
-		            <label> {{ emp.email }}</label>
+		            <label> {{ value.nameEmployee }}</label>
+		            <label> {{ value.email }}</label>
 	            </div>
 	            <br/>
 	            <div>
@@ -42,7 +42,7 @@
             </div>
             <div>
                <md-select ng-show="updateable" placeholder="Zaposleni" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
-                   <md-option ng-repeat="e in otherEmployees" value="{{ $index }}">{{ e.nameEmployee }}</md-option>
+                   <md-option ng-repeat="key in objectKeys(otherEmployees)" ng-init="value = otherEmployees[key]" ">{{ value.nameEmployee }}</md-option>
                </md-select>
                <div>
                     <md-input-container ng-show="updateable || newProject" md-no-float = "true">

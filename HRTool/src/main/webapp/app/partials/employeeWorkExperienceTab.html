@@ -1,8 +1,8 @@
 <div>
 	<h3>Work experience</h3>
 	<md-list>
-		<md-list-item class="md-3-line" ng-repeat="proj in projects">
-		   <div class="md-list-item-text" ng-click="showInfo(proj, $index)">Project name: {{ proj.nameProject }}, duration of project: {{ proj.durationOfProject }}</div>
+		<md-list-item class="md-3-line" ng-repeat="key in objectKeys(projects)" ng-init="value = projects[key]">
+		   <div class="md-list-item-text" ng-click="showInfo(value, $index)">Project name: {{ value.nameProject }}, duration of project: {{ value.durationOfProject }}</div>
 		</md-list-item>
 	</md-list>
 	<form>

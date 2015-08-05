@@ -15,6 +15,11 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		}
 	};
 	
+	//Da spreci automatsko sortiranje ng-repeata
+	$scope.objectKeys = function(obj){
+		  return Object.keys(obj);
+	}
+	
 	function getEmployees() {
 		$scope.employees = [];
 		$scope.projInfos = {};
