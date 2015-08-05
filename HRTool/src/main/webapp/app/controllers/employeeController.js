@@ -125,11 +125,33 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 			}
 			
-			$scope.deleteEmployee = function(employee){
-				employeeService.delete(employee).success(function(data){
-					$mdDialog.cancel();
-				})
-			}
+			/*$scope.showConfirm = function(ev, employee) {
+				console.log($rootScope.employees);
+				// Appending dialog to document.body to cover sidenav in docs app
+				var confirm = $mdDialog.confirm()
+			      .parent(angular.element(document.body))
+			      .title('Are you sure you want to delete employee ' + employee.nameEmployee + ' ?')
+			      .content(employee.nameEmployee + ' will be deleted permanently!')
+			      .ariaLabel('Unlucky ' + employee.nameEmployee + ' :(')
+			      .ok('Yes')
+			      .cancel('No')
+			      .targetEvent(ev);
+			    $mdDialog.show(confirm).then(function() {
+			    	console.log("delete");
+			    	employeeService.delete(employee).success(function (data) {
+			    	    $mdDialog.cancel();
+				    });
+				});
+			};*/
+			
+			$scope.deleteEmployee = function(emp) {
+				if($window.confirm("Do you really want to delete " + emp.nameEmployee + " ?")) {
+					employeeService.delete(emp).success(function (data) {
+			    	    $mdDialog.cancel();
+				    });
+				};
+			};
+			
 			// CLOSING DIALOG
 			$scope.hide = function() {
 				$mdDialog.hide();
