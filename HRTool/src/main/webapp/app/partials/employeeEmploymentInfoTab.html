@@ -12,6 +12,10 @@
 				<label>Start day from employment booklet:</label>
 				<input type="date" ng-model="startDateFromBooklet">
 			  </md-input-container>
+			  <md-input-container>
+				<label>Total work experience:</label>
+				<input type="text" ng-model="totalExperienceString" ng-readonly = "1==1">
+			  </md-input-container>
 			<md-input-container>
 				<label>Id card number:</label>
 				<input type="text" ng-model="currEmp.idCardNumber"> 
@@ -63,10 +67,14 @@
 				 <md-input-container>
 					<label>End date:</label>
 					<input type="date" ng-model = "dateDictionary[empInfo.companyName].endDate"> 
-				</md-input-container> 
+				</md-input-container>
+				<md-input-container>
+					<label>Work Experience in months:</label>
+					<input type="txt" ng-model = "dateDictionary[empInfo.companyName].workExperience" ng-readonly= "1==1"> 
+				</md-input-container>  
 			</md-content>
 		</form>
-		<h5>Position</h5>
+		<p>Position</p>
 			 <md-chips ng-model="EItagClouds[empInfo.companyName].tagClouds" md-autocomplete-snap="" md-require-match="" readonly = "false">
 				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
 				       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
