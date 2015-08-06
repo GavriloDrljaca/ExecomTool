@@ -8,6 +8,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 
 			$scope.init = function(){
+
 				if (angular.equals(selectedEmployee, {})){
 					$scope.newEmployee = true;
 					$scope.firstTimeClicked = true;
@@ -26,10 +27,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 				$scope.infoToShow = {};
 				$scope.getProjects();
-				// $scope.loadEmploymentInfo();
-				
-				
 			}
+
 			// START OF EMPLOYMENT INFO
 			// EMPLOYEMENT INFOES LOADER
 			$scope.loadEmploymentInfo = function(employee){
@@ -43,7 +42,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					}else{
 						$scope.employmentInfos = [];
 					}
-					//EXTRACT tagClouds
+					// EXTRACT tagClouds
 					$scope.EItagClouds = {};
 					$scope.extractEmploymentInfosTags();
 					// EXTRACT DATES
@@ -52,7 +51,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.extractEmploymentDates();
 				});
 			}
-			//EXTRACT EMPLOYMENT INFOES TAG CLOUDS
+			// EXTRACT EMPLOYMENT INFOES TAG CLOUDS
 			$scope.extractEmploymentInfosTags = function(){
 				$scope.EItagClouds = {};
 				angular.forEach($scope.employmentInfos, function(empInfo, key){
@@ -62,7 +61,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						$scope.EItagClouds[empInfo.companyName] = {};
 						if(data.hasOwnProperty('_embedded')){
 							$scope.EItagClouds[empInfo.companyName].tagClouds = data._embedded.tagClouds;
-							//console.log(data);
+							// console.log(data);
 						}else{
 							$scope.EItagClouds[empInfo.companyName].tagClouds = [];
 						}
@@ -90,7 +89,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.extractEmploymentDates = function(){
 				$scope.dateDictionary = {};
 				// $scope.startDate = new Date($scope.currEmp.startDate);
-				
+				$scope.totalWorkExperience = 0;
 				angular.forEach($scope.employmentInfos, function(empInfo, key){
 					$scope.dateDictionary[empInfo.companyName] = {};
 					$scope.dateDictionary[empInfo.companyName].startDate = 
@@ -98,10 +97,31 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					if(empInfo.endDate != null){
 						$scope.dateDictionary[empInfo.companyName].endDate = 
 							new Date(empInfo.endDate);
+						// Calculate date diference
+						$scope.dateDictionary[empInfo.companyName].workExperience = 
+							Math.abs($scope.dateDictionary[empInfo.companyName].endDate.getMonth() -
+							$scope.dateDictionary[empInfo.companyName].startDate.getMonth()) + 
+							(12* (Math.abs($scope.dateDictionary[empInfo.companyName].endDate.getFullYear() -
+							$scope.dateDictionary[empInfo.companyName].startDate.getFullYear())));
+						
 					}else{
 						$scope.dateDictionary[empInfo.companyName].endDate = null;
+						// Calculate date diference
+						today = new Date();
+						$scope.dateDictionary[empInfo.companyName].workExperience = 
+							(today.getMonth() - $scope.dateDictionary[empInfo.companyName].startDate.getMonth()) + 
+							(12*(today.getFullYear() -$scope.dateDictionary[empInfo.companyName].startDate.getFullYear()));
 					}
+					$scope.totalWorkExperience = $scope.totalWorkExperience + $scope.dateDictionary[empInfo.companyName].workExperience; 
 				});
+				if(Math.floor($scope.totalWorkExperience/12) == 1){
+					year = "year"
+				}else{
+					year = "years"
+				}
+				
+				
+				$scope.totalExperienceString = Math.floor($scope.totalWorkExperience/12) +" " +year+" (months: " + $scope.totalWorkExperience + ")"; 
 				
 			}
 			
@@ -129,20 +149,35 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// ADD NEW EMPLOYMENT HISTORY
 			$scope.newEmpInfo = {};
 			$scope.addNewEmploymentHistory = function(){
-				alert("adding new history");
 				$scope.newEmpInfo.companyName = "";
 				$scope.newEmpInfo.startDate = null;
 				$scope.newEmpInfo.endDate = null;
 				$scope.newEmpInfo.tagClouds = [];
 				$scope.addNewEmpInfo = "true";
 			}
-			//SAVE NEW EMPLOYMENT HISTORY
+			// SAVE NEW EMPLOYMENT HISTORY
 			$scope.saveNewEmploymentHistory = function(){
-				alert("saving new history");
+				employmentInfoesService.create($scope.newEmpInfo).success(function(data){
+					$scope.employmentInfos.push(data);
+					$scope.extractEmploymentDates();
+					$scope.extractEmploymentInfosTags();
+					console.log(data);
+					// ATTACH IT TO EMPLOYEEE
+					// IT WILL BE ATTACH IN FUNCTION saveEItoEMployee
+					/*
+					 * employmentInfoesService.saveEmployee(data,
+					 * $scope.currEmp).success(function(){ alert("saved!"); })
+					 */
+				});
+				$scope.addNewEmpInfo = "false";
 			}
-			
-			//adding new tag to employment info
-			
+			$scope.saveEIsToEmployee = function(){
+				angular.forEach($scope.employmentInfos, function(ei, key){
+					employmentInfoesService.saveEmployee(ei, $scope.currEmp);
+					
+				});
+			}
+			// ADDING NEW TAG TO EMPLOYMENT INFO
 			$scope.newTag = {};
 			$scope.addNewTagCloudEI= function(companyName, newName, type){
 				alert("asdfasd");
@@ -244,6 +279,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 				$scope.saveEmploymentInfos();
 				$scope.updateEmploymentInfoesTagClouds();
+				$scope.saveEIsToEmployee();
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;

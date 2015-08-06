@@ -29,6 +29,6 @@ app.service('employeeService', function($http){
 				method: "PUT",
 				headers: {"Content-Type": "text/uri-list"}
 			});
-		}
+		},
 	}
 });
