@@ -27,7 +27,7 @@ public class TagCloud {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
 	private Set<Employee> employees;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "tagClouds")
 	private Set<EmploymentInfo> employmentInfos;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")

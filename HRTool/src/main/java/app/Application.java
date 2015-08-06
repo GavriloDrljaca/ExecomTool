@@ -2,6 +2,7 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -45,6 +46,13 @@ public class Application implements CommandLineRunner {
 		addProjectInfos();
 		addTagsToEmployee();
 		addEmploymentInfos();
+		
+		//add position into employmentInfoes
+		
+		/*empInfoRep.findOne(1).getTagClouds().add(tagRep.findOne(24));
+		empInfoRep.findOne(2).getTagClouds().add(tagRep.findOne(24));
+		empInfoRep.findOne(2).getTagClouds().add(tagRep.findOne(25));
+		*/
 
 	}
 
@@ -475,7 +483,7 @@ public class Application implements CommandLineRunner {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		EmploymentInfo empInfo = new EmploymentInfo();
 		
-		empInfo.setCompanyName("DMS");
+		empInfo.setCompanyName("DmMS");
 		try {
 			empInfo.setStartDate(sdf.parse("2005-01-01"));
 		} catch (ParseException e) {
@@ -489,6 +497,7 @@ public class Application implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		
+		//empInfo.getTagClouds().add(tagRep.findOne(24));
 		empInfo.setEmployee(empRep.findOne(1));
 		
 		empInfoRep.save(empInfo);
@@ -503,10 +512,12 @@ public class Application implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		
-		
 		empInfo.setEmployee(empRep.findOne(1));
 		
 		empInfoRep.save(empInfo);
+		
+		Set<TagCloud> bla = empInfoRep.findOne(1).getTagClouds();
+		System.out.println();
 		
 	}
 }

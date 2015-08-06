@@ -1,4 +1,4 @@
-app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService ) {
+app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService ) {
 
 			if (angular.equals(selectedEmployee, {})){
 				$scope.newEmployee = true;
@@ -30,7 +30,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				
 				
 			}
-			
+			// START OF EMPLOYMENT INFO
+			// EMPLOYEMENT INFOES LOADER
 			$scope.loadEmploymentInfo = function(employee){
 				employeeService.getEmploymentInfos(employee).success(function(data){
 					if(data.hasOwnProperty('_embedded')){
@@ -42,9 +43,85 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					}else{
 						$scope.employmentInfos = [];
 					}
+					//EXTRACT tagClouds
+					$scope.EItagClouds = {};
+					$scope.extractEmploymentInfosTags();
+					// EXTRACT DATES
+					$scope.dateDictionary = {};
+					
+					$scope.extractEmploymentDates();
+				});
+			}
+			//EXTRACT EMPLOYMENT INFOES TAG CLOUDS
+			$scope.extractEmploymentInfosTags = function(){
+				$scope.EItagClouds = {};
+				angular.forEach($scope.employmentInfos, function(empInfo, key){
+					console.log(empInfo.companyName);
+					
+					employmentInfoesService.getEmploymentInfoesTagClouds(empInfo).success(function(data){
+						$scope.EItagClouds[empInfo.companyName] = {};
+						$scope.EItagClouds[empInfo.companyName].tagClouds = [];
+						console.log(data);
+					})
 					
 				});
 			}
+			// UPDATE EMPLOYMENT INFOES TAG CLOUDS (POSITION)
+			$scope.updateEmploymentInfoesTagClouds = function(){
+				$scope.empInfoesURLs ="";
+				
+				angular.forEach($scope.employmentInfos, function(empInfo, key){
+					angular.forEach($scope.EItagClouds[empInfo.companyName].tagClouds, function(tagCloud, key){
+						$scope.empInfoesURLs = $scope.empInfoesURLs + tagCloud._links.self.href + "\n";
+						
+					})
+					employmentInfoesService.updateEmploymentInfoesTags(empInfo,$scope.empInofesUrl).success(function(data){
+						console.log(data);
+					})
+					$scope.empInfoesURLs = "";
+				});
+			}
+			// EXTRACTING EMPLOYEMENT DATES
+			$scope.extractEmploymentDates = function(){
+				$scope.dateDictionary = {};
+				// $scope.startDate = new Date($scope.currEmp.startDate);
+				
+				angular.forEach($scope.employmentInfos, function(empInfo, key){
+					$scope.dateDictionary[empInfo.companyName] = {};
+					$scope.dateDictionary[empInfo.companyName].startDate = 
+						new Date(empInfo.startDate)
+					if(empInfo.endDate != null){
+						$scope.dateDictionary[empInfo.companyName].endDate = 
+							new Date(empInfo.endDate);
+					}else{
+						$scope.dateDictionary[empInfo.companyName].endDate = null;
+					}
+				});
+				
+			}
+			
+			$scope.saveEmploymentDates = function(){
+				angular.forEach($scope.employmentInfos, function(empInfo, key){
+						empInfo.startDate = $scope.dateDictionary[empInfo.companyName].startDate;
+						empInfo.endDate = $scope.dateDictionary[empInfo.companyName].endDate; 
+				
+				});
+			}
+			$scope.saveEmploymentInfos = function(){
+				$scope.saveEmploymentDates();
+				
+				angular.forEach($scope.employmentInfos, function(empInf){
+					employmentInfoesService.update(empInf);
+				});
+				
+				// SAVE NEW EMPLOYMENT INFOES -> like tag clouds
+				/*
+				 * employeeService.saveEmploymentInfos($curr.emp).success(function(){
+				 * 
+				 * });
+				 */
+			}
+			// END OF EMPLOYMENT INFO
 			
 			// Da spreci automatsko sortiranje ng-repeata
 			$scope.objectKeys = function(obj){
@@ -62,12 +139,9 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							$scope.projInfos = {};
 						}
 						for(i = 0; i<$scope.projInfos.length; i++) {
-							var info = $scope.projInfos[i];
-							$http.get(info._links.project.href).success((function(i){
-								return function(data){
-									$scope.projects[i] = data;
-								}
-							})(i))
+							$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
+								$scope.projects.push(data);
+							});
 						}
 					});
 			}
@@ -125,12 +199,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 				// saving (new) DateOfBirth
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
-				// saving (new) StartDate
-				$scope.currEmp.startDate = $scope.startDate;
-				// saving (new) endDate
-				$scope.currEmp.endDate = $scope.endDate;
+
 				// saving (new) startDateFromBooklet
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+
+				$scope.saveEmploymentInfos();
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;

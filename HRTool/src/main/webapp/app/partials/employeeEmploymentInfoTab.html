@@ -22,8 +22,27 @@
 			</md-input-container>
 			 </md-content>
 			</form>
-			<h5>Position</h5>
-			 <md-chips ng-model="tagDictionary['Position']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+		<h2>ALL FIRMS:</h2>
+		<md-divider></md-divider>
+		<div ng-repeat = "empInfo in employmentInfos">
+		<form>
+			<md-content layout-padding layout="column" layout-sm="column">
+				<md-input-container>
+					<label>Company name:</label>
+					<input type = text ng-model = "empInfo.companyName">	
+				</md-input-container>
+				<md-input-container md-no-float="true"> 
+					<label>Start date:</label>
+					<input type="date" ng-model = "dateDictionary[empInfo.companyName].startDate"> 
+				</md-input-container>
+				 <md-input-container>
+					<label>End date:</label>
+					<input type="date" ng-model = "dateDictionary[empInfo.companyName].endDate"> 
+				</md-input-container> 
+			</md-content>
+		</form>
+		<h5>Position</h5>
+			 <md-chips ng-model="EItagClouds[empInfo.companyName].tagClouds" md-autocomplete-snap="" md-require-match="" readonly = "false">
 				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
 				       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for a position">
@@ -42,26 +61,8 @@
 				        </span>
 				      </md-chip-template>
 			  </md-chips>
-		
-		<h2>ALL FIRMS:</h2>
-		<md-divider></md-divider>
-		<div ng-repeat = "empInfo in employmentInfos">
-		<form>
-			<md-content layout-padding layout="column" layout-sm="column">
-				<md-input-container>
-					<label>Company name:</label>
-					<input type = text ng-model = "empInfo.companyName">	
-				</md-input-container>
-				<md-input-container md-no-float="true"> 
-					<label>Start date:</label>
-					<input type="date" > 
-				</md-input-container>
-				 <md-input-container>
-					<label>End date:</label>
-					<input type="date"> 
-				</md-input-container> 
-			</md-content>
-		</form>
 		<md-divider ng-if="!$last"></md-divider>
 
+		</div>
+		<md-button ng-click = "updateEmploymentInfoesTagClouds()">Save Dates</md-button>
 		</div>

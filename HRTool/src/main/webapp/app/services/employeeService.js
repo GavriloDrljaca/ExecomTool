@@ -21,6 +21,14 @@ app.service('employeeService', function($http){
 		},
 		getEmploymentInfos : function(employee){
 			return $http.get(employee._links.empInfos.href);
+		},
+		saveEmploymentInfos: function(employeeURL, employmentInfos){
+			return $http({
+				url: employeeUrl,
+				data: employmentInfos,
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
 		}
 	}
 });
