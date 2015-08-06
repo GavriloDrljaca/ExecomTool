@@ -140,6 +140,25 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.saveNewEmploymentHistory = function(){
 				alert("saving new history");
 			}
+			
+			//adding new tag to employment info
+			
+			$scope.newTag = {};
+			$scope.addNewTagCloud= function(companyName, newName, type){
+				$scope.newTag.nameTagCloud = newName;
+				$scope.newTag.tipTagCloud = type;
+				/*
+				 * if($scope.checkDuplicate(newName, type)){ return; }
+				 */
+				tagCloudService.create($scope.newTag).success(function(data){
+					$scope.tagClouds.push(data);
+					// $scope.tagC.push(data);
+					$scope.loadedAll = false;
+					loadTags();
+					// PUSH TO APPROPRIATE ARRAY
+					$scope.EItagClouds[companyName].tagClouds.push(data);
+				});
+			}
 			// END OF EMPLOYMENT INFO
 			
 			// Da spreci automatsko sortiranje ng-repeata
