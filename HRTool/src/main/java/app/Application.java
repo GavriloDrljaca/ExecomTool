@@ -446,6 +446,7 @@ public class Application implements CommandLineRunner {
 		pi.setProject(projRep.findOne(2));
 		pi.setJobResponsibilities("frontend");
 		pi.setProjectExp("Learned a lot about frontend");
+		pi.setActive(true);
 		/*
 		 * Employee emp = empRep.findOne(1); emp.getProjectInfos().add(pi);
 		 * empRep.save(emp); Project p = projRep.findOne(2);
@@ -459,6 +460,7 @@ public class Application implements CommandLineRunner {
 		pi.setProject(projRep.findOne(2));
 		pi.setJobResponsibilities("backend");
 		pi.setProjectExp("Learned a lot about backend");
+		pi.setActive(true);
 
 		projInfoRep.save(pi);
 		pi = new ProjectInfo();
@@ -467,6 +469,7 @@ public class Application implements CommandLineRunner {
 		pi.setProject(projRep.findOne(1));
 		pi.setJobResponsibilities("backend");
 		pi.setProjectExp("Learned a lot about backend");
+		pi.setActive(true);
 
 		projInfoRep.save(pi);
 

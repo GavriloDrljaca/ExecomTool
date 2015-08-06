@@ -11,7 +11,10 @@ app.service('projectService', function($http) {
 			return $http.delete(project._links.self.href);
 		},
 		update: function(project){
-			return $http.put(project._links.self.href, project)
+			return $http.put(project._links.self.href, project);
+		},
+		tagCloudsForProject: function(project) {
+			return $http.get(project._links.tagClouds.href);
 		}
 	}
 });

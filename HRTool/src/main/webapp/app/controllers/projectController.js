@@ -1,4 +1,6 @@
-app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 'selectedProject', 'projectService', 'projectInfoService', 'employeeService', function($http, $scope, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService){
+app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 'selectedProject', 'projectService', 
+                                     'projectInfoService', 'employeeService', 'tagCloudService',
+                                     function($http, $scope, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService, tagCloudService){
 		
 	$scope.selectedProject = selectedProject;
 	
@@ -6,6 +8,8 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		if (!angular.equals(selectedProject, {}	)){
 			$scope.newProject = false;
 			getEmployees();
+			getTagCloudsForProject();
+			getTagCloudsByType("Industry")
 		}else{
 			$scope.projInfos = {};
 			$scope.updateable = true;
@@ -131,7 +135,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.updateable = false;
 			$scope.init();
 		});
-	}
+	};
 	
 	$scope.deleteProject = function(){
 		if ($window.confirm("Do you really want to delete the project " + selectedProject.nameProject)) {
@@ -139,7 +143,31 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 				$mdDialog.cancel();
 			});
 		};
-	}
+	};
+	
+	var getTagCloudsForProject = function() {
+		projectService.tagCloudsForProject(selectedProject).success(function (data) {
+			var tagClouds = data._embedded.tagClouds;
+			$scope.industries = [];
+			$scope.platforms = [];
+			$scope.oss = [];
+			for (i=0; i<tagClouds.length; i++) {
+				if (tagClouds[i].tipTagCloud === "Industry") {
+					$scope.industries.push(tagClouds[i]);
+				} else if (tagClouds[i].tipTagCloud === "Platform" ) {
+					$scope.platforms.push(tagClouds[i]);
+				} else if (tagClouds[i].tipTagCloud === "OS") {
+					$scope.oss.push(tagClouds[i]);
+				};
+			};
+		});
+	};
+	
+	var getTagCloudsByType = function(type) {
+		tagCloudService.findByTip(type).success(function (data) {
+			console.log(data);
+		});
+	};
 	
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);

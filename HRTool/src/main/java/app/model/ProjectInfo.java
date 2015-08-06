@@ -36,6 +36,7 @@ public class ProjectInfo {
 	
 	private String jobResponsibilities;
 	private String projectExp;
+	private boolean active;
 	
 	public Project getProject() {
 		return project;
@@ -66,6 +67,12 @@ public class ProjectInfo {
 	}
 	public void setProjectExp(String projectExp) {
 		this.projectExp = projectExp;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	

@@ -14,13 +14,31 @@
 	            <label>Project name: </label><input type="text" ng-model="selectedProject.nameProject" ng-disabled="!updateable"/>
 		    </md-input-container>
 	        <md-input-container md-no-float = "true">
-	           <label>Duration of project (in weeks): </label><input type="number" ng-model="selectedProject.durationOfProject" ng-disabled="!updateable"/><br/>   
+	            <label>Duration of project (in weeks): </label><input type="number" ng-model="selectedProject.durationOfProject" ng-disabled="!updateable"/><br/>   
 	        </md-input-container>
-	        <md-input-container md-no-float="true" flex="100">
-	            <div ng-repeat="technolgy in selectedProject.tagClouds">
-	                <label>{{ technology.nameTagCloud }}</label>
-	            </div>
-	        </md-input-container>
+	        <div flex="100">
+	            <label>Industries on the project: </label>
+	            <md-chips ng-model="industries" readOnly="true">
+					<md-chip-template>
+						<strong>{{$chip.nameTagCloud}}</strong>
+						<em>(Industry)</em>
+					</md-chip-template>
+			    </md-chips>
+                <label>Platforms on the project: </label>             
+                <md-chips ng-model="platforms" readOnly="true">
+                    <md-chip-template>
+                        <strong>{{$chip.nameTagCloud}}</strong>
+                        <em>(Platform)</em>
+                    </md-chip-template>
+                </md-chips>
+                <label>OS' on the project: </label>            
+                <md-chips ng-model="oss" readOnly="true">
+                    <md-chip-template>
+                        <strong>{{$chip.nameTagCloud}}</strong>
+                        <em>(OS)</em>
+                    </md-chip-template>
+                </md-chips>
+	        </div>
 	        <label ng-show="!newProject" style="font-size: 20px" flex="100">Employees on the project:</label><br/><br/>
 	        <div ng-repeat="emp in employees" flex="100">
 	            <div>
