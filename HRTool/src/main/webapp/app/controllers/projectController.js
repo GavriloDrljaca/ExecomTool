@@ -29,12 +29,16 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 			} else {
 				$scope.projInfos = {};
 			}
+			var counter = 0;
 			for(i = 0; i<$scope.projInfos.length; i++) {
 				var info = $scope.projInfos[i];
 				projectInfoService.getOne(info).success((function(info, i) {
 						return function(data){
-						$scope.employees[i] = data;
-						$scope.employees[i].projectInfo = info;
+							if (info.active == true){	
+								$scope.employees.push(data);
+								$scope.employees[counter].projectInfo = info;
+								counter++;
+							}
 						}
 				})(info, i));
 			}
@@ -57,8 +61,6 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 			}
 		});		
 	};
-	
-	
 	
 	$scope.setSelectedEmployee = function(employeeIndex){
 		$scope.selectedEmployeeIndex = employeeIndex;
@@ -85,6 +87,7 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
 		if(!angular.equals(selectedProject, {})){
+			$scope.newProjectInfo.active = true;
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
 				var temp = data;
 				projectInfoService.saveProject(temp, $scope.selectedProject._links.self.href).success(function(data){
@@ -95,6 +98,15 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 				})
 			})	
 		}
+	}
+	
+	$scope.removeEmployeeFromProject = function(employee){
+		console.log(employee);
+		console.log(employee.projectInfo);
+		employee.projectInfo.active = false;
+		projectInfoService.update(employee.projectInfo).success(function(){
+			getEmployees();			
+		})
 	}
 	
 	$scope.createProject = function(){
