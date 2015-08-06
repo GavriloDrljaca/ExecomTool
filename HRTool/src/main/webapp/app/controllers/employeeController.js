@@ -144,7 +144,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			//adding new tag to employment info
 			
 			$scope.newTag = {};
-			$scope.addNewTagCloud= function(companyName, newName, type){
+			$scope.addNewTagCloudEI= function(companyName, newName, type){
+				alert("asdfasd");
 				$scope.newTag.nameTagCloud = newName;
 				$scope.newTag.tipTagCloud = type;
 				/*

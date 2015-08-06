@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Project {
 	private boolean execom;
 	private String companyName;
 	
-	@ManyToMany(cascade=CascadeType.ALL)  
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)  
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
 	private Set<TagCloud> tagClouds;
 	
