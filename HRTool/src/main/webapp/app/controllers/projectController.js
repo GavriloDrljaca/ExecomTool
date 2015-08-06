@@ -20,19 +20,19 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		  return Object.keys(obj);
 	}
 	
+	//Dobavlja sve zaposlene aktivne na projektu
 	function getEmployees() {
 		$scope.employees = [];
 		projectInfoService.getForProject(selectedProject).success(function (data) {
 			if(data._embedded != undefined) {
 				$scope.projInfos = data._embedded.projectInfoes;
-				//console.log( data);
 			} else {
 				$scope.projInfos = {};
 			}
 			var counter = 0;
 			for(i = 0; i<$scope.projInfos.length; i++) {
 				var info = $scope.projInfos[i];
-				projectInfoService.getOne(info).success((function(info, i) {
+				projectInfoService.getOne(info).success((function(info) {
 						return function(data){
 							if (info.active == true){	
 								$scope.employees.push(data);
@@ -40,12 +40,13 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 								counter++;
 							}
 						}
-				})(info, i));
+				})(info));
 			}
 			getOtherEmployees($scope.employees);
 		});
 	};
 
+	//Odredjuje koji zaposleni nisu na projektu i stavlja ih u listu izbora za dodavanje
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {
 			$scope.otherEmployees = data._embedded.employees;
@@ -66,6 +67,7 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 		$scope.selectedEmployeeIndex = employeeIndex;
 	}
 	
+	//Cuva izmene nad projektom na serveru
 	$scope.updateProject = function() {
 		if ($scope.selectedProject.nameProject == ""){
 			$scope.selectedProject.nameProject = "No name given";
