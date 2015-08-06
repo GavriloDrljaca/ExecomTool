@@ -157,7 +157,7 @@ public class CVGenerator {
 			for(int i=0;i<projects.get(p).size();i++) {
 				if(i+1== projects.get(p).size()) {
 					projectInfo.add(projects.get(p).get(i).getNameTagCloud());
-				}
+				} 
 				else {
 					projectInfo.add(projects.get(p).get(i).getNameTagCloud() + ", ");
 				}

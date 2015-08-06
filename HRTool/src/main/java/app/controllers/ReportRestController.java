@@ -215,7 +215,7 @@ public static Employee getEmployee() {
 		List<TagCloud> technologies = new ArrayList<>();
 		Map<Project, List<TagCloud>> projects = new HashMap<>();
 		for(ProjectInfo pi : pinfos) {
-			List<TagCloud> tempTech = new ArrayList<>();
+			List<TagCloud> tempTech = new ArrayList<>(); 
 			for(TagCloud tc : pi.getProject().getTagClouds()) {
 				if(tc.getTipTagCloud().equals(TagCloudEnum.Technologie)) {
 					tempTech.add(tc);
