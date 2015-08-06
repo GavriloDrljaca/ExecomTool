@@ -30,6 +30,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			//INITIALIZATION OF SEARCH TAG DICTIONARY
 			$scope.initSearchTagDictionary = function(){
+				$scope.report = {};
 				$scope.report.searchTagDictionary = {};
 				// Technologie
 				$scope.report.searchTagDictionary['Technologie'] = [];
