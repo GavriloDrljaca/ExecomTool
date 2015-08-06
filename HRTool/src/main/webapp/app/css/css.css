@@ -6,3 +6,7 @@ th {
     background-color: #4169E1;
     color: white;
 }
+
+md-radio-button {
+  display: inline;
+}
