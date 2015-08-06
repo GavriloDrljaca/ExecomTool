@@ -9,7 +9,6 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		projectService.list().success(function(data) {
 			$scope.projects = data._embedded.projects;
 		})
-		$scope.initEmptyTagClouds();
 		$scope.newEmployee = {};
 		$scope.newProject = {};
 	}
@@ -106,34 +105,6 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		$scope.report.searchTagDictionary['ForeignLanguage'] = [];
 	}
 	
-	// TAGCLOUD: init if tagClouds are empty
-	$scope.initEmptyTagClouds = function(){
-
-		$scope.employeeTagClouds =[];
-		// TAGS BY TYPE
-		// <md chips ng-model = ""
-		$scope.tagDictionary = {};
-		// Technologie
-		$scope.tagDictionary['Technologie'] = [];
-		// POSITION
-		$scope.tagDictionary['Position'] = [];
-		// JobRole
-		$scope.tagDictionary['JobRoles'] = [];
-		// Database
-		$scope.tagDictionary['Database'] = [];
-		// IDE
-		$scope.tagDictionary['IDE'] = [];
-		// Industry
-		$scope.tagDictionary['Industry'] = [];				
-		// Platform
-		$scope.tagDictionary['Platform'] = [];
-		// OS,
-		$scope.tagDictionary['OS'] = [];
-		// Education
-		$scope.tagDictionary['Education'] = [];
-		// ForeignLanguage
-		$scope.tagDictionary['ForeignLanguage'] = [];
-	}
 	
 	// TAGCLOUD: EVERYTHING FOR CHIPS AND AUTOCOMPLETE
 	$scope.tagClouds = [];
@@ -169,7 +140,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		 */
 	    $scope.loadedAll = false;
 	    function querySearch (query, tipQuery) {
-	    	$scope.selectedValue = $scope.tagDictionary[tipQuery];
+	    	$scope.selectedValue = $scope.report.searchTagDictionary[tipQuery];
 	    	if(!$scope.loadedAll){
 	    		loadTags();
 	    		$scope.loadedAll=true;

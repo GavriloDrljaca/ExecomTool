@@ -34,6 +34,7 @@ public class ProjectInfo {
 	@JoinTable(name="TagCloudsPrInfo", joinColumns=@JoinColumn(name="idProjectInfo"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))
 	private Set<TagCloud> tagClouds;
 	
+	private SeniorityEnum seniority;
 	private String jobResponsibilities;
 	private String projectExp;
 	
@@ -66,6 +67,12 @@ public class ProjectInfo {
 	}
 	public void setProjectExp(String projectExp) {
 		this.projectExp = projectExp;
+	}
+	public SeniorityEnum getSeniority() {
+		return seniority;
+	}
+	public void setSeniority(SeniorityEnum seniority) {
+		this.seniority = seniority;
 	}
 	
 	

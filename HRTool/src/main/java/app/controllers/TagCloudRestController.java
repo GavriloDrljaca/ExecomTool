@@ -1,6 +1,8 @@
 package app.controllers;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,9 @@ public class TagCloudRestController {
 	@Autowired
 	EmploymentInfoRepository employmentInfoRepository;
 	
-	
+	@RequestMapping("/allTagClouds")
+	public List<TagCloud> getClouds(){
+		return tagCloudRepository.findAll();
+	}
 	
 }
