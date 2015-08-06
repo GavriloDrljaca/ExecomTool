@@ -16,6 +16,7 @@ app.service('employmentInfoesService', function($http){
 			return $http.get(empInfo._links.tagClouds.href);
 		},
 		updateEmploymentInfoesTags : function(empInfo, tagURLs){
+
 			return $http({
 				url: empInfo._links.tagClouds.href,
 				data: tagURLs,

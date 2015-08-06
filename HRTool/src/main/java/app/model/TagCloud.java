@@ -27,11 +27,11 @@ public class TagCloud {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
 	private Set<Employee> employees;
 	
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
 	private Set<EmploymentInfo> employmentInfos;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	private Set<Project> projectInfos;
+	private Set<ProjectInfo> projectInfos;
 
 	public Set<Employee> getEmployees() {
 		return employees;
@@ -81,11 +81,11 @@ public class TagCloud {
 		this.employmentInfos = employmentInfos;
 	}
 
-	public Set<Project> getProjectInfos() {
+	public Set<ProjectInfo> getProjectInfos() {
 		return projectInfos;
 	}
 
-	public void setProjectInfos(Set<Project> projectInfos) {
+	public void setProjectInfos(Set<ProjectInfo> projectInfos) {
 		this.projectInfos = projectInfos;
 	}
 }

@@ -2,6 +2,8 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,8 @@ public class Application implements CommandLineRunner {
 		addProjectInfos();
 		addTagsToEmployee();
 		addEmploymentInfos();
-		
+		addTagsToEmpInfo();
+		addTagsToProject();
 		//add position into employmentInfoes
 		
 		/*empInfoRep.findOne(1).getTagClouds().add(tagRep.findOne(24));
@@ -497,7 +500,7 @@ public class Application implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		
-		//empInfo.getTagClouds().add(tagRep.findOne(24));
+		
 		empInfo.setEmployee(empRep.findOne(1));
 		
 		empInfoRep.save(empInfo);
@@ -518,6 +521,27 @@ public class Application implements CommandLineRunner {
 		
 		Set<TagCloud> bla = empInfoRep.findOne(1).getTagClouds();
 		System.out.println();
+		
+	}
+	public void addTagsToEmpInfo(){
+		System.out.println("EMP: "+ empInfoRep.findOne(1).getCompanyName() + "   TAG: "+tagRep.findOne(24).getNameTagCloud());
+		System.out.println(empInfoRep.findOne(1).getTagClouds());
+		
+		EmploymentInfo ei =empInfoRep.findOne(1); 
+		ei.getTagClouds().add(tagRep.findOne(24));
+		ei.getTagClouds().add(tagRep.findOne(25));
+		empInfoRep.save(ei);
+		
+		ei =empInfoRep.findOne(2);
+		ei.getTagClouds().add(tagRep.findOne(24));
+		empInfoRep.save(ei);
+		System.out.println(empInfoRep.findOne(1).getTagClouds());
+	}
+	public void addTagsToProject(){
+		Project p = projRep.findOne(1);
+		p.getTagClouds().add(tagRep.findOne(6));
+		p.getTagClouds().add(tagRep.findOne(8));
+		p.getTagClouds().add(tagRep.findOne(17));
 		
 	}
 }

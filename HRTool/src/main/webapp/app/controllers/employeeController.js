@@ -60,8 +60,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					
 					employmentInfoesService.getEmploymentInfoesTagClouds(empInfo).success(function(data){
 						$scope.EItagClouds[empInfo.companyName] = {};
-						$scope.EItagClouds[empInfo.companyName].tagClouds = [];
-						console.log(data);
+						if(data.hasOwnProperty('_embedded')){
+							$scope.EItagClouds[empInfo.companyName].tagClouds = data._embedded.tagClouds;
+							//console.log(data);
+						}else{
+							$scope.EItagClouds[empInfo.companyName].tagClouds = [];
+						}
 					})
 					
 				});
@@ -75,7 +79,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						$scope.empInfoesURLs = $scope.empInfoesURLs + tagCloud._links.self.href + "\n";
 						
 					})
-					employmentInfoesService.updateEmploymentInfoesTags(empInfo,$scope.empInofesUrl).success(function(data){
+					
+					employmentInfoesService.updateEmploymentInfoesTags(empInfo,$scope.empInfoesURLs).success(function(data){
 						console.log(data);
 					})
 					$scope.empInfoesURLs = "";
@@ -120,6 +125,20 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				 * 
 				 * });
 				 */
+			}
+			// ADD NEW EMPLOYMENT HISTORY
+			$scope.newEmpInfo = {};
+			$scope.addNewEmploymentHistory = function(){
+				alert("adding new history");
+				$scope.newEmpInfo.companyName = "";
+				$scope.newEmpInfo.startDate = null;
+				$scope.newEmpInfo.endDate = null;
+				$scope.newEmpInfo.tagClouds = [];
+				$scope.addNewEmpInfo = "true";
+			}
+			//SAVE NEW EMPLOYMENT HISTORY
+			$scope.saveNewEmploymentHistory = function(){
+				alert("saving new history");
 			}
 			// END OF EMPLOYMENT INFO
 			
@@ -204,6 +223,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 
 				$scope.saveEmploymentInfos();
+				$scope.updateEmploymentInfoesTagClouds();
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;

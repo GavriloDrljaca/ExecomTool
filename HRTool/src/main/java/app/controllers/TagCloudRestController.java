@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.model.TagCloud;
 import app.repository.EmployeeRepository;
+import app.repository.EmploymentInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
 
@@ -24,6 +25,10 @@ public class TagCloudRestController {
 	
 	@Autowired
 	ProjectRepository projectRepository;
+	
+	@Autowired
+	EmploymentInfoRepository employmentInfoRepository;
+	
 	
 	
 }

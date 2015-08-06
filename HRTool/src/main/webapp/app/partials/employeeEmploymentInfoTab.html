@@ -23,9 +23,31 @@
 			 </md-content>
 			</form>
 		<h2>ALL FIRMS:</h2>
+		
+		<md-button class = "md-primary" ng-click = "addNewEmploymentHistory()">Add new employment history</md-button>
+		<div id = "newAdd" ng-show = "addNewEmpInfo == 'true'">
+			<form>
+			<md-content layout-padding layout="column" layout-sm="column">
+				<md-input-container>
+						<label>Company name:</label>
+						<input type = text ng-model = "newEmpInfo.companyName">	
+					</md-input-container>
+					<md-input-container md-no-float="true"> 
+						<label>Start date:</label>
+						<input type="date" ng-model = "newEmpInfo.startDate"> 
+					</md-input-container>
+					 <md-input-container>
+						<label>End date:</label>
+						<input type="date" ng-model = "newEmpInfo.endDate"> 
+					</md-input-container> 
+				</md-content>
+			</form>
+			<md-button class = "md-primary" ng-click = "saveNewEmploymentHistory()">Save new employment history</md-button>
+	    </div>
+	    
 		<md-divider></md-divider>
 		<div ng-repeat = "empInfo in employmentInfos">
-		<form>
+		<form id = "ngEMPform">
 			<md-content layout-padding layout="column" layout-sm="column">
 				<md-input-container>
 					<label>Company name:</label>
@@ -63,6 +85,4 @@
 			  </md-chips>
 		<md-divider ng-if="!$last"></md-divider>
 
-		</div>
-		<md-button ng-click = "updateEmploymentInfoesTagClouds()">Save Dates</md-button>
-		</div>
+		
