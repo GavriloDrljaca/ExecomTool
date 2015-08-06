@@ -18,21 +18,48 @@
 	        </md-input-container>
 	        <div flex="100">
 	            <label>Industries on the project: </label>
-	            <md-chips ng-model="industries" readOnly="true">
+	            <md-chips ng-model="industries">
+	               <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in allIndustries' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for Industry">                       
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                        <md-not-found >
+                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+                            Click here to add new foreign language ({{searchText}})</span>
+                        </md-not-found>
+                    </md-autocomplete>
 					<md-chip-template>
 						<strong>{{$chip.nameTagCloud}}</strong>
 						<em>(Industry)</em>
 					</md-chip-template>
 			    </md-chips>
                 <label>Platforms on the project: </label>             
-                <md-chips ng-model="platforms" readOnly="true">
+                <md-chips ng-model="platforms">
+                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in allPlatforms' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for Platform">                       
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                        <md-not-found >
+                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+                            Click here to add new foreign language ({{searchText}})</span>
+                        </md-not-found>
+                    </md-autocomplete>
                     <md-chip-template>
                         <strong>{{$chip.nameTagCloud}}</strong>
                         <em>(Platform)</em>
                     </md-chip-template>
                 </md-chips>
                 <label>OS' on the project: </label>            
-                <md-chips ng-model="oss" readOnly="true">
+                <md-chips ng-model="oss">
+                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in allOss' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for OS">                       
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                        <md-not-found >
+                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+                            Click here to add new foreign language ({{searchText}})</span>
+                        </md-not-found>
+                    </md-autocomplete>
                     <md-chip-template>
                         <strong>{{$chip.nameTagCloud}}</strong>
                         <em>(OS)</em>

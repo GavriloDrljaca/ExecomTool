@@ -9,7 +9,9 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.newProject = false;
 			getEmployees();
 			getTagCloudsForProject();
-			getTagCloudsByType("Industry")
+			getTagCloudsByType("Industry");
+			getTagCloudsByType("Platform");
+			getTagCloudsByType("OS");
 		}else{
 			$scope.projInfos = {};
 			$scope.updateable = true;
@@ -165,7 +167,16 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	
 	var getTagCloudsByType = function(type) {
 		tagCloudService.findByTip(type).success(function (data) {
-			console.log(data);
+			switch(type) {
+			case "Industry":
+				$scope.allIndustries = data._embedded.tagClouds;
+				break;
+			case "Platform":
+				$scope.allPlatforms = data._embedded.tagClouds;
+				break;
+			case "OS":
+				$scope.allOss = data._embedded.tagClouds;
+			};
 		});
 	};
 	

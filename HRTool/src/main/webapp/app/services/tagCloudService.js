@@ -23,14 +23,8 @@ app.service('tagCloudService', function($http){
 			});
 
 		},
-		findByTip: function(tiptagcloud) {
-			console.log(tiptagcloud);
-			return $http({
-				url: 'http://localhost:8080/tagClouds/search/findByTipTagCloud',
-				data: tiptagcloud,
-				method: "GET",
-				headers: {"Content-Type":"text/plain"}
-			});
+		findByTip: function(type) {
+			return $http.get('http://localhost:8080/tagClouds/search/findByTipTagCloud?tipTagCloud=' + type);
 		}
 	}
 	
