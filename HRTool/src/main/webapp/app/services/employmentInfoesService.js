@@ -23,6 +23,14 @@ app.service('employmentInfoesService', function($http){
 				method: "PUT",
 				headers: {"Content-Type": "text/uri-list"}
 			});
+		},
+		saveEmployee: function(employmentInfo, employee){
+			return $http({
+				url:employmentInfo._links.employee.href,
+				data: employee._links.self.href,
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
 		}
 		
 	}

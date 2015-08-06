@@ -8,6 +8,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 
 			$scope.init = function(){
+				$scope.initSearchTagDictionary();
 				if (angular.equals(selectedEmployee, {})){
 					$scope.newEmployee = true;
 					$scope.firstTimeClicked = true;
@@ -26,9 +27,30 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 				$scope.infoToShow = {};
 				$scope.getProjects();
-				// $scope.loadEmploymentInfo();
-				
-				
+			}
+			//INITIALIZATION OF SEARCH TAG DICTIONARY
+			$scope.initSearchTagDictionary = function(){
+				$scope.report.searchTagDictionary = {};
+				// Technologie
+				$scope.report.searchTagDictionary['Technologie'] = [];
+				// POSITION
+				$scope.report.searchTagDictionary['Position'] = [];
+				// JobRole
+				$scope.report.searchTagDictionary['JobRoles'] = [];
+				// Database
+				$scope.report.searchTagDictionary['Database'] = [];
+				// IDE
+				$scope.report.searchTagDictionary['IDE'] = [];
+				// Industry
+				$scope.report.searchTagDictionary['Industry'] = [];				
+				// Platform
+				$scope.report.searchTagDictionary['Platform'] = [];
+				// OS,
+				$scope.report.searchTagDictionary['OS'] = [];
+				// Education
+				$scope.report.searchTagDictionary['Education'] = [];
+				// ForeignLanguage
+				$scope.report.searchTagDictionary['ForeignLanguage'] = [];
 			}
 			// START OF EMPLOYMENT INFO
 			// EMPLOYEMENT INFOES LOADER
@@ -129,7 +151,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// ADD NEW EMPLOYMENT HISTORY
 			$scope.newEmpInfo = {};
 			$scope.addNewEmploymentHistory = function(){
-				alert("adding new history");
 				$scope.newEmpInfo.companyName = "";
 				$scope.newEmpInfo.startDate = null;
 				$scope.newEmpInfo.endDate = null;
@@ -138,11 +159,26 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			//SAVE NEW EMPLOYMENT HISTORY
 			$scope.saveNewEmploymentHistory = function(){
-				alert("saving new history");
+				employmentInfoesService.create($scope.newEmpInfo).success(function(data){
+					$scope.employmentInfos.push(data);
+					$scope.extractEmploymentDates();
+					$scope.extractEmploymentInfosTags();
+					console.log(data);
+					//ATTACH IT TO EMPLOYEEE
+					//IT WILL BE ATTACH IN FUNCTION saveEItoEMployee
+					/*employmentInfoesService.saveEmployee(data, $scope.currEmp).success(function(){
+						alert("saved!");
+					})*/
+				});
+				$scope.addNewEmpInfo = "false";
 			}
-			
-			//adding new tag to employment info
-			
+			$scope.saveEIsToEmployee = function(){
+				angular.forEach($scope.employmentInfos, function(ei, key){
+					employmentInfoesService.saveEmployee(ei, $scope.currEmp);
+					
+				});
+			}
+			//ADDING NEW TAG TO EMPLOYMENT INFO
 			$scope.newTag = {};
 			$scope.addNewTagCloudEI= function(companyName, newName, type){
 				alert("asdfasd");
@@ -244,6 +280,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 				$scope.saveEmploymentInfos();
 				$scope.updateEmploymentInfoesTagClouds();
+				$scope.saveEIsToEmployee();
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;

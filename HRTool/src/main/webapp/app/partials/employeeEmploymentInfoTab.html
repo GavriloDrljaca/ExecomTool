@@ -42,27 +42,10 @@
 					</md-input-container> 
 				</md-content>
 			</form>
-			<h5>Position</h5>
-			 <md-chips ng-model="newEmpInfo.tagClouds" md-autocomplete-snap="" md-require-match="" readonly = "false">
-				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
-				       placeholder="Search for a position">
-				       
-				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-				         <md-not-found >
-				        	<span ng-click = "addNewTagCloud(newEmpInfo.companyName, searchText, 'Technologie')">
-				        	Click here to add new position ({{searchText}})</span>
-				        </md-not-found>
-				      </md-autocomplete>
-				
-				      <md-chip-template>
-				        <span>
-				          <strong>{{$chip.nameTagCloud}}</strong>
-				          <em>({{$chip.tipTagCloud}})</em>
-				        </span>
-				      </md-chip-template>
-			  </md-chips>
+	
+			 
 			<md-button class = "md-primary" ng-click = "saveNewEmploymentHistory()">Save new employment history</md-button>
+			<md-button class = "md-primary" ng-click = "addNewEmpInfo = 'false'">Cancel</md-button>
 	    </div>
 	    
 		<md-divider></md-divider>
@@ -86,12 +69,12 @@
 		<h5>Position</h5>
 			 <md-chips ng-model="EItagClouds[empInfo.companyName].tagClouds" md-autocomplete-snap="" md-require-match="" readonly = "false">
 				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(empInfo.companyName, searchText, "Position")' md-item-text="item.nameTagCloud" 
+				       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for a position">
 				       
 				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 				         <md-not-found >
-				        	<span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'Technologie')">
+				        	<span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'Position')">
 				        	Click here to add new position ({{searchText}})</span>
 				        </md-not-found>
 				      </md-autocomplete>
