@@ -542,6 +542,6 @@ public class Application implements CommandLineRunner {
 		p.getTagClouds().add(tagRep.findOne(6));
 		p.getTagClouds().add(tagRep.findOne(8));
 		p.getTagClouds().add(tagRep.findOne(17));
-		
+		projRep.save(p);
 	}
 }
