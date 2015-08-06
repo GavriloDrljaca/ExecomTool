@@ -1,4 +1,4 @@
-app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedProject', 'projectService', 'projectInfoService', 'employeeService', function($http, $scope, $mdDialog, selectedProject, projectService, projectInfoService, employeeService){
+app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 'selectedProject', 'projectService', 'projectInfoService', 'employeeService', function($http, $scope, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService){
 		
 	$scope.selectedProject = selectedProject;
 	
@@ -134,9 +134,11 @@ app.controller('projectController', ['$http', '$scope', '$mdDialog', 'selectedPr
 	}
 	
 	$scope.deleteProject = function(){
-		projectService.delete(selectedProject).success(function(){
-			$mdDialog.cancel();
-		})
+		if ($window.confirm("Do you really want to delete the project " + selectedProject.nameProject)) {
+			projectService.delete(selectedProject).success(function(){
+				$mdDialog.cancel();
+			});
+		};
 	}
 	
 	$scope.answer = function(answer) {
