@@ -20,6 +20,65 @@
 		        <md-radio-button style="display: inline" value="Equals"> Equals </md-radio-button>
 		        <md-radio-button style="display: inline" value="After"> After </md-radio-button>
 		     </md-radio-group>
+		     <br/>
+		     <h5>Education</h5>
+             <md-chips ng-model="report.searchTagDictionary['Education']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Education")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a education">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <br/>
+              <h5>Technologies</h5>
+              <md-chips ng-model="report.searchTagDictionary['Technologie']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a technologie">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <br/>
+              <h5>Position</h5>
+              <md-chips ng-model="report.searchTagDictionary['Position']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a position">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <h5>Database knowelage</h5>
+              <md-chips ng-model="report.searchTagDictionary['Database']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a database">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
         </md-content>
     </form>
 </div>
