@@ -225,8 +225,8 @@ public class SearchReportRestController {
 			count = 0;
 			for (String pos : sr.getPosition()){
 				stop = false;
-				for(ProjectInfo pi : projectInfoes){
-					for (TagCloud tg : pi.getTagClouds()){
+				for(EmploymentInfo ei : employmentInfoes){
+					for (TagCloud tg : ei.getTagClouds()){
 						if (tg.getTipTagCloud().equals(TagCloudEnum.Position) && pos.equals(tg.getNameTagCloud())){
 							count++;
 							stop=true;
@@ -239,6 +239,29 @@ public class SearchReportRestController {
 				}		
 			}
 			if (count == sr.getPosition().size()){
+				addEmployee = true;
+			}else{
+				addEmployee = false;
+			}
+			if (!addEmployee) continue;
+			
+			count = 0;
+			for (String jr : sr.getJobRole()){
+				stop = false;
+				for(ProjectInfo pi : projectInfoes){
+					for (TagCloud tg : pi.getTagClouds()){
+						if (tg.getTipTagCloud().equals(TagCloudEnum.JobRole) && jr.equals(tg.getNameTagCloud())){
+							count++;
+							stop=true;
+							break;
+						}
+					}
+					if (stop){
+						break;
+					}
+				}		
+			}
+			if (count == sr.getJobRole().size()){
 				addEmployee = true;
 			}else{
 				addEmployee = false;

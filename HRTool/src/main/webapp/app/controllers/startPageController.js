@@ -113,6 +113,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		$scope.report.position = [];
 		$scope.report.database = [];
 		$scope.report.language = [];
+		$scope.report.jobRole = [];
 		for (i=0; i<$scope.report.searchTagDictionary['Technologie'].length; i++){
 			$scope.report.technology.push($scope.report.searchTagDictionary['Technologie'][i].nameTagCloud);
 		}
@@ -127,6 +128,9 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		}
 		for (i=0; i<$scope.report.searchTagDictionary['ForeignLanguage'].length; i++){
 			$scope.report.language.push($scope.report.searchTagDictionary['ForeignLanguage'][i].nameTagCloud);
+		}
+		for (i=0; i<$scope.report.searchTagDictionary['JobRoles'].length; i++){
+			$scope.report.jobRole.push($scope.report.searchTagDictionary['JobRoles'][i].nameTagCloud);
 		}
 		delete $scope.report.searchTagDictionary;
 		$http.post('/report',$scope.report).success(function(data){

@@ -15,6 +15,7 @@ public class SearchReport {
 	private ArrayList<String> position;
 	private ArrayList<String> database;
 	private ArrayList<String> language;
+	private ArrayList<String> jobRole;
 	
 	public String getSeniority() {
 		return seniority;
@@ -75,5 +76,11 @@ public class SearchReport {
 	}
 	public void setLanguage(ArrayList<String> language) {
 		this.language = language;
+	}
+	public ArrayList<String> getJobRole() {
+		return jobRole;
+	}
+	public void setJobRole(ArrayList<String> jobRole) {
+		this.jobRole = jobRole;
 	}
 }
