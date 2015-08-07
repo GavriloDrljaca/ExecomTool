@@ -33,6 +33,32 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 	}
 	
+	$scope.showEmployeeReport = function(event, employee) {
+		$http.get('/employees/'+employee.idEmployee).success(function(data){
+			$scope.selectedEmployee = data;
+			$mdDialog.show({
+				controller : 'employeeController',
+				controllerAs : 'empCtrl',
+				templateUrl : 'app/partials/employeeDialog.html',
+				parent : angular.element(document.body),
+				targetEvent : event,
+				locals : {
+					selectedEmployee : $scope.selectedEmployee
+				}
+			}).then(function(answer) {
+				employeeService.list().success(function(data){
+					$scope.employees = data._embedded.employees;
+					$scope.newEmployee ={};
+				})
+			}, function() {
+				employeeService.list().success(function(data){
+					$scope.employees = data._embedded.employees;
+					$scope.newEmployee ={};
+				})
+			});
+		})
+	};
+	
 	$scope.showEmployee = function(event, employee) {
 		$scope.selectedEmployee = employee;
 		$mdDialog.show({
@@ -104,6 +130,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		}
 		delete $scope.report.searchTagDictionary;
 		$http.post('/report',$scope.report).success(function(data){
+			$scope.reportResult = data;
 			$scope.initSearchTagDictionary();
 		})
 	}

@@ -66,14 +66,14 @@ public class Employee {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "TagCloudEmp", joinColumns = @JoinColumn(name = "idEmployee"), inverseJoinColumns = @JoinColumn(name = "idTagCloud"))
-	@JsonManagedReference
+	//@JsonManagedReference
 	private Set<TagCloud> tagClouds;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	private Set<ProjectInfo> projectInfos;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
-	@JsonManagedReference
+	//@JsonManagedReference
 	private Set<EmploymentInfo> empInfos;
 
 	public int getIdEmployee() {

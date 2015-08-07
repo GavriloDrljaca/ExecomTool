@@ -2,7 +2,8 @@
     <h3>Report</h3>
     
     <form>
-	    <md-content>
+	    <md-content layout="row">
+	    <div flex="50">
 	         <p>Seniority</p>
              <md-radio-group ng-model="report.seniority">
                 <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
@@ -101,6 +102,22 @@
                       </md-chip-template>
               </md-chips>
               <md-button class="md-primary" ng-click="makeReport()">Generate report</md-button>
+        </div>
+        <div>
+	         <md-list layout="column" layout-align="center start">   
+	            <md-list-item class="md-3-line">
+	                <md-input-container>
+	                    <label>Filter employees:</label>
+	                    <input type="text" ng-model="filterForEmployeesReport"/>
+	                </md-input-container>
+	            </md-list-item>
+	            <md-list-item class="md-3-line" ng-click="showEmployeeReport($event, emp)" ng-repeat="emp in reportResult | filter:filterForEmployeesReport">
+	                <div class="md-list-item-text">
+	                     <h3>{{ emp.nameEmployee }}</h3>
+	                </div>
+	            </md-list-item>
+	         </md-list>
+        </div>
         </md-content>
     </form>
 </div>

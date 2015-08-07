@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TagCloud {
@@ -27,11 +28,13 @@ public class TagCloud {
 	private Set<Project> projects;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	@JsonBackReference
+	//@JsonBackReference
+	@JsonIgnore
 	private Set<Employee> employees;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	@JsonBackReference
+	//@JsonBackReference
+	@JsonIgnore
 	private Set<EmploymentInfo> employmentInfos;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
