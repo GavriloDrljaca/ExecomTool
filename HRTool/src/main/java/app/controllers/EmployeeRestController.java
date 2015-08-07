@@ -9,7 +9,7 @@ import app.model.Employee;
 
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping
 @RepositoryEventHandler(Employee.class)
 public class EmployeeRestController {
 

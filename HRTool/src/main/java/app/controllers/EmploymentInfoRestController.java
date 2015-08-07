@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import app.model.EmploymentInfo;
 
 @RestController
-@RequestMapping("/employmentInfoes")
 @RepositoryEventHandler(EmploymentInfo.class)
 public class EmploymentInfoRestController {
 
