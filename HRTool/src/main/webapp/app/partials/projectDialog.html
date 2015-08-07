@@ -20,8 +20,9 @@
 	            <label>Industries on the project: </label>
 	            <md-chips ng-model="industries" ng-click="updateAllIndustries()">
 					<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-					       md-items='item in allIndustries' md-item-text="item.nameTagCloud" 
-					       placeholder="Search for Industry" md-no-cache="true" md-selected-item-change="updateAllIndustries()">                       
+					       md-items='item in querySearch(searchText, "Industry")'
+					       md-item-text="item.nameTagCloud" placeholder="Search for Industry" 
+					       md-no-cache="true" md-selected-item-change="updateAllIndustries()">                       
 					    <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 					    <md-not-found >
 					        <span ng-click = "addNewTagCloud(searchText, 'Industry')">
@@ -34,13 +35,13 @@
 				    </md-chip-template>
 			    </md-chips>
 				<label>Platforms on the project: </label>             
-				<md-chips ng-model="platforms" ng-click="updateAllPlatforms()">
+				<md-chips ng-model="platforms" md-autocomplete-snap md-require-match ng-click="updateAllPlatforms()">
 				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in allPlatforms' md-item-text="item.nameTagCloud" 
+				       md-items='item in querySearch(searchText, "Platform")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for Platform" md-no-cache="true" md-selected-item-change="updateAllPlatforms()">                       
 				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 				        <md-not-found >
-				            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+				            <span ng-click = "addNewTagCloud(searchText, 'Platform')">
 				            Click here to add a new Platform ({{searchText}})</span>
 				        </md-not-found>
 				    </md-autocomplete>
@@ -50,13 +51,13 @@
 				    </md-chip-template>
 				</md-chips>
 				<label>OS' on the project: </label>            
-				<md-chips ng-model="oss" ng-click="updateAllOss()">
+				<md-chips ng-model="oss" md-autocomplete-snap md-require-match ng-click="updateAllOss()">
 				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in allOss' md-item-text="item.nameTagCloud" 
+				       md-items='item in querySearch(searchText, "OS")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for OS" md-no-cache="true" md-selected-item-change="updateAllOss()">                       
 				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 				        <md-not-found >
-				            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+				            <span ng-click = "addNewTagCloud(searchText, 'OS')">
 				            Click here to add a new OS ({{searchText}})</span>
 				        </md-not-found>
 				    </md-autocomplete>

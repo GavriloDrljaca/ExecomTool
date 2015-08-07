@@ -228,6 +228,55 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		});
 	};
 	
+	$scope.addNewTagCloud = function(newName, type){
+		var newTag = {};
+		newTag.nameTagCloud = newName;
+		newTag.tipTagCloud = type;
+		tagCloudService.create(newTag).success(function(data){
+			switch(data.tipTagCloud) {
+			case "Industry":
+				allIndustries.push(data);
+				$scope.updateAllIndustries();
+				break;
+			case "Platform":
+				allPlatforms.push(data);
+				$scope.updateAllPlatforms();
+				break;
+			case "OS":
+				allOss.push(data);
+				$scope.updateAllOss();
+			};
+			
+		});
+	};
+	
+	//autocomplete search
+    $scope.querySearch = function (query, tip) {
+    	var tagClouds = [];
+    	switch(tip) {
+    	case "Industry":
+			tagClouds = $scope.allIndustries;
+			break;
+		case "Platform":
+			tagClouds = $scope.allPlatforms;
+			break;
+		case "OS":
+			tagClouds = $scope.allOss;
+		};
+	    var results = query ? tagClouds.filter( createFilterFor(query, tip) ) : [];
+		return results;
+    };
+    
+	function createFilterFor(query, tip) {
+		var lowercaseQuery = angular.lowercase(query);
+		var lowercaseTip = angular.lowercase(tip);
+		return function filterFn(tag) {
+			return ((tag.nameTagCloud.toLowerCase().indexOf(lowercaseQuery) === 0) ||
+			        (tag.tipTagCloud.toLowerCase().indexOf(lowercaseQuery) === 0) ) &&
+		            (tag.tipTagCloud.toLowerCase().indexOf(lowercaseTip) === 0);
+		}
+	}
+	
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
 	};
