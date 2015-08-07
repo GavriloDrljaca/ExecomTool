@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Employee {
 
@@ -64,6 +66,7 @@ public class Employee {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "TagCloudEmp", joinColumns = @JoinColumn(name = "idEmployee"), inverseJoinColumns = @JoinColumn(name = "idTagCloud"))
+	@JsonManagedReference
 	private Set<TagCloud> tagClouds;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
