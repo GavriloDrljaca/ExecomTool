@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import app.model.Employee;
+import app.model.EmployeeRole;
 import app.model.EmploymentInfo;
 import app.model.Project;
 import app.model.ProjectInfo;
@@ -258,6 +259,8 @@ public class Application implements CommandLineRunner {
 		emp.setLeadership(4);
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
+		
+		emp.setEmployeeRole(EmployeeRole.EMP);
 		empRep.save(emp);
 
 	}
