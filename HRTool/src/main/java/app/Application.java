@@ -111,6 +111,7 @@ public class Application implements CommandLineRunner {
 		emp.setLeadership(4);
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
+		emp.setEmployeeRole(EmployeeRole.EMP);
 		empRep.save(emp);
 
 		// EMPLOYEE Snezana
@@ -160,6 +161,7 @@ public class Application implements CommandLineRunner {
 		emp.setLeadership(4);
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
+		emp.setEmployeeRole(EmployeeRole.EMP);
 		empRep.save(emp);
 
 		// EMPLOYEE Milos
@@ -209,6 +211,7 @@ public class Application implements CommandLineRunner {
 		emp.setLeadership(4);
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
+		emp.setEmployeeRole(EmployeeRole.EMP);
 		empRep.save(emp);
 
 		// EMPLOYEE Nemanja
