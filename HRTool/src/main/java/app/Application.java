@@ -52,6 +52,7 @@ public class Application implements CommandLineRunner {
 		addEmploymentInfos();
 		addTagsToEmpInfo();
 		addTagsToProject();
+		addTagsToProjectInfos();
 		//add position into employmentInfoes
 		
 		/*empInfoRep.findOne(1).getTagClouds().add(tagRep.findOne(24));
@@ -442,6 +443,18 @@ public class Application implements CommandLineRunner {
 		tc.setNameTagCloud("HR manager");
 		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
+		
+		tc = new TagCloud();
+
+		tc.setNameTagCloud("UI designer");
+		tc.setTipTagCloud(TagCloudEnum.JobRole);
+		tagRep.save(tc);
+		
+		tc = new TagCloud();
+
+		tc.setNameTagCloud("Software architect");
+		tc.setTipTagCloud(TagCloudEnum.JobRole);
+		tagRep.save(tc);
 
 	}
 
@@ -451,10 +464,10 @@ public class Application implements CommandLineRunner {
 
 		pi.setEmployee(empRep.findOne(1));
 		pi.setProject(projRep.findOne(2));
+		pi.setProjectExp("Learned a lot about frontend");
 		pi.setSeniority(SeniorityEnum.Senior);
 		pi.setDurationOnProject(9);
 		pi.setJobResponsibilities("frontend");
-		pi.setProjectExp("Learned a lot about frontend");
 		pi.setActive(true);
 		/*
 		 * Employee emp = empRep.findOne(1); emp.getProjectInfos().add(pi);
@@ -558,5 +571,22 @@ public class Application implements CommandLineRunner {
 		p.getTagClouds().add(tagRep.findOne(8));
 		p.getTagClouds().add(tagRep.findOne(17));
 		projRep.save(p);
+	}
+	public void addTagsToProjectInfos(){
+		ProjectInfo pi = projInfoRep.findOne(1);
+		pi.getTagClouds().add(tagRep.findOne(1));
+		pi.getTagClouds().add(tagRep.findOne(2));
+		pi.getTagClouds().add(tagRep.findOne(4));
+		pi.getTagClouds().add(tagRep.findOne(11));
+		pi.getTagClouds().add(tagRep.findOne(26));
+		
+		projInfoRep.save(pi);
+		pi = projInfoRep.findOne(2);
+		pi.getTagClouds().add(tagRep.findOne(1));
+		pi.getTagClouds().add(tagRep.findOne(4));
+		pi.getTagClouds().add(tagRep.findOne(11));
+		pi.getTagClouds().add(tagRep.findOne(27));
+		
+		projInfoRep.save(pi);
 	}
 }

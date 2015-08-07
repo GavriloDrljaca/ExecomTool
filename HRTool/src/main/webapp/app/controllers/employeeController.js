@@ -1,4 +1,4 @@
-app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService ) {
+app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService ) {
 
 			if (angular.equals(selectedEmployee, {})){
 				$scope.newEmployee = true;
@@ -201,9 +201,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.objectKeys = function(obj){
 				  return Object.keys(obj);
 			}
-			
+			// PROJECT INFOS : WORK EXPERIENCE TAB
 			$scope.getProjects = function(){
 				$scope.projects = [];
+				$scope.projectInfosTagClouds = [];
 				$scope.projInfos = {};
 				if (selectedEmployee._links!=undefined)	
 					$http.get(selectedEmployee._links.projectInfos.href).success(function (data) {
@@ -216,8 +217,21 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
 								$scope.projects.push(data);
 							});
+							$http.get($scope.projInfos[i]._links.tagClouds.href).success(function(data){
+								if(data._embedded != undefined){
+									if(data._embedded.hasOwnProperty('tagClouds')){
+										$scope.projectInfosTagClouds.push(data._embedded.tagClouds);
+									}else{
+										$scope.projectInfosTagClouds.push([]);
+									}
+								}else{
+									$scope.projectInfosTagClouds.push([]);
+								}
+							});
 						}
 					});
+				
+				$scope.extractProjectInfosTagClouds();
 			}
 			
 			// Sluzi za prikazivanje projectInfo-a u employeeWorkExperiance
@@ -228,14 +242,54 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				if (!angular.equals($scope.infoToShow.projectExperiance, undefined)){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
+					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
+					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
+					try{
+						alert("saving in show info");
+						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
+						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
+						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
+						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
+					}catch(err){
+						alert("saving in showInfo");
+					
+					}
 				}
+				$scope.extractProjectInfosTagClouds();
 				$scope.index = index;
 				$scope.infoToShow.projectName = project.nameProject;
 				$scope.infoToShow.projectDuration = project.durationOfProject;
 				$scope.infoToShow.jobResponsibilities = $scope.projInfos[index].jobResponsibilities;
 				$scope.infoToShow.projectExperiance = $scope.projInfos[index].projectExp;
 				$scope.infoToShow.seniority = $scope.projInfos[index].seniority;
+				$scope.infoToShow.durationOnProject = $scope.projInfos[index].durationOnProject;
+				try{
+					$scope.infoToShow.technologieTags = $scope.projectInfosTagClouds[index].technologieTags;
+					$scope.infoToShow.databaseTags = $scope.projectInfosTagClouds[index].databaseTags;
+					$scope.infoToShow.ideTags = $scope.projectInfosTagClouds[index].ideTags;
+					$scope.infoToShow.jobRoleTags = $scope.projectInfosTagClouds[index].jobRoleTags;
+				}catch(err){
+					$scope.infoToShow.technologieTags = [];
+					$scope.infoToShow.databaseTags = [];
+					$scope.infoToShow.ideTags = [];
+					$scope.infoToShow.jobRoleTags = [];
+				
+				}
 			}
+			
+			// EXTRACT PROJECT INFOES TAG CLOUDS, TECHNOLOGIE, DATABASE, IDE
+			
+			$scope.extractProjectInfosTagClouds = function(){
+				angular.forEach($scope.projectInfosTagClouds, function(tagClouds, key){
+					$scope.projectInfosTagClouds[key].technologieTags = $filter('filter')(tagClouds, {tipTagCloud :"Technologie"} );
+					$scope.projectInfosTagClouds[key].databaseTags = $filter('filter')(tagClouds, {tipTagCloud :"Database"} );
+					$scope.projectInfosTagClouds[key].ideTags = $filter('filter')(tagClouds, {tipTagCloud :"IDE"} );
+					$scope.projectInfosTagClouds[key].jobRoleTags = $filter('filter')(tagClouds, {tipTagCloud :"JobRole"} );
+				});
+				
+			}
+			
+			// END OF PROJECT INFOES CONTROLS ?
 			
 			$scope.activeForm = "none";
 			$scope.currRealDeal = selectedEmployee;
@@ -292,8 +346,22 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.currEmp.yearsOfWorkingExpInExecom =0;
 				}
 				if($scope.index != undefined){
+					//SAVING PROJECT INFOS !
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
+					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
+					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
+					try{
+						alert("saving in save");
+						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
+						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
+						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
+						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
+					}catch(err){
+						alert("saving in //saving project");
+					
+					}
+					
 				}
 				
 				$scope.saveTags();
@@ -301,7 +369,25 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					for (i = 0; i<$scope.projInfos.length; i++){
 						$http.put($scope.projInfos[i]._links.self.href, $scope.projInfos[i]).success(function(data){
 							
-						})
+						});
+						//save tagClouds to projectInfos
+						try{
+							tags = [];
+							
+							tags = tags.concat($scope.projectInfosTagClouds[i].technologieTags,
+									$scope.projectInfosTagClouds[i].databaseTags, $scope.projectInfosTagClouds[i].ideTags,
+									$scope.projectInfosTagClouds[i].jobRoleTags);
+							
+							tagURLs = "";
+							angular.forEach(tags, function(t, k){
+								tagURLs = tagURLs+t._links.self.href + "\n";
+							});
+							console.log(tagURLs);
+	
+							projectInfoService.saveTagClouds($scope.projInfos[i], tagURLs);
+						}catch(err){
+							alert("nemaa")
+						}
 					}
 					$mdDialog.cancel();
 					

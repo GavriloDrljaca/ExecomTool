@@ -2,7 +2,9 @@ package app.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,7 @@ public class ProjectInfo {
 	@JoinColumn(name="idEmployee")
 	private Employee employee;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name="TagCloudsPrInfo", joinColumns=@JoinColumn(name="idProjectInfo"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))
 	private Set<TagCloud> tagClouds;
 	

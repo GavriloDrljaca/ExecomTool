@@ -39,6 +39,15 @@ app.service('projectInfoService', function($http) {
 				headers: { "Content-Type":"text/uri-list" }
 				
 			});
+		},
+		saveTagClouds: function(projectInfo, tagCloudsURLs){
+			return $http({
+				url: projectInfo._links.tagClouds.href,
+				data: tagCloudsURLs,
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
 		}
 		
 	}
