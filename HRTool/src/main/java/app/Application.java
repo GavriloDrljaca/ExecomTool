@@ -62,7 +62,7 @@ public class Application implements CommandLineRunner {
 	}
 
 	public void addEmployees() {
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		// EMPLOYEE PETAR
 		Employee emp = new Employee();

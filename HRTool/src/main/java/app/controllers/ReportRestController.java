@@ -205,7 +205,6 @@ public static Employee getEmployee() {
 
 	@RequestMapping("/rtf")
 	public ResponseEntity<byte[]> generateRtf(@RequestParam("idEmployee") int idEmployee) {
-		//dodati querije ili reps
 		Employee e = employeeRepository.getOne(idEmployee);
 		List<TagCloud> education = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		List<TagCloud> language = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
