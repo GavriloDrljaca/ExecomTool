@@ -15,4 +15,6 @@ public interface TagCloudRepository extends JpaRepository<TagCloud, Integer> {
 	TagCloud findByNameTagCloud(@Param("tagCloudName") String tagCloudName);
 
 	List<TagCloud> findByTipTagCloud(@Param("tipTagCloud") TagCloudEnum tiptagcloud);
+	
+	TagCloud findByTipTagCloudAndNameTagCloud(@Param("tipTagCloud") TagCloudEnum tipTagCloud, @Param("tagCloudName") String tagCloudName);
 }
