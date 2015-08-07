@@ -86,6 +86,21 @@
                         </span>
                       </md-chip-template>
               </md-chips>
+              <h5>Known languages</h5>
+              <md-chips ng-model="report.searchTagDictionary['ForeignLanguage']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "ForeignLanguage")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a language">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <md-button class="md-primary" ng-click="makeReport()">Generate report</md-button>
         </md-content>
     </form>
 </div>

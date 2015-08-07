@@ -2,6 +2,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	
 	$scope.init = function() {
 		$scope.initSearchTagDictionary();
+		
 		employeeService.list().success(function(data) {
 			$scope.employees = data._embedded.employees;
 		})
@@ -79,6 +80,33 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 			})
 		});
 	};
+	
+	$scope.makeReport = function(){
+		$scope.report.technology = [];
+		$scope.report.education = [];
+		$scope.report.position = [];
+		$scope.report.database = [];
+		$scope.report.language = [];
+		for (i=0; i<$scope.report.searchTagDictionary['Technologie'].length; i++){
+			$scope.report.technology.push($scope.report.searchTagDictionary['Technologie'][i].nameTagCloud);
+		}
+		for (i=0; i<$scope.report.searchTagDictionary['Education'].length; i++){
+			$scope.report.education.push($scope.report.searchTagDictionary['Education'][i].nameTagCloud);
+		}
+		for (i=0; i<$scope.report.searchTagDictionary['Position'].length; i++){
+			$scope.report.position.push($scope.report.searchTagDictionary['Position'][i].nameTagCloud);
+		}
+		for (i=0; i<$scope.report.searchTagDictionary['Database'].length; i++){
+			$scope.report.database.push($scope.report.searchTagDictionary['Database'][i].nameTagCloud);
+		}
+		for (i=0; i<$scope.report.searchTagDictionary['ForeignLanguage'].length; i++){
+			$scope.report.language.push($scope.report.searchTagDictionary['ForeignLanguage'][i].nameTagCloud);
+		}
+		delete $scope.report.searchTagDictionary;
+		$http.post('/report',$scope.report).success(function(data){
+			$scope.initSearchTagDictionary();
+		})
+	}
 	
 	$scope.initSearchTagDictionary = function(){
 		$scope.report = {};

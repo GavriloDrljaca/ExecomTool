@@ -15,6 +15,7 @@ import app.model.Employee;
 import app.model.EmploymentInfo;
 import app.model.Project;
 import app.model.ProjectInfo;
+import app.model.SeniorityEnum;
 import app.model.TagCloud;
 import app.model.TagCloudEnum;
 import app.repository.EmployeeRepository;
@@ -444,6 +445,7 @@ public class Application implements CommandLineRunner {
 
 		pi.setEmployee(empRep.findOne(1));
 		pi.setProject(projRep.findOne(2));
+		pi.setSeniority(SeniorityEnum.Senior);
 		pi.setJobResponsibilities("frontend");
 		pi.setProjectExp("Learned a lot about frontend");
 		pi.setActive(true);
@@ -459,6 +461,7 @@ public class Application implements CommandLineRunner {
 		pi.setEmployee(empRep.findOne(2));
 		pi.setProject(projRep.findOne(2));
 		pi.setJobResponsibilities("backend");
+		pi.setSeniority(SeniorityEnum.Junior);
 		pi.setProjectExp("Learned a lot about backend");
 		pi.setActive(true);
 
@@ -468,6 +471,7 @@ public class Application implements CommandLineRunner {
 		pi.setEmployee(empRep.findOne(3));
 		pi.setProject(projRep.findOne(1));
 		pi.setJobResponsibilities("backend");
+		pi.setSeniority(SeniorityEnum.Junior);
 		pi.setProjectExp("Learned a lot about backend");
 		pi.setActive(true);
 
