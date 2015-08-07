@@ -151,20 +151,23 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	
 	var getTagCloudsForProject = function() {
 		projectService.tagCloudsForProject(selectedProject).success(function (data) {
-			var tagClouds = data._embedded.tagClouds;
-			$scope.industries = [];
-			$scope.platforms = [];
-			$scope.oss = [];
-			for (i=0; i<tagClouds.length; i++) {
-				if (tagClouds[i].tipTagCloud === "Industry") {
-					$scope.industries.push(tagClouds[i]);
-				} else if (tagClouds[i].tipTagCloud === "Platform" ) {
-					$scope.platforms.push(tagClouds[i]);
-				} else if (tagClouds[i].tipTagCloud === "OS") {
-					$scope.oss.push(tagClouds[i]);
+			console.log(data);
+			if (data._embedded != undefined) {
+				var tagClouds = data._embedded.tagClouds;
+				$scope.industries = [];
+				$scope.platforms = [];
+				$scope.oss = [];
+				for (i=0; i<tagClouds.length; i++) {
+					if (tagClouds[i].tipTagCloud === "Industry") {
+						$scope.industries.push(tagClouds[i]);
+					} else if (tagClouds[i].tipTagCloud === "Platform" ) {
+						$scope.platforms.push(tagClouds[i]);
+					} else if (tagClouds[i].tipTagCloud === "OS") {
+						$scope.oss.push(tagClouds[i]);
+					};
 				};
+				$scope.updateAllIndustries();
 			};
-			$scope.updateAllIndustries();
 		});
 	};
 
