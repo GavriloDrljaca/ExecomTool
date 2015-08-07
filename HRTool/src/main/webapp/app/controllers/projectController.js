@@ -3,21 +3,23 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
                                      function($http, $scope, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService, tagCloudService){
 		
 	$scope.selectedProject = selectedProject;
+	var allIndustries = [];
+	var allPlatforms = [];
+	var allOss = [];
 	
 	$scope.init = function() {
 		if (!angular.equals(selectedProject, {}	)){
 			$scope.newProject = false;
 			getEmployees();
+			getAllTagCloudsForProject();
 			getTagCloudsForProject();
-			getTagCloudsByType("Industry");
-			getTagCloudsByType("Platform");
-			getTagCloudsByType("OS");
 		}else{
 			$scope.projInfos = {};
 			$scope.updateable = true;
 			$scope.newProject = true;
 			$scope.employees = {};
 			getOtherEmployees();
+			getAllTagCloudsForProject();
 		}
 	};
 	
@@ -162,21 +164,67 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 					$scope.oss.push(tagClouds[i]);
 				};
 			};
+			$scope.updateAllIndustries();
 		});
 	};
-	
-	var getTagCloudsByType = function(type) {
-		tagCloudService.findByTip(type).success(function (data) {
-			switch(type) {
-			case "Industry":
-				$scope.allIndustries = data._embedded.tagClouds;
-				break;
-			case "Platform":
-				$scope.allPlatforms = data._embedded.tagClouds;
-				break;
-			case "OS":
-				$scope.allOss = data._embedded.tagClouds;
+
+	$scope.updateAllIndustries = function() {
+		$scope.allIndustries = [];
+		for (i=0; i<allIndustries.length; i++) {
+			found = false;
+			for (j=0; j<$scope.industries.length; j++) {
+				if (allIndustries[i]._links.self.href === $scope.industries[j]._links.self.href) {
+					found = true;
+					break;
+				};
 			};
+			if (!found) {
+				$scope.allIndustries.push(allIndustries[i]);
+			}
+		};
+	};
+	
+	$scope.updateAllPlatforms = function() {
+		$scope.allPlatforms = [];
+		for (i=0; i<allPlatforms.length; i++) {
+			found = false;
+			for (j=0; j<$scope.platforms.length; j++) {
+				if (allPlatforms[i]._links.self.href === $scope.platforms[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allPlatforms.push(allPlatforms[i]);
+			}
+		};
+	};
+	
+	$scope.updateAllOss = function() {
+		$scope.allOss = [];
+		for (i=0; i<allOss.length; i++) {
+			found = false;
+			for (j=0; j<$scope.platforms.length; j++) {
+				if (allOss[i]._links.self.href === $scope.oss[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allOss.push(allOss[i]);
+			}
+		};
+	};
+	
+	var getAllTagCloudsForProject = function() {
+		tagCloudService.findByTip("Industry").success(function (data) {
+			allIndustries = data._embedded.tagClouds;
+		});
+		tagCloudService.findByTip("Platform").success(function (data) {
+			allPlatforms = data._embedded.tagClouds;
+		});
+		tagCloudService.findByTip("OS").success(function (data) {
+			allOss = data._embedded.tagClouds;
 		});
 	};
 	

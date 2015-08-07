@@ -8,8 +8,8 @@
 
 	</div>
 	</md-toolbar>
-	<div layout="row">
-		<md-dialog-content ng-init="init()" flex="30" layout="row" layout-wrap>
+	<md-dialog-content ng-init="init()" layout="row">
+	    <div flex="35">
 		    <md-input-container md-no-float="true" flex="100">
 	            <label>Project name: </label><input type="text" ng-model="selectedProject.nameProject" ng-disabled="!updateable"/>
 		    </md-input-container>
@@ -18,53 +18,53 @@
 	        </md-input-container>
 	        <div flex="100">
 	            <label>Industries on the project: </label>
-	            <md-chips ng-model="industries">
-	               <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                       md-items='item in allIndustries' md-item-text="item.nameTagCloud" 
-                       placeholder="Search for Industry">                       
-                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-                        <md-not-found >
-                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
-                            Click here to add new foreign language ({{searchText}})</span>
-                        </md-not-found>
-                    </md-autocomplete>
+	            <md-chips ng-model="industries" ng-click="updateAllIndustries()">
+					<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+					       md-items='item in allIndustries' md-item-text="item.nameTagCloud" 
+					       placeholder="Search for Industry" md-no-cache="true" md-selected-item-change="updateAllIndustries()">                       
+					    <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+					    <md-not-found >
+					        <span ng-click = "addNewTagCloud(searchText, 'Industry')">
+					        Click here to add a new Industry ({{searchText}})</span>
+					    </md-not-found>
+					</md-autocomplete>
 					<md-chip-template>
 						<strong>{{$chip.nameTagCloud}}</strong>
 						<em>(Industry)</em>
-					</md-chip-template>
+				    </md-chip-template>
 			    </md-chips>
-                <label>Platforms on the project: </label>             
-                <md-chips ng-model="platforms">
-                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                       md-items='item in allPlatforms' md-item-text="item.nameTagCloud" 
-                       placeholder="Search for Platform">                       
-                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-                        <md-not-found >
-                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
-                            Click here to add new foreign language ({{searchText}})</span>
-                        </md-not-found>
-                    </md-autocomplete>
-                    <md-chip-template>
-                        <strong>{{$chip.nameTagCloud}}</strong>
-                        <em>(Platform)</em>
-                    </md-chip-template>
-                </md-chips>
-                <label>OS' on the project: </label>            
-                <md-chips ng-model="oss">
-                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                       md-items='item in allOss' md-item-text="item.nameTagCloud" 
-                       placeholder="Search for OS">                       
-                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-                        <md-not-found >
-                            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
-                            Click here to add new foreign language ({{searchText}})</span>
-                        </md-not-found>
-                    </md-autocomplete>
-                    <md-chip-template>
-                        <strong>{{$chip.nameTagCloud}}</strong>
-                        <em>(OS)</em>
-                    </md-chip-template>
-                </md-chips>
+				<label>Platforms on the project: </label>             
+				<md-chips ng-model="platforms" ng-click="updateAllPlatforms()">
+				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+				       md-items='item in allPlatforms' md-item-text="item.nameTagCloud" 
+				       placeholder="Search for Platform" md-no-cache="true" md-selected-item-change="updateAllPlatforms()">                       
+				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+				        <md-not-found >
+				            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+				            Click here to add a new Platform ({{searchText}})</span>
+				        </md-not-found>
+				    </md-autocomplete>
+				    <md-chip-template>
+				        <strong>{{$chip.nameTagCloud}}</strong>
+				        <em>(Platform)</em>
+				    </md-chip-template>
+				</md-chips>
+				<label>OS' on the project: </label>            
+				<md-chips ng-model="oss" ng-click="updateAllOss()">
+				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+				       md-items='item in allOss' md-item-text="item.nameTagCloud" 
+				       placeholder="Search for OS" md-no-cache="true" md-selected-item-change="updateAllOss()">                       
+				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+				        <md-not-found >
+				            <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
+				            Click here to add a new OS ({{searchText}})</span>
+				        </md-not-found>
+				    </md-autocomplete>
+				    <md-chip-template>
+				        <strong>{{$chip.nameTagCloud}}</strong>
+				        <em>(OS)</em>
+				    </md-chip-template>
+				</md-chips>
 	        </div>
 	        <label ng-show="!newProject" style="font-size: 20px" flex="100">Employees on the project:</label><br/><br/>
 	        <div ng-repeat="emp in employees" flex="100">
@@ -101,8 +101,8 @@
 	            </md-input-container>
 	            <md-button ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
 	        </div>
-		</md-dialog-content>
-	</div>
+        </div>
+	</md-dialog-content>
 	<md-divider></md-divider>
   	<div class="md-actions" layout="row">
 	    <span flex></span>
