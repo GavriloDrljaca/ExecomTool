@@ -256,14 +256,15 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.currEmp.nameEmployee = "No name";
 				}
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
-				$scope.currEmp.startDate = $scope.startDate;
+				/*$scope.currEmp.startDate = $scope.startDate;
 				$scope.currEmp.endDate = $scope.endDate;
-				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;*/
 				
 				employeeService.create($scope.currEmp).success(function(data) {
 					$scope.currEmp = data;
-					$scope.saveTags();
-					$mdDialog.cancel();
+					//$scope.saveTags();
+					$scope.newEmployee = false;
+					//$mdDialog.cancel();
 					
 				});	
 			}
@@ -527,6 +528,25 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				});
 				
 				return $scope.nonUnique;
+			}
+			//IMAGE CONTROLS
+			
+			if($scope.currEmp.gender == "Female"){
+				$scope.defaultImage = "images/defaultFemale.jpg";
+			}else{
+				$scope.defaultImage = "images/defaultMale.jpg";
+			}
+			
+/*			if($scope.currEmp.image != ""){
+				$scope.imageSwitch = false;
+			}else{
+				$scope.imageSwitch = true;
+			}*/
+			$scope.imageSwitch = true;
+			$scope.imageUploaded = function(serverResponse){
+				$scope.currEmp.image = serverResponse;
+				console.log(serverResponse);
+				$scope.imageSwitch = true;
 			}
 
 		});
