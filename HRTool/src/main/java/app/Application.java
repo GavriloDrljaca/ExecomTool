@@ -452,6 +452,7 @@ public class Application implements CommandLineRunner {
 		pi.setEmployee(empRep.findOne(1));
 		pi.setProject(projRep.findOne(2));
 		pi.setSeniority(SeniorityEnum.Senior);
+		pi.setDurationOnProject(9);
 		pi.setJobResponsibilities("frontend");
 		pi.setProjectExp("Learned a lot about frontend");
 		pi.setActive(true);
@@ -464,9 +465,10 @@ public class Application implements CommandLineRunner {
 
 		pi = new ProjectInfo();
 
-		pi.setEmployee(empRep.findOne(2));
-		pi.setProject(projRep.findOne(2));
+		pi.setEmployee(empRep.findOne(1));
+		pi.setProject(projRep.findOne(1));
 		pi.setJobResponsibilities("backend");
+		pi.setDurationOnProject(5);
 		pi.setSeniority(SeniorityEnum.Junior);
 		pi.setProjectExp("Learned a lot about backend");
 		pi.setActive(true);

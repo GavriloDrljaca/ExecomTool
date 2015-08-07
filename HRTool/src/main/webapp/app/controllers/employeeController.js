@@ -234,6 +234,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.infoToShow.projectDuration = project.durationOfProject;
 				$scope.infoToShow.jobResponsibilities = $scope.projInfos[index].jobResponsibilities;
 				$scope.infoToShow.projectExperiance = $scope.projInfos[index].projectExp;
+				$scope.infoToShow.seniority = $scope.projInfos[index].seniority;
 			}
 			
 			$scope.activeForm = "none";
@@ -256,15 +257,18 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.currEmp.nameEmployee = "No name";
 				}
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
-				/*$scope.currEmp.startDate = $scope.startDate;
-				$scope.currEmp.endDate = $scope.endDate;
-				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;*/
+				/*
+				 * $scope.currEmp.startDate = $scope.startDate;
+				 * $scope.currEmp.endDate = $scope.endDate;
+				 * $scope.currEmp.startDateFromBooklet =
+				 * $scope.startDateFromBooklet;
+				 */
 				
 				employeeService.create($scope.currEmp).success(function(data) {
 					$scope.currEmp = data;
-					//$scope.saveTags();
+					// $scope.saveTags();
 					$scope.newEmployee = false;
-					//$mdDialog.cancel();
+					// $mdDialog.cancel();
 					
 				});	
 			}
@@ -281,6 +285,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.saveEmploymentInfos();
 				$scope.updateEmploymentInfoesTagClouds();
 				$scope.saveEIsToEmployee();
+				$scope.currEmp.yearsOfWorking = Math.floor($scope.totalWorkExperience/12);
+				if($scope.dateDictionary['Execom'] != undefined){
+					$scope.currEmp.yearsOfWorkingExpInExecom = Math.floor($scope.dateDictionary['Execom'].workExperience/12);
+				}else{
+					$scope.currEmp.yearsOfWorkingExpInExecom =0;
+				}
 				if($scope.index != undefined){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
@@ -529,19 +539,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				
 				return $scope.nonUnique;
 			}
-			//IMAGE CONTROLS
+			// IMAGE CONTROLS
 			
-			if($scope.currEmp.gender == "Female"){
-				$scope.defaultImage = "images/defaultFemale.jpg";
-			}else{
-				$scope.defaultImage = "images/defaultMale.jpg";
-			}
-			
-/*			if($scope.currEmp.image != ""){
-				$scope.imageSwitch = false;
-			}else{
-				$scope.imageSwitch = true;
-			}*/
 			$scope.imageSwitch = true;
 			$scope.imageUploaded = function(serverResponse){
 				$scope.currEmp.image = serverResponse;

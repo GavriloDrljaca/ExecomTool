@@ -37,6 +37,15 @@ public class ProjectInfo {
 	private SeniorityEnum seniority;
 	private String jobResponsibilities;
 	private String projectExp;
+	private int durationOnProject;
+	
+	
+	public int getDurationOnProject() {
+		return durationOnProject;
+	}
+	public void setDurationOnProject(int durationOnProject) {
+		this.durationOnProject = durationOnProject;
+	}
 	private boolean active;
 	
 	public Project getProject() {
