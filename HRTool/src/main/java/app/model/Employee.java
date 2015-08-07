@@ -73,6 +73,7 @@ public class Employee {
 	private Set<ProjectInfo> projectInfos;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Set<EmploymentInfo> empInfos;
 
 	public int getIdEmployee() {

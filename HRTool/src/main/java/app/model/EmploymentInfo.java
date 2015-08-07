@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class EmploymentInfo {
 	
@@ -25,10 +28,12 @@ public class EmploymentInfo {
 	private Date endDate;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonManagedReference
 	@JoinTable(name="TagCloudPos", joinColumns=@JoinColumn(name="idEmploymentInfo"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))
 	private Set<TagCloud> tagClouds;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="idEmployee")
 	private Employee employee;
 

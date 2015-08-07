@@ -60,35 +60,42 @@ public class SearchReportRestController {
 			}
 			
 			if (!addEmployee) continue;
-			if(sr.getYearsOfExperianceRelation() == null){
-				sr.setYearsOfExperianceRelation("More");
-			}
-			if (addEmployee && sr.getYearsOfExperianceRelation().equals("Less")){
-				if (emp.getYearsOfWorking() < sr.getYearsOfExperiance()){
-					addEmployee = true;
-				}else {
-					if (addEmployee){
-						addEmployee = false;
-					}
+			if (sr.getYearsOfExperiance() > 0){
+				if (sr.getYearsOfExperianceRelation() == null){
+					sr.setYearsOfExperianceRelation("Equals");
 				}
-			}else if (addEmployee && sr.getYearsOfExperianceRelation().equals("More")){
-				if (emp.getYearsOfWorking() > sr.getYearsOfExperiance()){
-					addEmployee = true;
-				}else {
-					if (addEmployee){
-						addEmployee = false;
-					}
-				}
-			}else if (addEmployee && sr.getYearsOfExperianceRelation().equals("Equals")){
-				if (emp.getYearsOfWorking() == sr.getYearsOfExperiance()){
-					addEmployee = true;
-				}else {
-					if (addEmployee){
-						addEmployee = false;
-					}
+				switch(sr.getYearsOfExperianceRelation()){
+					case "Less":
+						if (emp.getYearsOfWorking() < sr.getYearsOfExperiance()){
+							addEmployee = true;
+						}else {
+							if (addEmployee){
+								addEmployee = false;
+							}
+						}
+						break;
+					case "More":
+						if (emp.getYearsOfWorking() > sr.getYearsOfExperiance()){
+							addEmployee = true;
+						}else {
+							if (addEmployee){
+								addEmployee = false;
+							}
+						}
+						break;
+					case "Equals":
+						if (emp.getYearsOfWorking() == sr.getYearsOfExperiance()){
+							addEmployee = true;
+						}else {
+							if (addEmployee){
+								addEmployee = false;
+							}
+						}
+						break;
 				}
 			}
 			if (!addEmployee) continue;
+			
 			employmentInfoes = emp.getEmpInfos();
 			if (addEmployee){
 				for (EmploymentInfo ei : employmentInfoes){

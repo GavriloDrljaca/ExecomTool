@@ -31,6 +31,7 @@ public class TagCloud {
 	private Set<Employee> employees;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	@JsonBackReference
 	private Set<EmploymentInfo> employmentInfos;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
