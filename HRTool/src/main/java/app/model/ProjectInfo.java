@@ -33,6 +33,7 @@ public class ProjectInfo {
 	private Employee employee;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+	@JsonIgnore
 	@JoinTable(name="TagCloudsPrInfo", joinColumns=@JoinColumn(name="idProjectInfo"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))
 	private Set<TagCloud> tagClouds;
 	
