@@ -41,8 +41,8 @@ targetCompatibility = 1.8
 jar {
 
     
-    baseName = 'gs-spring-boot'
-    version = '0.1.0'
+    baseName = 'test'
+    version = '1'
 }
 
 
@@ -58,7 +58,7 @@ uploadArchives {
     }
 }
 task wrapper(type: Wrapper){
-	gradleVersion = '2.3'
+	gradleVersion = '2.5'
 }
 
 

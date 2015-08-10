@@ -10,6 +10,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	$scope.init = function() {
 		if (!angular.equals(selectedProject, {}	)){
 			$scope.newProject = false;
+			$scope.selectedProject.startDate = new Date(selectedProject.startDate);
 			getEmployees();
 			getAllTagCloudsForProject();
 			getTagCloudsForProject();
@@ -86,9 +87,11 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			projectInfoService.update(projInfos[i]);
 		};
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
+		selectedProject.startDate = $scope.selectedProject.startDate;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
 		$scope.jobResponsibilities = "";
 		$scope.projectExp = "";
+		saveTags();
 		projectService.update(selectedProject);
 	};
 	
@@ -151,7 +154,6 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	
 	var getTagCloudsForProject = function() {
 		projectService.tagCloudsForProject(selectedProject).success(function (data) {
-			console.log(data);
 			if (data._embedded != undefined) {
 				var tagClouds = data._embedded.tagClouds;
 				$scope.industries = [];
@@ -173,6 +175,9 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 
 	$scope.updateAllIndustries = function() {
 		$scope.allIndustries = [];
+		if ($scope.industries === undefined) {
+			$scope.industries = [];
+		}
 		for (i=0; i<allIndustries.length; i++) {
 			found = false;
 			for (j=0; j<$scope.industries.length; j++) {
@@ -189,6 +194,9 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	
 	$scope.updateAllPlatforms = function() {
 		$scope.allPlatforms = [];
+		if ($scope.platforms === undefined) {
+			$scope.platforms = [];
+		}
 		for (i=0; i<allPlatforms.length; i++) {
 			found = false;
 			for (j=0; j<$scope.platforms.length; j++) {
@@ -205,6 +213,9 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	
 	$scope.updateAllOss = function() {
 		$scope.allOss = [];
+		if ($scope.oss === undefined) {
+			$scope.oss = [];
+		}
 		for (i=0; i<allOss.length; i++) {
 			found = false;
 			for (j=0; j<$scope.platforms.length; j++) {
@@ -252,6 +263,16 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			
 		});
 	};
+	
+	var saveTags = function(){
+		var req = "";
+		var newTags = [];
+		newTags = newTags.concat($scope.industries, $scope.platforms, $scope.oss);		
+		for(i =0; i<newTags.length; i++){
+			req += newTags[i]._links.self.href +"\n";
+		}
+		tagCloudService.saveTag(selectedProject._links.tagClouds.href, req)
+	}
 	
 	//autocomplete search
     $scope.querySearch = function (query, tip) {

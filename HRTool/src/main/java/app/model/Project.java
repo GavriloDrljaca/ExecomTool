@@ -31,7 +31,7 @@ public class Project {
 	@JoinTable(name="TagClouds", joinColumns=@JoinColumn(name="idProject"), inverseJoinColumns=@JoinColumn(name="idTagCloud"))  
 	private Set<TagCloud> tagClouds;
 	
-	@OneToMany(mappedBy="project", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
 	private Set<ProjectInfo> projectInfo;
 	
 	public Set<TagCloud> getTagClouds() {
