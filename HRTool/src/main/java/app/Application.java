@@ -492,11 +492,11 @@ public class Application implements CommandLineRunner {
 		projInfoRep.save(pi);
 		pi = new ProjectInfo();
 
-		pi.setEmployee(empRep.findOne(3));
-		pi.setProject(projRep.findOne(1));
-		pi.setJobResponsibilities("backend");
+		pi.setEmployee(empRep.findOne(1));
+		pi.setProject(projRep.findOne(3));
+		pi.setJobResponsibilities("Frontend, user interface");
 		pi.setSeniority(SeniorityEnum.Junior);
-		pi.setProjectExp("Learned a lot about backend");
+		pi.setProjectExp("Designed UI");
 		pi.setActive(true);
 
 		projInfoRep.save(pi);
@@ -589,6 +589,10 @@ public class Application implements CommandLineRunner {
 		pi.getTagClouds().add(tagRep.findOne(4));
 		pi.getTagClouds().add(tagRep.findOne(11));
 		pi.getTagClouds().add(tagRep.findOne(27));
+		
+		projInfoRep.save(pi);
+		pi = projInfoRep.findOne(3);
+		pi.getTagClouds().add(tagRep.findOne(1));
 		
 		projInfoRep.save(pi);
 	}

@@ -211,16 +211,20 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							$http.get($scope.projInfos[i]._links.project.href).success((function (i) {
 								return function (data) {
 							
-								$scope.projects.splice(i, 0, data);
+								$scope.projects[i] =  data;
+								console.log("Projekat" +i);
+								console.log("Projekat");
+								console.log(data);
 								}
-								})(i));
+								
+							})(i));
 							
 							$http.get($scope.projInfos[i]._links.tagClouds.href).success( (function (i) {
 									
 								return function(data){
 								if(data._embedded != undefined){
 									if(data._embedded.hasOwnProperty('tagClouds')){
-										$scope.projectInfosTagClouds.push(data._embedded.tagClouds);
+										$scope.projectInfosTagClouds[i] = (data._embedded.tagClouds);
 										console.log(i);
 										console.log(data._embedded.tagClouds);
 									}else{
@@ -240,8 +244,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// Sluzi za prikazivanje projectInfo-a u employeeWorkExperiance
 			// tab-u
 			$scope.showInfo = function(project, index){
-				if ($scope.firstTimeClicked == false)
+				if ($scope.firstTimeClicked == false){
+					$scope.extractProjectInfosTagClouds();
 					$scope.firstTimeClicked = true;
+				}
 				if (!angular.equals($scope.infoToShow.projectExperiance, undefined)){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
@@ -251,6 +257,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						alert("saving in show info");
 						console.log($scope.projects[$scope.index]);
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
+						console.log($scope.projectInfosTagClouds[$scope.index].technologieTags);
 						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
 						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
 						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
@@ -259,7 +266,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					
 					}
 				}
-				$scope.extractProjectInfosTagClouds();
 				$scope.index = index;
 				$scope.infoToShow.projectName = project.nameProject;
 				$scope.infoToShow.projectDuration = project.durationOfProject;
