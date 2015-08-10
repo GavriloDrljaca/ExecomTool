@@ -15,6 +15,17 @@ app.service('projectService', function($http) {
 		},
 		tagCloudsForProject: function(project) {
 			return $http.get(project._links.tagClouds.href);
+		},
+		saveTagCloudsForProject: function(projectUrl, tagClouds) {
+			return $http({
+				url: projectUrl,
+				data: tagClouds,
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
+		},
+		projectInfosForProject: function(project) {
+			return $http.get(project._links.projectInfo.href)
 		}
 	}
 });

@@ -10,13 +10,16 @@
 	</md-toolbar>
 	<md-dialog-content ng-init="init()" layout="row">
 	    <div flex="35">
-		    <md-input-container md-no-float="true" flex="100">
+		    <md-input-container md-no-float="true">
 	            <label>Project name: </label><input type="text" ng-model="selectedProject.nameProject" ng-disabled="!updateable"/>
 		    </md-input-container>
-	        <md-input-container md-no-float = "true">
+            <md-input-container md-no-float = "true" layout="column" layout-align="center start">
+                <label>Project start date: </label><input type="date" ng-model="selectedProject.startDate" ng-disabled="!updateable"/><br/>   
+            </md-input-container>
+	        <md-input-container md-no-float = "true" layout="column" layout-align="center start">
 	            <label>Duration of project (in weeks): </label><input type="number" ng-model="selectedProject.durationOfProject" ng-disabled="!updateable"/><br/>   
 	        </md-input-container>
-	        <div flex="100">
+	        <div>
 	            <label>Industries on the project: </label>
 	            <md-chips ng-model="industries" ng-click="updateAllIndustries()">
 					<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
@@ -67,29 +70,8 @@
 				    </md-chip-template>
 				</md-chips>
 	        </div>
-	        <label ng-show="!newProject" style="font-size: 20px" flex="100">Employees on the project:</label><br/><br/>
-	        <div ng-repeat="emp in employees" flex="100">
-	            <div>
-		            <label> {{ emp.nameEmployee }}</label>
-		            <label> {{ emp.email }}</label>
-		            <md-button ng-click="removeFromProject()" class="md-primary">Remove from project</md-button>
-	            </div>
-	            <br/>
-	            <div>
-		            <md-input-container md-no-float = "true">
-			            <label> Role of employee:</label>
-			            <input type="text" ng-model="emp.projectInfo.jobResponsibilities" ng-disabled="!updateable || newProject"/><br/> 
-		            </md-input-container>
-	            </div>
-	            <div>
-		            <md-input-container md-no-float = "true">
-			            <label> Experience of employee on the project:</label>
-			            <input type="text" ng-model="emp.projectInfo.projectExp" ng-disabled="!updateable || newProject"/><br/><br/> 
-	                </md-input-container>
-	            </div>
-	        </div>
 	        <div flex="100">
-	            <md-select ng-show="updateable && !newProject" placeholder="Zaposleni" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
+	            <md-select ng-show="updateable && !newProject" placeholder="Employees" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
 	                <md-option ng-repeat="e in otherEmployees" value="{{ $index }}">{{ e.nameEmployee }}</md-option>
 	            </md-select>
 	            <md-input-container ng-show="updateable && !newProject" md-no-float = "true">
@@ -102,6 +84,29 @@
 	            </md-input-container>
 	            <md-button ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
 	        </div>
+        </div>
+        <div offset="5" flex="40">            
+            <label ng-show="!newProject" style="font-size: 20px">Employees on the project:</label><br/><br/>
+            <div ng-repeat="emp in employees">
+                <div>
+                    <label> {{ emp.nameEmployee }}</label>
+                    <label> {{ emp.email }}</label>
+                    <md-button ng-click="removeEmployeeFromProject(emp)" class="md-primary">Remove from project</md-button>
+                </div>
+                <br/>
+                <div>
+                    <md-input-container md-no-float = "true">
+                        <label> Role of employee:</label>
+                        <input type="text" ng-model="emp.projectInfo.jobResponsibilities" ng-disabled="!updateable || newProject"/><br/> 
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container md-no-float = "true">
+                        <label> Experience of employee on the project:</label>
+                        <input type="text" ng-model="emp.projectInfo.projectExp" ng-disabled="!updateable || newProject"/><br/><br/> 
+                    </md-input-container>
+                </div>
+            </div>
         </div>
 	</md-dialog-content>
 	<md-divider></md-divider>
