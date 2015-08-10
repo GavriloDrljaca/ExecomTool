@@ -247,20 +247,16 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		newTag.nameTagCloud = newName;
 		newTag.tipTagCloud = type;
 		tagCloudService.create(newTag).success(function(data){
-			switch(data.tipTagCloud) {
-			case "Industry":
+			if (data.tipTagCloud === "Industry") {
 				allIndustries.push(data);
-				$scope.updateAllIndustries();
-				break;
-			case "Platform":
+				$scope.industries.push(data);
+			} else if (data.tipTagCloud === "Platform") {
 				allPlatforms.push(data);
-				$scope.updateAllPlatforms();
-				break;
-			case "OS":
+				$scope.platforms.push(data);
+			} else if (data.tipTagCloud === "OS") {
 				allOss.push(data);
-				$scope.updateAllOss();
+				$scope.oss.push(data);
 			};
-			
 		});
 	};
 	
