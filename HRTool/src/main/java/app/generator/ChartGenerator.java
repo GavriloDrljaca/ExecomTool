@@ -67,17 +67,14 @@ public class ChartGenerator {
 		List<ProjectInfo> seniority = new ArrayList<>();
 		for (Employee e : emps) {
 			Date lastDate = df.parse("1900-02-01");
-			Calendar cal1 = Calendar.getInstance();
-			Calendar cal2 = Calendar.getInstance();
-			cal2.setTime(lastDate);
 			ProjectInfo last = new ProjectInfo();
 			Set<ProjectInfo> projectInfoIt = e.getProjectInfos();
 			if (projectInfoIt.size() == 0) {
 				continue;
 			}
 			for (ProjectInfo pi : projectInfoIt) {
-				cal1.setTime(pi.getProject().getStartDate());
-				if (cal1.after(cal2)) {
+				if(pi.getProject().getStartDate().after(lastDate)){
+					lastDate = pi.getProject().getStartDate();
 					lastDate = pi.getProject().getStartDate();
 					last = pi;
 				}
