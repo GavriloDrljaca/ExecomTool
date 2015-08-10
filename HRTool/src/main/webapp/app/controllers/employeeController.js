@@ -4,6 +4,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.init = function(){
 				$scope.newProjectInfoEntry = false;
 				$scope.newProjectOrNot = {};
+				$scope.projInfos = [];
 				
 				$scope.newProjectOrNot.bool = "";
 				if (angular.equals(selectedEmployee, {})){
@@ -52,7 +53,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.extractEmploymentInfosTags = function(){
 				$scope.EItagClouds = {};
 				angular.forEach($scope.employmentInfos, function(empInfo, key){
-					console.log(empInfo.companyName);
 					
 					employmentInfoesService.getEmploymentInfoesTagClouds(empInfo).success(function(data){
 						$scope.EItagClouds[empInfo.companyName] = {};
@@ -77,7 +77,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					})
 					
 					employmentInfoesService.updateEmploymentInfoesTags(empInfo,$scope.empInfoesURLs).success(function(data){
-						console.log(data);
 					})
 					$scope.empInfoesURLs = "";
 				});
@@ -158,7 +157,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.employmentInfos.push(data);
 					$scope.extractEmploymentDates();
 					$scope.extractEmploymentInfosTags();
-					console.log(data);
 					// ATTACH IT TO EMPLOYEEE
 					// IT WILL BE ATTACH IN FUNCTION saveEItoEMployee
 					/*
@@ -207,16 +205,13 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						if(data._embedded != undefined) {
 							$scope.projInfos = data._embedded.projectInfoes;
 						} else {
-							$scope.projInfos = {};
+							$scope.projInfos = [];
 						}
 						for(i = 0; i<$scope.projInfos.length; i++) {
 							$http.get($scope.projInfos[i]._links.project.href).success((function (i) {
 								return function (data) {
 							
 								$scope.projects[i] =  data;
-								console.log("Projekat" +i);
-								console.log("Projekat");
-								console.log(data);
 								}
 								
 							})(i));
@@ -227,13 +222,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 								if(data._embedded != undefined){
 									if(data._embedded.hasOwnProperty('tagClouds')){
 										$scope.projectInfosTagClouds[i] = (data._embedded.tagClouds);
-										console.log(i);
-										console.log(data._embedded.tagClouds);
 									}else{
-										$scope.projectInfosTagClouds.push([]);
+										$scope.projectInfosTagClouds[i] = [];
 									}
 								}else{
-									$scope.projectInfosTagClouds.push([]);
+									$scope.projectInfosTagClouds[i] = [];
 								}
 								}
 								})(i));
@@ -257,9 +250,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
 					try{
-						console.log($scope.projects[$scope.index]);
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
-						console.log($scope.projectInfosTagClouds[$scope.index].technologieTags);
 						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
 						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
 						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
@@ -394,29 +385,30 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			
 			$scope.addNewProject = function(){
 				projectService.save($scope.newProject).success(function(data){
-					$scope.createNewProjectInfo(data);
+					alert(data._links.self.href)
+					$scope.createNewProjectInfo(data._links.self.href);
 				});
 			}
 			
 			$scope.createNewProjectInfo = function(project){
-				console.log(project);
 				//create new projectInfo
 				var newProjectInfo = {};
 				projectInfoService.create(newProjectInfo).success(function(data){
+					newProjectInfo = data;
 					projectInfoService.saveEmployee(data, $scope.currEmp._links.self.href).success(function(){
-						console.log("saved employee");
+						projectInfoService.saveProject(data, project).success(function(data){
+							//updateVIEW
+							$scope.updateProjectInfoView(data,newProjectInfo)
+							
+						});
 					});
-					
-					projectInfoService.saveProject(data, project._links.self.href).success(function(){
-						console.log("saved project");
-					});
-					
 				});
-					//attach employee
-					
-					//attach project
-				
-				
+			}
+			
+			$scope.updateProjectInfoView = function(newProject , newProjectInfo){
+				$scope.projInfos.push(newProjectInfo);
+				$scope.getProjects();
+				$scope.newProjectInfoEntry = false;
 			}
 			
 			// END OF PROJECT INFOES CONTROLS ?
@@ -510,13 +502,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							angular.forEach(tags, function(t, k){
 								tagURLs = tagURLs+t._links.self.href + "\n";
 							});
-							console.log(tagURLs);
 	
 							projectInfoService.saveTagClouds($scope.projInfos[i], tagURLs);
 						}catch(err){
 						}
 					}
-					$mdDialog.cancel();
+					//$mdDialog.cancel();
 					
 				});
 
@@ -566,9 +557,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			 */
 			// TAGCLOUD: FILL tagCLOUDS
 			$scope.fillTagClouds = function(){
-				console.log(selectedEmployee);
 				employeeService.getEmployeeTagClouds(selectedEmployee).success(function(data){
-					console.log(data);
 					
 					if(!data.hasOwnProperty('_embedded')){
 						$scope.initEmptyTagClouds();
@@ -755,13 +744,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.imageSwitch = true;
 			$scope.imageUploaded = function(serverResponse){
 				$scope.currEmp.image = serverResponse;
-				console.log(serverResponse);
 				$scope.imageSwitch = true;
 			}
 			$scope.generateCV = function() {
 				emp = $scope.currEmp;
 				array = emp._links.self.href.split('/');
-				console.log("TEST " + array[array.length-1]);
 				$window.open("/report/cv?id=" + array[array.length-1],"_self");
 			}
 
