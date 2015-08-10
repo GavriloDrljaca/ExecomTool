@@ -91,7 +91,7 @@
                 <div>
                     <label> {{ emp.nameEmployee }}</label>
                     <label> {{ emp.email }}</label>
-                    <md-button ng-click="removeEmployeeFromProject(emp)" class="md-primary">Remove from project</md-button>
+                    <md-button ng-click="removeEmployeeFromProject(emp)" class="md-primary" ng-show="updateable">Remove from project</md-button>
                 </div>
                 <br/>
                 <div>
