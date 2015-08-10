@@ -17,7 +17,6 @@ import app.model.Employee;
 import app.model.Project;
 import app.model.ProjectInfo;
 import app.model.TagCloud;
-import app.model.TagCloudEnum;
 
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
@@ -60,6 +59,7 @@ public class CVGenerator {
 		try {
 			execomImage = Image.getInstance("execom-logo.jpg");
 			image = Image.getInstance("execom-logo.jpg");
+			//image = Image.getInstance(e.getImage());
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {

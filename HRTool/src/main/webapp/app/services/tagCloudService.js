@@ -1,4 +1,5 @@
 app.service('tagCloudService', function($http){
+	var url = '/tagClouds';
 	return{
 		create: function(tagCloud){
 
@@ -24,7 +25,7 @@ app.service('tagCloudService', function($http){
 
 		},
 		findByTip: function(type) {
-			return $http.get('http://localhost:8080/tagClouds/search/findByTipTagCloud?tipTagCloud=' + type);
+			return $http.get(url + '/search/findByTipTagCloud?tipTagCloud=' + type);
 		}
 	}
 	

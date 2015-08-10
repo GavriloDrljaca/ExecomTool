@@ -1,6 +1,7 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
 	
 	$scope.init = function() {
+		$scope.report = {};
 		$scope.initSearchTagDictionary();
 		
 		employeeService.list().success(function(data) {
@@ -36,7 +37,8 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	$scope.showEmployeeReport = function(event, employee) {
 		$http.get('/employees/'+employee.idEmployee).success(function(data){
 			$scope.selectedEmployee = data;
-			$mdDialog.show({
+			$scope.showEmployee(event, $scope.selectedEmployee)
+			/*	$mdDialog.show({
 				controller : 'employeeController',
 				controllerAs : 'empCtrl',
 				templateUrl : 'app/partials/employeeDialog.html',
@@ -55,7 +57,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 					$scope.employees = data._embedded.employees;
 					$scope.newEmployee ={};
 				})
-			});
+			});*/
 		})
 	};
 	
@@ -71,6 +73,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 				selectedEmployee : $scope.selectedEmployee
 			}
 		}).then(function(answer) {
+			console.log(answer)
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
 				$scope.newEmployee ={};
@@ -132,15 +135,21 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		for (i=0; i<$scope.report.searchTagDictionary['JobRole'].length; i++){
 			$scope.report.jobRole.push($scope.report.searchTagDictionary['JobRole'][i].nameTagCloud);
 		}
+		var temp = $scope.report.searchTagDictionary;
 		delete $scope.report.searchTagDictionary;
 		$http.post('/report',$scope.report).success(function(data){
 			$scope.reportResult = data;
-			$scope.initSearchTagDictionary();
+			$scope.report.searchTagDictionary = temp;
 		})
 	}
 	
-	$scope.initSearchTagDictionary = function(){
+	$scope.clearForm = function(){
+		$scope.reportResult = {};
 		$scope.report = {};
+		$scope.initSearchTagDictionary();
+	}
+	
+	$scope.initSearchTagDictionary = function(){
 		$scope.report.searchTagDictionary = {};
 		// Technologie
 		$scope.report.searchTagDictionary['Technologie'] = [];

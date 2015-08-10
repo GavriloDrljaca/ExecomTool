@@ -19,25 +19,36 @@ import app.model.SeniorityEnum;
 import app.model.TagCloud;
 import app.model.TagCloudEnum;
 import app.repository.EmployeeRepository;
-import app.repository.ProjectInfoRepository;
-import app.repository.ProjectRepository;
-import app.repository.TagCloudRepository;
 
 @RestController
 public class SearchReportRestController {
 
+	private int calculateYearsOfExperiance(Employee employee){
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		int totalMonths = 0;
+		for (EmploymentInfo ei : employee.getEmpInfos()){
+			if (ei.getEndDate() != null){
+				startDate.setTime(ei.getStartDate());
+				endDate.setTime(ei.getEndDate());
+				int diffYear = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
+				totalMonths += diffYear * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
+				/*totalMonths += Math.abs(endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH)) +
+						(12 * (Math.abs(endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR))));*/
+			}else{
+				startDate.setTime(ei.getStartDate());
+				endDate = Calendar.getInstance();
+				int diffYear = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
+				totalMonths += diffYear * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
+			}
+		}
+		employee.setYearsOfWorking((int)(totalMonths/12));
+		return employee.getYearsOfWorking();
+	}
+	
 	@Autowired
 	EmployeeRepository employeeRepository;
 	
-	@Autowired
-	TagCloudRepository tagCloudRepository;
-	
-	@Autowired
-	ProjectRepository projectRepository;
-	
-	@Autowired
-	ProjectInfoRepository projectInfoRepository;
-
 	@RequestMapping("/report")
 	public List<Employee> generateReport(@RequestBody SearchReport sr){
 		List<Employee> allEmployees = employeeRepository.findAll();
@@ -80,6 +91,7 @@ public class SearchReportRestController {
 			
 			if (!addEmployee) continue;
 			if (sr.getYearsOfExperiance() > 0){
+				calculateYearsOfExperiance(emp);
 				if (sr.getYearsOfExperianceRelation() == null){
 					sr.setYearsOfExperianceRelation("Equals");
 				}
@@ -114,9 +126,6 @@ public class SearchReportRestController {
 				}
 			}
 			if (!addEmployee) continue;
-
-			Calendar cal = Calendar.getInstance();
-		//	cal.setTime(sr.getYearOfEmployment());
 			
 			if (sr.getYearOfEmploymentRelation() == null){
 				sr.setYearOfEmploymentRelation("After");
