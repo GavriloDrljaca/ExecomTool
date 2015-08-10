@@ -201,5 +201,9 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 			 $scope.empPic = serverResponse;
 			 console.log($scope.empPic);
 		 }
+		 
+		$scope.generateCV = function(email) {
+			employeeService.generate(email);
+		}
 
 });

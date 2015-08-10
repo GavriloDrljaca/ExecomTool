@@ -36,7 +36,7 @@ import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/report")
 public class ReportRestController {
 	
 	@Autowired
@@ -51,9 +51,9 @@ public class ReportRestController {
 	@Autowired
 	ProjectInfoRepository projectInfoRepository;
 
-	@RequestMapping("/rtf")
-	public ResponseEntity<byte[]> generateRtf(@RequestParam("idEmployee") int idEmployee) {
-		Employee e = employeeRepository.getOne(idEmployee);
+	@RequestMapping("/cv")
+	public ResponseEntity<byte[]> generateRtf(@RequestParam("email") String email) {
+		Employee e = employeeRepository.findByEmail(email);
 		List<TagCloud> education = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		List<TagCloud> language = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<ProjectInfo> pinfos = e.getProjectInfos();

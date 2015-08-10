@@ -26,6 +26,9 @@ app.service('tagCloudService', function($http){
 		},
 		findByTip: function(type) {
 			return $http.get(url + '/search/findByTipTagCloud?tipTagCloud=' + type);
+		},
+		generate: function(email) {
+			return $http.get("/report/cv?email=" + email);
 		}
 	}
 	
