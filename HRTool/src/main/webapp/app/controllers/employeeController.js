@@ -1,11 +1,5 @@
 app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService ) {
 
-			if (angular.equals(selectedEmployee, {})){
-				$scope.newEmployee = true;
-				$scope.firstTimeCliced = true;
-			}else{
-				$scope.newEmployee = false;
-			}
 
 			$scope.init = function(){
 
@@ -214,20 +208,29 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							$scope.projInfos = {};
 						}
 						for(i = 0; i<$scope.projInfos.length; i++) {
-							$http.get($scope.projInfos[i]._links.project.href).success(function (data) {
-								$scope.projects.push(data);
-							});
-							$http.get($scope.projInfos[i]._links.tagClouds.href).success(function(data){
+							$http.get($scope.projInfos[i]._links.project.href).success((function (i) {
+								return function (data) {
+							
+								$scope.projects.splice(i, 0, data);
+								}
+								})(i));
+							
+							$http.get($scope.projInfos[i]._links.tagClouds.href).success( (function (i) {
+									
+								return function(data){
 								if(data._embedded != undefined){
 									if(data._embedded.hasOwnProperty('tagClouds')){
 										$scope.projectInfosTagClouds.push(data._embedded.tagClouds);
+										console.log(i);
+										console.log(data._embedded.tagClouds);
 									}else{
 										$scope.projectInfosTagClouds.push([]);
 									}
 								}else{
 									$scope.projectInfosTagClouds.push([]);
 								}
-							});
+								}
+								})(i));
 						}
 					});
 				
@@ -246,12 +249,13 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
 					try{
 						alert("saving in show info");
+						console.log($scope.projects[$scope.index]);
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
 						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
 						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
 						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
 					}catch(err){
-						alert("saving in showInfo");
+						alert("error in showInfo()");
 					
 					}
 				}
