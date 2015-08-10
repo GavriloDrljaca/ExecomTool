@@ -758,5 +758,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				console.log(serverResponse);
 				$scope.imageSwitch = true;
 			}
+			$scope.generateCV = function() {
+				emp = $scope.currEmp;
+				array = emp._links.self.href.split('/');
+				console.log("TEST " + array[array.length-1]);
+				$window.open("/report/cv?id=" + array[array.length-1],"_self");
+			}
 
 		});

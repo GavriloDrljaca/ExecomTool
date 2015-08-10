@@ -52,8 +52,8 @@ public class ReportRestController {
 	ProjectInfoRepository projectInfoRepository;
 
 	@RequestMapping("/cv")
-	public ResponseEntity<byte[]> generateRtf(@RequestParam("email") String email) {
-		Employee e = employeeRepository.findByEmail(email);
+	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) {
+		Employee e = employeeRepository.findOne(id);
 		List<TagCloud> education = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		List<TagCloud> language = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<ProjectInfo> pinfos = e.getProjectInfos();
