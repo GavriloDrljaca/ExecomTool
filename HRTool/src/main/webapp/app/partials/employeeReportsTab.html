@@ -44,9 +44,9 @@
               </md-chips>
               <br/>
               <h5>Job role</h5>
-              <md-chips ng-model="report.searchTagDictionary['JobRoles']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+              <md-chips ng-model="report.searchTagDictionary['JobRole']" md-autocomplete-snap="" md-require-match="" readonly = "false">
                       <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                       md-items='item in querySearch(searchText, "JobRoles")' md-item-text="item.nameTagCloud" 
+                       md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
                        placeholder="Search for a job role">
                         <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
                       </md-autocomplete>

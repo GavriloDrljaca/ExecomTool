@@ -129,8 +129,8 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		for (i=0; i<$scope.report.searchTagDictionary['ForeignLanguage'].length; i++){
 			$scope.report.language.push($scope.report.searchTagDictionary['ForeignLanguage'][i].nameTagCloud);
 		}
-		for (i=0; i<$scope.report.searchTagDictionary['JobRoles'].length; i++){
-			$scope.report.jobRole.push($scope.report.searchTagDictionary['JobRoles'][i].nameTagCloud);
+		for (i=0; i<$scope.report.searchTagDictionary['JobRole'].length; i++){
+			$scope.report.jobRole.push($scope.report.searchTagDictionary['JobRole'][i].nameTagCloud);
 		}
 		delete $scope.report.searchTagDictionary;
 		$http.post('/report',$scope.report).success(function(data){
@@ -147,7 +147,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		// POSITION
 		$scope.report.searchTagDictionary['Position'] = [];
 		// JobRole
-		$scope.report.searchTagDictionary['JobRoles'] = [];
+		$scope.report.searchTagDictionary['JobRole'] = [];
 		// Database
 		$scope.report.searchTagDictionary['Database'] = [];
 		// IDE

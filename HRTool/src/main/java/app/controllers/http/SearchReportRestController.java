@@ -1,6 +1,8 @@
 package app.controllers.http;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -49,9 +51,19 @@ public class SearchReportRestController {
 				addEmployee = true;
 			}
 			else{
+				Date lastProjectDate = null;
+				if (projectInfoes.size()!=0){
+					lastProjectDate = projectInfoes.iterator().next().getProject().getStartDate();
+				}
+				for (ProjectInfo pi : projectInfoes){
+					if (pi.getProject().getStartDate().after(lastProjectDate)){
+						lastProjectDate = pi.getProject().getStartDate();
+					}
+				}
 				for (ProjectInfo pi : projectInfoes){
 					if (sr.getSeniority() != null){
-						if (SeniorityEnum.valueOf(sr.getSeniority()) == pi.getSeniority()){
+						if (SeniorityEnum.valueOf(sr.getSeniority()) == pi.getSeniority() 
+								&& pi.getProject().getStartDate().equals(lastProjectDate)){
 							addEmployee = true;
 							break;
 						}else {
@@ -102,6 +114,9 @@ public class SearchReportRestController {
 				}
 			}
 			if (!addEmployee) continue;
+
+			Calendar cal = Calendar.getInstance();
+		//	cal.setTime(sr.getYearOfEmployment());
 			
 			if (sr.getYearOfEmploymentRelation() == null){
 				sr.setYearOfEmploymentRelation("After");

@@ -2,8 +2,7 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -272,18 +271,22 @@ public class Application implements CommandLineRunner {
 	public void addProjects() {
 
 		Project p = new Project();
-		p.setNameProject("HRTool");
-		p.setDurationOfProject(5);
-		projRep.save(p);
-
-		p = new Project();
 		p.setNameProject("SmartHouse");
 		p.setDurationOfProject(10);
+		p.setStartDate(new Date());
+		projRep.save(p);
+		
+		p = new Project();
+		p.setNameProject("HRTool");
+		p.setDurationOfProject(5);
+		p.setStartDate(new Date());
+		p.getStartDate().setTime(p.getStartDate().getTime() + 1000000);
 		projRep.save(p);
 
 		p = new Project();
 		p.setNameProject("Bicycle web shop");
 		p.setDurationOfProject(10);
+		p.setStartDate(new Date());
 		projRep.save(p);
 
 	}
