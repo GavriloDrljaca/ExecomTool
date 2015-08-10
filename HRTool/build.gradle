@@ -30,6 +30,8 @@ dependencies {
     compile 'org.springframework.data:spring-data-rest-webmvc:2.3.2.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE')
     compile('com.lowagie:itext:4.2.1')
+    compile('com.itextpdf:itextpdf:5.5.6')
+    compile('jfree:jfreechart:1.0.13')
     compile("com.h2database:h2")
     testCompile("junit:junit")
 
