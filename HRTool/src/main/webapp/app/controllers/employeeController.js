@@ -1,4 +1,4 @@
-app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService ) {
+app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService, projectService ) {
 
 
 			$scope.init = function(){
@@ -362,8 +362,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			//NEW PROJECTI INFO ENTRY
 			
-			
+			var clickedOnNewProjectInfo = false;
 			$scope.newProjectInfo = function(){
+				if(!clickedOnNewProjectInfo){
+					$scope.getAllProjects();
+					clickedOnNewProjectInfo = true;
+				}
 				if($scope.newProjectInfoEntry == false){
 					$scope.newProjectInfoEntry = true;
 				}else{
@@ -371,10 +375,49 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 			}
 			$scope.newProject = {};
+			$scope.startDateOfProject = null;
 			
+			//GET ALL PROJECTS
+			
+			$scope.getAllProjects = function(){
+				$scope.newProjectOrNot.selectedProjectToAdd = null;
+				projectService.list().success(function (data){
+					$scope.allProjects = data._embedded.projects;
+				});
+				
+			};
 			//add (newProject) and newProjectInfo()
+			var projectToAdd = {};
+			$scope.addExistingProject = function(){
+				$scope.createNewProjectInfo($scope.newProjectOrNot.selectedProjectToAdd);
+			}
 			
+			$scope.addNewProject = function(){
+				projectService.save($scope.newProject).success(function(data){
+					$scope.createNewProjectInfo(data);
+				});
+			}
 			
+			$scope.createNewProjectInfo = function(project){
+				console.log(project);
+				//create new projectInfo
+				var newProjectInfo = {};
+				projectInfoService.create(newProjectInfo).success(function(data){
+					projectInfoService.saveEmployee(data, $scope.currEmp._links.self.href).success(function(){
+						console.log("saved employee");
+					});
+					
+					projectInfoService.saveProject(data, project._links.self.href).success(function(){
+						console.log("saved project");
+					});
+					
+				});
+					//attach employee
+					
+					//attach project
+				
+				
+			}
 			
 			// END OF PROJECT INFOES CONTROLS ?
 			

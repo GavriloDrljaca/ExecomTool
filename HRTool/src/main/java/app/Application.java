@@ -288,6 +288,12 @@ public class Application implements CommandLineRunner {
 		p.setDurationOfProject(10);
 		p.setStartDate(new Date());
 		projRep.save(p);
+		
+		p = new Project();
+		p.setNameProject("Glorified calculator");
+		p.setDurationOfProject(20);
+		p.setStartDate(new Date());
+		projRep.save(p);
 
 	}
 

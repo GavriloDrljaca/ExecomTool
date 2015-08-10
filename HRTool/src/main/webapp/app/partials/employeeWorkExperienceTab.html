@@ -1,8 +1,8 @@
 <div layout = "row">
-<div flex = "60">
+<div flex = "70">
 	<h3>Work experience</h3>
 	<md-list>
-	<md-divider></md-divider>s
+	<md-divider></md-divider>
 	<md-list-item>
 		<md-button class= " md-primary" ng-click = "newProjectInfo()">
 		New entry
@@ -22,29 +22,58 @@
 	</md-list>
 
 </div>
-<div flex = 100 ng-show = "newProjectInfoEntry">
+<div flex = 100 flex offset = "10"ng-show = "newProjectInfoEntry">
 	
 		<p>Choose existing project or make new one</p>
 			 <md-radio-group ng-model="newProjectOrNot.bool">
                 <md-radio-button style="display: inline" value="Existing">Existing </md-radio-button>
                 <md-radio-button style="display: inline" value="New"> New </md-radio-button>
              </md-radio-group>
-             
-        <md-input-container>
-        	<label>Existing</label>
-        	<input type = "text" ng-readonly = "newProjectOrNot.bool != 'Existing'"/>
-        </md-input-container>
-    <form ng-readonly = "newProjectOrNot.bool != 'New'">
+     <div ng-show = "newProjectOrNot.bool == 'Existing'">
+     <h3>Choose existing project</h3>
+     <label>Choose project: </label>
+       <md-select placeholder = "project" ng-model = "newProjectOrNot.selectedProjectToAdd">
+       	<md-option ng-repeat = "proj in allProjects" value = "{{proj}}">
+       		{{proj.nameProject}}
+       	</md-option>
+       </md-select>
+       <br>
+       <md-divider></md-divider>
+        <md-button class = "md-raised md-primary" ng-click = "addExistingProject()">Add existing project to employee</md-button>
+        <md-divider></md-divider>
+     </div>
+     <div ng-show = "newProjectOrNot.bool == 'New'">
+     <h3>Add new project</h3>
+   	 <form>
         <md-input-container>
         	<label>New project name</label>
-        	<input type = "text" ng-model = "newProject.name"/>
+        	<input type = "text" ng-model = "newProject.nameProject"/>
         </md-input-container>
         <md-input-container>
         	<label>New project duration</label>
-        	<input type = "number" ng-model = "newProject.duration"/>
-        </md-input-container>     
+        	<input type = "number" ng-model = "newProject.durationOfProject"/>
+        </md-input-container>
+        <md-input-container>
+        	<label>New project duration</label>
+        	<input type = "date" ng-model = "startDateOfProject"/>
+        </md-input-container>
+        <md-input-container>
+        	<label>New project company name</label>
+        	<input type = "text" ng-model = "newProject.companyName"/>
+        </md-input-container>
+        <br>
+        <label>Execom project: </label>
+             <md-radio-group ng-model="newProject.execom" title = "Execom project">
+                <md-radio-button style="display: inline" value="true"> YES </md-radio-button>
+                <md-radio-button style="display: inline" value="false"> NO </md-radio-button>
+             </md-radio-group>
 	</form>
-
+	<br>
+	<br>
+	<md-divider></md-divider>
+	<md-button class = "md-raised md-primary" ng-click = "addNewProject()">Add new project to employee</md-button>
+	<md-divider></md-divider>
+	</div>
 
 </div>
 <div flex = "100">
