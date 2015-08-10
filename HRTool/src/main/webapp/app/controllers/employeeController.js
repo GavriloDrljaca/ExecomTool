@@ -2,7 +2,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 
 			$scope.init = function(){
-
+				$scope.newProjectInfoEntry = false;
+				$scope.newProjectOrNot = {};
+				
+				$scope.newProjectOrNot.bool = "";
 				if (angular.equals(selectedEmployee, {})){
 					$scope.newEmployee = true;
 					$scope.firstTimeClicked = true;
@@ -93,9 +96,9 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 							new Date(empInfo.endDate);
 						// Calculate date diference
 						$scope.dateDictionary[empInfo.companyName].workExperience = 
-							Math.abs($scope.dateDictionary[empInfo.companyName].endDate.getMonth() -
+							($scope.dateDictionary[empInfo.companyName].endDate.getMonth() -
 							$scope.dateDictionary[empInfo.companyName].startDate.getMonth()) + 
-							(12* (Math.abs($scope.dateDictionary[empInfo.companyName].endDate.getFullYear() -
+							(12* (($scope.dateDictionary[empInfo.companyName].endDate.getFullYear() -
 							$scope.dateDictionary[empInfo.companyName].startDate.getFullYear())));
 						
 					}else{
@@ -174,7 +177,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// ADDING NEW TAG TO EMPLOYMENT INFO
 			$scope.newTag = {};
 			$scope.addNewTagCloudEI= function(companyName, newName, type){
-				alert("asdfasd");
 				$scope.newTag.nameTagCloud = newName;
 				$scope.newTag.tipTagCloud = type;
 				/*
@@ -248,13 +250,13 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.extractProjectInfosTagClouds();
 					$scope.firstTimeClicked = true;
 				}
+				$scope.newProjectInfoEntry = false;
 				if (!angular.equals($scope.infoToShow.projectExperiance, undefined)){
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
 					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
 					try{
-						alert("saving in show info");
 						console.log($scope.projects[$scope.index]);
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
 						console.log($scope.projectInfosTagClouds[$scope.index].technologieTags);
@@ -262,7 +264,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
 						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
 					}catch(err){
-						alert("error in showInfo()");
 					
 					}
 				}
@@ -298,6 +299,82 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				});
 				
 			}
+			$scope.newTag = {};
+			$scope.addNewTagCloudProjectInfo= function(newName, type){
+				$scope.newTag.nameTagCloud = newName;
+				$scope.newTag.tipTagCloud = type;
+				
+				if($scope.checkDuplicateProjectInfoTag(newName, type)){ 
+					return; 
+				}
+				 
+				tagCloudService.create($scope.newTag).success(function(data){
+					$scope.tagClouds.push(data);
+					// $scope.tagC.push(data);
+					$scope.loadedAll = false;
+					loadTags();
+					// PUSH TO APPROPRIATE ARRAY
+					if(type == "Technologie"){
+						$scope.projectInfosTagClouds[$scope.index].technologieTags.push(data);
+					}else if(type == "JobRole"){
+						$scope.projectInfosTagClouds[$scope.index].jobRoleTags.push(data);
+					}else if(type == "Database"){
+						$scope.projectInfosTagClouds[$scope.index].databaseTags.push(data);
+						
+					}else if(type == "IDE"){
+						$scope.projectInfosTagClouds[$scope.index].ideTags.push(data);
+					}
+				});
+			}
+			
+			$scope.unigueProjTag = false;
+			$scope.checkDuplicateProjectInfoTag = function(newName, type){
+				$scope.unigueProjTag = false;
+				if(type == "Technologie"){
+					angular.forEach($scope.projectInfosTagClouds[$scope.index].technologieTags, function(tag, key){
+						if(tag.nameTagCloud == newName){
+							$scope.uniqueProjTag = true;
+						}
+					});
+				}else if(type == "JobRole"){
+					angular.forEach($scope.projectInfosTagClouds[$scope.index].jobRoleTags, function(tag, key){
+						if(tag.nameTagCloud == newName){
+							$scope.uniqueProjTag = true;
+						}
+					});
+				}else if(type == "Database"){
+					angular.forEach($scope.projectInfosTagClouds[$scope.index].databaseTags, function(tag, key){
+						if(tag.nameTagCloud == newName){
+							$scope.uniqueProjTag = true;
+						}
+					});
+					
+				}else if(type == "IDE"){
+					angular.forEach($scope.projectInfosTagClouds[$scope.index].ideTags, function(tag, key){
+						if(tag.nameTagCloud == newName){
+							$scope.uniqueProjTag = true;
+						}
+					});
+				}
+				
+				return $scope.uniqueProjTag;
+				
+			}
+			//NEW PROJECTI INFO ENTRY
+			
+			
+			$scope.newProjectInfo = function(){
+				if($scope.newProjectInfoEntry == false){
+					$scope.newProjectInfoEntry = true;
+				}else{
+					$scope.newProjectInfoEntry = false;
+				}
+			}
+			$scope.newProject = {};
+			
+			//add (newProject) and newProjectInfo()
+			
+			
 			
 			// END OF PROJECT INFOES CONTROLS ?
 			
@@ -362,13 +439,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
 					try{
-						alert("saving in save");
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
 						$scope.projectInfosTagClouds[$scope.index].databaseTags = $scope.infoToShow.databaseTags;
 						$scope.projectInfosTagClouds[$scope.index].ideTags = $scope.infoToShow.ideTags;
 						$scope.projectInfosTagClouds[$scope.index].jobRoleTags = $scope.infoToShow.jobRoleTags;
 					}catch(err){
-						alert("saving in //saving project");
 					
 					}
 					
@@ -396,7 +471,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 	
 							projectInfoService.saveTagClouds($scope.projInfos[i], tagURLs);
 						}catch(err){
-							alert("nemaa")
 						}
 					}
 					$mdDialog.cancel();
@@ -441,10 +515,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 
 			$scope.showForm = function(forma) {
 				$scope.activeForm = forma;
-			}
-			$scope.showDate = function(bla) {
-				alert($scope.dateOfBirth);
-				alert(new Date($scope.DateOfBirth))
 			}
 			/*
 			 * function toJSONLocal (date) { var local = new Date(date);
@@ -608,9 +678,11 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.addNewTagCloud= function(newName, type){
 				$scope.newTag.nameTagCloud = newName;
 				$scope.newTag.tipTagCloud = type;
-				/*
-				 * if($scope.checkDuplicate(newName, type)){ return; }
-				 */
+				
+				  if($scope.checkDuplicate(newName, type)){ 
+					  return; 
+				 }
+				 
 				tagCloudService.create($scope.newTag).success(function(data){
 					$scope.tagClouds.push(data);
 					// $scope.tagC.push(data);
@@ -622,7 +694,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			
 			
-			
+			$scope.nonUnique = false;
 			$scope.checkDuplicate = function(name, type){
 				$scope.nonUnique = false;
 				angular.forEach($scope.tagDictionary[type], function(value, key){

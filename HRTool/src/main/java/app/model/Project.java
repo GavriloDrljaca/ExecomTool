@@ -24,6 +24,7 @@ public class Project {
 	private String nameProject;
 	private Date startDate;
 	private int durationOfProject;
+	//IS EXECOM PROJECT
 	private boolean execom;
 	private String companyName;
 	
