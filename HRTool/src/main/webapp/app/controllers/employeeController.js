@@ -13,6 +13,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.newEmployee = true;
 					$scope.firstTimeClicked = true;
 					// TAGCLOUDS ARE EMPTY!!
+					
 					$scope.initEmptyTagClouds();
 					// INIT EMPLOYMENT INFOES
 					$scope.employmentInfos = [];
@@ -159,6 +160,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.employmentInfos.push(data);
 					$scope.extractEmploymentDates();
 					$scope.extractEmploymentInfosTags();
+					//NOVI EMPLOYEMNT INFO SE DIREKTNO CUVA BEZ potrebe
+					
 					// ATTACH IT TO EMPLOYEEE
 					// IT WILL BE ATTACH IN FUNCTION saveEItoEMployee
 					/*
@@ -166,6 +169,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					 * $scope.currEmp).success(function(){ alert("saved!"); })
 					 */
 				});
+				
 				$scope.addNewEmpInfo = "false";
 			}
 			$scope.saveEIsToEmployee = function(){
@@ -201,7 +205,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.getProjects = function(){
 				$scope.projects = [];
 				$scope.projectInfosTagClouds = [];
-				$scope.projInfos = {};
+				$scope.projInfos = [];
 				if (selectedEmployee._links!=undefined)	
 					$http.get(selectedEmployee._links.projectInfos.href).success(function (data) {
 						if(data._embedded != undefined) {
@@ -447,8 +451,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				employeeService.create($scope.currEmp).success(function(data) {
 					$scope.currEmp = data;
 					// $scope.saveTags();
+					selectedEmployee = $scope.currEmp;
 					$scope.newEmployee = false;
 					// $mdDialog.cancel();
+					$scope.init();
 					
 				});	
 			}
@@ -562,7 +568,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			 */
 			// TAGCLOUD: FILL tagCLOUDS
 			$scope.fillTagClouds = function(){
-				employeeService.getEmployeeTagClouds(selectedEmployee).success(function(data){
+				employeeService.getEmployeeTagClouds($scope.currEmp).success(function(data){
 					
 					if(!data.hasOwnProperty('_embedded')){
 						$scope.initEmptyTagClouds();

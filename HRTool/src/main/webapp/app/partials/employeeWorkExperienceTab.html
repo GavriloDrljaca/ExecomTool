@@ -39,7 +39,7 @@
        </md-select>
        <br>
        <md-divider></md-divider>
-        <md-button class = "md-raised md-primary" ng-click = "addExistingProject()">Add existing project to employee</md-button>
+        <md-button class = "md-raised md-primary" ng-click = "addExistingProject()" ng-disabled = "newProjectOrNot.selectedProjectToAdd == null">Add existing project to employee</md-button>
         <md-divider></md-divider>
      </div>
      <div ng-show = "newProjectOrNot.bool == 'New'">
