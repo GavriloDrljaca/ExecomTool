@@ -5,6 +5,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.newProjectInfoEntry = false;
 				$scope.newProjectOrNot = {};
 				$scope.projInfos = [];
+				$scope.newProject = {};
+				$scope.newProject.startDate = new Date();
 				
 				$scope.newProjectOrNot.bool = "";
 				if (angular.equals(selectedEmployee, {})){
@@ -365,8 +367,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.newProjectInfoEntry = false;
 				}
 			}
-			$scope.newProject = {};
-			$scope.newProject.startDate = new Date();
+			
 			
 			//GET ALL PROJECTS
 			
@@ -384,7 +385,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			
 			$scope.addNewProject = function(){
-				$scope.newProject.startDate = $scope.newProject.startDate.toJSON();
 				projectService.save($scope.newProject).success(function(data){
 					alert(data._links.self.href)
 					$scope.createNewProjectInfo(data._links.self.href);
@@ -410,6 +410,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.projInfos.push(newProjectInfo);
 				$scope.getProjects();
 				$scope.newProjectInfoEntry = false;
+				$scope.newProject = {};
 			}
 			
 			// END OF PROJECT INFOES CONTROLS ?
