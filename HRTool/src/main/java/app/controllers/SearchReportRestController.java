@@ -67,13 +67,14 @@ public class SearchReportRestController {
 					lastProjectDate = projectInfoes.iterator().next().getProject().getStartDate();
 				}
 				for (ProjectInfo pi : projectInfoes){
-					if (pi.getProject().getStartDate().after(lastProjectDate)){
+					
+					if (pi.getProject().getStartDate()!=null && pi.getProject().getStartDate().after(lastProjectDate)){
 						lastProjectDate = pi.getProject().getStartDate();
 					}
 				}
 				for (ProjectInfo pi : projectInfoes){
 					if (sr.getSeniority() != null){
-						if (SeniorityEnum.valueOf(sr.getSeniority()) == pi.getSeniority() 
+						if (pi.getProject().getStartDate()!=null && SeniorityEnum.valueOf(sr.getSeniority()) == pi.getSeniority() 
 								&& pi.getProject().getStartDate().equals(lastProjectDate)){
 							addEmployee = true;
 							break;

@@ -274,6 +274,7 @@ public class Application implements CommandLineRunner {
 		p.setNameProject("SmartHouse");
 		p.setDurationOfProject(10);
 		p.setStartDate(new Date());
+		p.setExecom(true);
 		projRep.save(p);
 		
 		p = new Project();
@@ -281,18 +282,21 @@ public class Application implements CommandLineRunner {
 		p.setDurationOfProject(5);
 		p.setStartDate(new Date());
 		p.getStartDate().setTime(p.getStartDate().getTime() + 1000000);
+		p.setExecom(true);
 		projRep.save(p);
 
 		p = new Project();
 		p.setNameProject("Bicycle web shop");
 		p.setDurationOfProject(10);
 		p.setStartDate(new Date());
+		p.setExecom(true);
 		projRep.save(p);
 		
 		p = new Project();
 		p.setNameProject("Glorified calculator");
 		p.setDurationOfProject(20);
 		p.setStartDate(new Date());
+		p.setExecom(true);
 		projRep.save(p);
 
 	}

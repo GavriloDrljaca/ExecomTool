@@ -7,14 +7,22 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		employeeService.list().success(function(data) {
 			$scope.employees = data._embedded.employees;
 		})
-
-		projectService.list().success(function(data) {
-			$scope.projects = data._embedded.projects;
-		})
+		$scope.getExecomProjects();
+		
 		$scope.newEmployee = {};
 		$scope.newProject = {};
 	}
 	
+	$scope.getExecomProjects = function(){
+		projectService.list().success(function(data) {
+			$scope.projects = [];
+			angular.forEach(data._embedded.projects, function(value, key){
+				if (value.execom == true){
+					$scope.projects.push(value);
+				}
+			})
+		})
+	}
 	
 	$scope.submit = function(){
 		employeeService.create($scope.currEmp).success(function(data){
@@ -77,12 +85,15 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
 				$scope.newEmployee ={};
-			})
+			});
+			$scope.getExecomProjects();
+			
 		}, function() {
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
 				$scope.newEmployee ={};
-			})
+			});
+			$scope.getExecomProjects();
 		});
 	};
 
