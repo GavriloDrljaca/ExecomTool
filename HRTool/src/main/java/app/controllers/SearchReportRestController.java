@@ -1,4 +1,4 @@
-package app.controllers.http;
+package app.controllers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
