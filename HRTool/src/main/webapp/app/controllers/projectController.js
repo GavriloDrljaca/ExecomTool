@@ -55,6 +55,17 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		});
 	};
 
+	$scope.employeeClicked = function (employee, index) {
+		console.log("tu sam");
+		if ($scope.firstTimeClicked === false) {
+			$scope.firstTimeClicked === true;
+		}
+		projectInfoService.getForProjectAndEmployee(selectedProject._links.self.href, employee._links.self.href).success(function (data) {
+			console.log(data);
+		});
+		//$scope.employeesToClick[index];
+	}
+
 	//Odredjuje koji zaposleni nisu na projektu i stavlja ih u listu izbora za dodavanje
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {

@@ -22,6 +22,12 @@ app.service('projectInfoService', function($http) {
 		getForProject: function(project){
 			return $http.get(project._links.projectInfo.href);
 		},
+		getForEmployee: function(employee) {
+			return $http.get(employee._links.projectInfos.href);
+		},
+		getForProjectAndEmployee: function(project, employee) {
+			return $http.get(url + "/search/findByProjectAndEmployee?project=" + project + "&employee=" + employee);
+		},
 		saveProject: function(projectInfo, projectUrl){
 			return $http({
 				url: projectInfo._links.project.href,
