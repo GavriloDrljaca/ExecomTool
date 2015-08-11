@@ -1,6 +1,6 @@
-app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 'selectedProject', 'projectService', 
+app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','$window', '$mdDialog', 'selectedProject', 'projectService', 
                                      'projectInfoService', 'employeeService', 'tagCloudService',
-                                     function($http, $scope, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService, tagCloudService){
+                                     function($http, $scope, $mdToast, $animate, $window, $mdDialog, selectedProject, projectService, projectInfoService, employeeService, tagCloudService){
 		
 	$scope.selectedProject = selectedProject;
 	var allIndustries = [];
@@ -62,8 +62,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	};
 
 	$scope.employeeClicked = function (employee) {
-		console.log("tu sam");
-		if ($scope.firstTimeClicked === undefined) {
+		if ($scope.firstTimeClicked !== true) {
 			$scope.firstTimeClicked = true;
 		}
 		$scope.clickedEmployee = employee;
@@ -97,11 +96,11 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.selectedProject.nameProject = "No name given";
 		}
 		projInfos = [];
-		/*for (i=0; i<$scope.employees.length; i++) {
-			projInfos[i] = $scope.employees[i].projectInfo;
-			projectInfoService.update(projInfos[i]);
-		};*/
-		projectInfoService.update($scope.clickedEmployee.projectInfo);
+		
+		// if none of the employees is clicked
+		if ($scope.clickedEmployee !== undefined) {
+			projectInfoService.update($scope.clickedEmployee.projectInfo);			
+		}
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.startDate = $scope.selectedProject.startDate;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
@@ -109,7 +108,9 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		$scope.projectExp = "";
 		saveProjectTags();
 		saveProjectInfoTags();
-		projectService.update(selectedProject);
+		projectService.update(selectedProject).success(function (data) {
+			$scope.showSimpleToast();
+		});
 	};
 	
 	$scope.addEmployeeToProject = function(employeeIndex){
@@ -131,12 +132,13 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	}
 	
 	$scope.removeEmployeeFromProject = function(employee){
-		console.log(employee);
-		console.log(employee.projectInfo);
+		if (employee._links.self.href === $scope.clickedEmployee._links.self.href) {
+			$scope.firstTimeClicked = false;
+		}
 		employee.projectInfo.active = false;
 		projectInfoService.update(employee.projectInfo).success(function(){
 			getEmployees();			
-		})
+		});
 	}
 	
 	$scope.createProject = function(){
@@ -185,7 +187,6 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 						$scope.oss.push(tagClouds[i]);
 					};
 				};
-				$scope.updateAllIndustries();
 			};
 		});
 	};
@@ -196,23 +197,26 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		$scope.clickedEmployee.databases = [];
 		$scope.clickedEmployee.ides = [];
 		tagCloudService.getForProjectInfo(clickedEmployee.projectInfo).success(function (data) {
-			var tagClouds = data._embedded.tagClouds;
-			for (i=0; i<tagClouds.length; i++) {
-				switch (tagClouds[i].tipTagCloud) {
-				case "JobRole":
-					$scope.clickedEmployee.jobRoles.push(tagClouds[i]);
-					break;
-				case "Technologie":
-					$scope.clickedEmployee.technologies.push(tagClouds[i]);
-					break;
-				case "Database":
-					$scope.clickedEmployee.databases.push(tagClouds[i]);
-					break;
-				case "IDE":
-					$scope.clickedEmployee.databases.push(tagClouds[i]);
-					break;
+			tagClouds = [];
+			if (data._embedded !== undefined) {
+				tagClouds = data._embedded.tagClouds;
+				for (i=0; i<tagClouds.length; i++) {
+					switch (tagClouds[i].tipTagCloud) {
+					case "JobRole":
+						$scope.clickedEmployee.jobRoles.push(tagClouds[i]);
+						break;
+					case "Technologie":
+						$scope.clickedEmployee.technologies.push(tagClouds[i]);
+						break;
+					case "Database":
+						$scope.clickedEmployee.databases.push(tagClouds[i]);
+						break;
+					case "IDE":
+						$scope.clickedEmployee.ides.push(tagClouds[i]);
+						break;
+					}
 				}
-			}
+			};
 		});
 	};
 
@@ -393,7 +397,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 				$scope.oss.push(data);
 			} else if (data.tipTagCloud === "Technologie") {
 				allTechnologies.push(data);
-				$scope.clickedEmployee.techonologies.push(data);
+				$scope.clickedEmployee.technologies.push(data);
 			} else if (data.tipTagCloud === "Database") {
 				allDatabases.push(data);
 				$scope.clickedEmployee.databases.push(data);
@@ -410,8 +414,16 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	var saveProjectTags = function(){
 		var req = "";
 		var newTags = [];
-		newTags = newTags.concat($scope.industries, $scope.platforms, $scope.oss);
-		if (newTags !== undefined) {
+		if ($scope.industries !== undefined) {
+			newTags = newTags.concat($scope.industries);
+		};
+		if ($scope.platforms !== undefined) {
+			newTags = newTags.concat($scope.platforms);
+		};
+		if ($scope.oss !== undefined) {
+			newTags = newTags.concat($scope.oss);
+		};
+		if (newTags.length > 0) {
 			for(i =0; i<newTags.length; i++){
 				req += newTags[i]._links.self.href +"\n";
 			}
@@ -422,13 +434,26 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	var saveProjectInfoTags = function() {
 		var req = "";
 		var newTags = [];
-		newTags = newTags.concat($scope.clickedEmployee.technologies, $scope.clickedEmployee.ides, $scope.clickedEmployee.databases, $scope.clickedEmployee.jobRoles);
-		if (newTags !== undefined) {
-			for(i =0; i<newTags.length; i++){
-				req += newTags[i]._links.self.href +"\n";
-			}
-		};
-		tagCloudService.saveTag($scope.clickedEmployee.projectInfo._links.tagClouds.href, req)
+		if ($scope.clickedEmployee !== undefined) {
+			if ($scope.clickedEmployee.technologies !== undefined) {
+				newTags = newTags.concat($scope.clickedEmployee.technologies);
+			};
+			if ($scope.clickedEmployee.ides !== undefined) {
+				newTags = newTags.concat($scope.clickedEmployee.ides);
+			};
+			if ($scope.clickedEmployee.databases !== undefined) {
+				newTags = newTags.concat($scope.clickedEmployee.databases);
+			};
+			if ($scope.clickedEmployee.jobRoles !== undefined) {
+				newTags = newTags.concat($scope.clickedEmployee.jobRoles);
+			};
+			if (newTags.length > 0) {
+				for(i =0; i<newTags.length; i++){
+					req += newTags[i]._links.self.href +"\n";
+				}
+			};
+			tagCloudService.saveTag($scope.clickedEmployee.projectInfo._links.tagClouds.href, req);
+		}
 	}
 	
 	//autocomplete search
@@ -474,4 +499,28 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
 	};
+	
+	//Project updated Toast
+	$scope.toastPosition = {
+	    bottom: false,
+	    top: true,
+	    left: false,
+	    right: true
+	};
+	
+	$scope.getToastPosition = function() {
+	    return Object.keys($scope.toastPosition)
+	      .filter(function(pos) { return $scope.toastPosition[pos]; })
+	      .join(' ');
+	};
+	
+	$scope.showSimpleToast = function() {
+	    $mdToast.show(
+	      $mdToast.simple()
+	        .content("Project " + selectedProject.nameProject + " updated!")
+	        .position($scope.getToastPosition())
+	        .hideDelay(3000)
+	    );
+	};
+	
 }]);
