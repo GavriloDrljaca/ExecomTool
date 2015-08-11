@@ -4,7 +4,7 @@
     <form>
 	    <md-content layout="row">
 	    <div flex="50">
-	         <p>Seniority</p>
+	         <p>Seniority:</p>
              <md-radio-group ng-model="report.seniority">
                 <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
                 <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
@@ -18,15 +18,15 @@
 	            <md-radio-button style="display: inline" value="Less"> Less </md-radio-button>
 	            <md-radio-button style="display: inline" value="Equals"> Equals </md-radio-button>
 	            <md-radio-button style="display: inline" value="More"> More </md-radio-button>
-	         </md-radio-group>
+	         </md-radio-group><span>Default is Equals</span>
 	         <br/>
 	         <md-input-container md-no-float = "true">
-	           <label>Date of employment:</label><input type="date" ng-model="report.yearOfEmployment"/>
+	           <label>Date of employment in execom:</label><input type="date" ng-model="report.yearOfEmployment"/>
 	         </md-input-container>
 		     <md-radio-group ng-model="report.yearOfEmploymentRelation">
 		        <md-radio-button style="display: inline" value="Before"> Before </md-radio-button>
 		        <md-radio-button style="display: inline" value="After"> After </md-radio-button>
-		     </md-radio-group>
+		     </md-radio-group><span>Default is After</span>
 		     <br/>
 		     <h5>Education</h5>
              <md-chips ng-model="report.searchTagDictionary['Education']" md-autocomplete-snap="" md-require-match="" readonly = "false">
@@ -118,7 +118,7 @@
               <md-button class="md-primary" ng-click="makeReport()">Find employees by criteria</md-button>
               <md-button class="md-primary" ng-click="clearForm()">Clear form and result</md-button>
         </div>
-        <div>
+        <div offset="10">
 	         <md-list layout="column" layout-align="center start">   
 	            <md-list-item class="md-3-line">
 	                <md-input-container>

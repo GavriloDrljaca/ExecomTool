@@ -22,7 +22,8 @@ import app.repository.EmployeeRepository;
 
 @RestController
 public class SearchReportRestController {
-
+	
+	//Calculates how many years of experiance the given employee has
 	private int calculateYearsOfExperiance(Employee employee){
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
@@ -58,23 +59,22 @@ public class SearchReportRestController {
 		for (Employee emp : allEmployees){
 			boolean addEmployee = false;
 			projectInfoes = emp.getProjectInfos();
-			if (projectInfoes.size()==0 && sr.getSeniority() == null){
+			if (sr.getSeniority() == null){  
 				addEmployee = true;
 			}
-			else{
+			else{ //considers employees from chronologically last projects they are working on and have appropriate seniority level
 				Date lastProjectDate = null;
 				if (projectInfoes.size()!=0){
 					lastProjectDate = projectInfoes.iterator().next().getProject().getStartDate();
 				}
 				for (ProjectInfo pi : projectInfoes){
-					
 					if (pi.getProject().getStartDate()!=null &&
 							pi.getProject().getStartDate().after(lastProjectDate)){
 						lastProjectDate = pi.getProject().getStartDate();
 					}
 				}
 				for (ProjectInfo pi : projectInfoes){
-					if (sr.getSeniority() != null){
+					//if (sr.getSeniority() != null){
 						if (pi.getProject().getStartDate()!=null && SeniorityEnum.valueOf(sr.getSeniority()) == pi.getSeniority() 
 								&& pi.getProject().getStartDate().equals(lastProjectDate)){
 							addEmployee = true;
@@ -84,14 +84,14 @@ public class SearchReportRestController {
 								addEmployee = false;
 							}
 						}
-					}else {
+				/*	}else {
 						addEmployee = true;
 						break;
-					}
+					}*/
 				}
 			}
-			
 			if (!addEmployee) continue;
+			
 			if (sr.getYearsOfExperiance() > 0){
 				calculateYearsOfExperiance(emp);
 				if (sr.getYearsOfExperianceRelation() == null){

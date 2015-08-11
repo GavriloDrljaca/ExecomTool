@@ -6,7 +6,10 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		
 		employeeService.list().success(function(data) {
 			$scope.employees = data._embedded.employees;
-		})
+		});
+		projectService.list().success(function(data) {
+			$scope.allProjects = data._embedded.projects;
+		});
 		$scope.getExecomProjects();
 		
 		$scope.newEmployee = {};
