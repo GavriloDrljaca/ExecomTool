@@ -60,7 +60,8 @@ public class CVGenerator {
 		try {
 			execomImage = Image.getInstance("execom-logo.jpg");
 			if(e.getImage() != null) {
-				image = Image.getInstance(e.getImage());
+				System.out.println(e.getImage());
+				image = Image.getInstance("src/main/webapp/" + e.getImage());
 			}
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
@@ -69,7 +70,7 @@ public class CVGenerator {
 		}
 		execomImage.scaleAbsolute(250, 40);
 
-		image.scaleAbsolute(60, 60);
+		image.scaleAbsolute(70, 70);
 		Phrase basic = new Phrase(e.getNameEmployee(), font1);
 		Paragraph basicTitle = new Paragraph(basic);
 		Table nameAndImage = new Table(2, 1);
