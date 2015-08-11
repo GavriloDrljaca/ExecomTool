@@ -88,8 +88,8 @@
         <div offset="5" flex="40" layout="column">          
             <label ng-show="!newProject" style="font-size: 20px">Employees on the project:</label><br/><br/>
             <md-list>
-				<md-list-item class="md-2-line" ng-repeat="emp in employees" ng-click="employeeClicked(emp)">
-					<div class="md-list-item-text">
+				<md-list-item class="md-2-line" ng-repeat="emp in employees">
+					<div class="md-list-item-text" ng-click="employeeClicked(emp)">
 						<h3>{{ emp.nameEmployee }}</h3>
 						<p>{{ emp.email }}</p>
 					</div>

@@ -75,6 +75,8 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 			$scope.otherEmployees = data._embedded.employees;
 			if (!$scope.newProject){
 				var temp = $scope.otherEmployees;
+				console.log(employees);
+				console.log(employees.length);
 				for(i=0; i<employees.length; i++) {
 					for (k=0; k<temp.length; k++){
 						if (temp[k]._links.self.href == employees[i]._links.self.href){
@@ -113,7 +115,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		});
 	};
 	
-	$scope.addEmployeeToProject = function(employeeIndex){
+	$scope.addEmployeeToProject = function(employeeIndex) {
 		$scope.newProjectInfo = {};
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
@@ -124,12 +126,20 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 				projectInfoService.saveProject(temp, $scope.selectedProject._links.self.href).success(function(data){
 					projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href).success(function(){
 						$scope.otherEmployees.splice(employeeIndex,1);
-						getEmployees();
 					});	
-				})
-			})	
-		}
-	}
+				});
+			});
+		};
+	};
+	
+	var checkDuplicateEmployeeOnTheProject = function (employee, array) {
+		for (i=0; i<array.length; i++) {
+			if (employee._links.self.href === array[i]._links.self.href) {
+				return true;
+			};
+		};
+		return false;
+	};
 	
 	$scope.removeEmployeeFromProject = function(employee){
 		if ($scope.clickedEmployee !== undefined) {
@@ -389,38 +399,37 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		newTag.tipTagCloud = type;
 		tagCloudService.create(newTag).success(function(data){
 			if (data.tipTagCloud === "Industry") {
-				console.log(checkDuplicate(newTag.nameTagCloud, allIndustries));
 				if (!checkDuplicate(newTag.nameTagCloud, $scope.industries)) {
 					allIndustries.push(data);
 					$scope.industries.push(data);					
 				}
 			} else if (data.tipTagCloud === "Platform") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.platforms)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.platforms)) {
 					allPlatforms.push(data);
 					$scope.platforms.push(data);
 				}
 			} else if (data.tipTagCloud === "OS") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.oss)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.oss)) {
 					allOss.push(data);
 					$scope.oss.push(data);
 				}
 			} else if (data.tipTagCloud === "Technologie") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.technologies)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.technologies)) {
 					allTechnologies.push(data);
 					$scope.clickedEmployee.technologies.push(data);
 				}
 			} else if (data.tipTagCloud === "Database") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.databases)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.databases)) {
 					allDatabases.push(data);
 					$scope.clickedEmployee.databases.push(data);
 				}
 			} else if (data.tipTagCloud === "IDE") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.ides)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.ides)) {
 					allIDEs.push(data);
 					$scope.clickedEmployee.ides.push(data);
 				}
 			} else if (data.tipTagCloud === "JobRole") {
-				if (checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.jobRoles)) {
+				if (!checkDuplicate(newTag.nameTagCloud, $scope.clickedEmployee.jobRoles)) {
 					allJobRoles.push(data);
 					$scope.clickedEmployee.jobRoles.push(data);
 				};
