@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,15 +9,19 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,18 +57,18 @@ public class ReportRestController {
 	ProjectInfoRepository projectInfoRepository;
 
 	@RequestMapping("/cv")
-	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) {
+	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee e = employeeRepository.findOne(id);
 		List<TagCloud> education = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		List<TagCloud> language = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<ProjectInfo> pinfos = e.getProjectInfos();
-		List<TagCloud> databases = new ArrayList<>();
-		List<TagCloud> ides = new ArrayList<>();
-		List<TagCloud> technologies = new ArrayList<>();
+		Set<TagCloud> databases = new HashSet<>();
+		Set<TagCloud> ides = new HashSet<>();
+		Set<TagCloud> technologies = new HashSet<>();
 		Map<Project, List<TagCloud>> projects = new HashMap<>();
 		for(ProjectInfo pi : pinfos) {
 			List<TagCloud> tempTech = new ArrayList<>(); 
-			for(TagCloud tc : pi.getProject().getTagClouds()) {
+			for(TagCloud tc : pi.getTagClouds()) {
 				if(tc.getTipTagCloud().equals(TagCloudEnum.Technologie)) {
 					tempTech.add(tc);
 					technologies.add(tc);
@@ -78,15 +83,16 @@ public class ReportRestController {
 			projects.put(pi.getProject(),tempTech);
 			
 		}
+		File file = null;
 		try {
-			CVGenerator.generate(e,education,language,projects, technologies, databases, ides);
+			file = CVGenerator.generate(e,education,language,projects, technologies, databases, ides);
 		} catch (FileNotFoundException e2) {
 			e2.printStackTrace();
 		} catch (DocumentException e2) {
 			e2.printStackTrace();
 		}
-		
-		String fileName = "CV.rtf";	
+		String employeeName = e.getNameEmployee().replace(" ", "_");
+		String fileName = employeeName + "_CV.rtf";	
 		Path path = Paths.get(fileName);
     	byte[] data = null;
 		try {
@@ -97,6 +103,7 @@ public class ReportRestController {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/rtf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
+    	file.delete();
     	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
         return response;
 	}
@@ -108,7 +115,7 @@ public class ReportRestController {
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "chart.pdf";
+		String fileName = "seniority-chart.pdf";
 		Path path = Paths.get(fileName);
     	byte[] data = null;
 		try {
@@ -129,7 +136,7 @@ public class ReportRestController {
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "chart.pdf";
+		String fileName = "technology-chart.pdf";
 		Path path = Paths.get(fileName);
     	byte[] data = null;
 		try {
@@ -151,7 +158,7 @@ public class ReportRestController {
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "chart.pdf";
+		String fileName = "database-chart.pdf";
 		Path path = Paths.get(fileName);
     	byte[] data = null;
 		try {
