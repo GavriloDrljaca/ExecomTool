@@ -10,6 +10,13 @@
         <div flex offset="5" flex="25">
 			<md-list layout="column" layout-align="center start">  
 			    <md-list-item class="md-3-line">
+                    <md-radio-group ng-model="projectGroup" ng-change="setProjectList(projectGroup)">
+                        <md-radio-button style="display: inline" value="Execom"> All Execom projects </md-radio-button>
+                        <md-radio-button style="display: inline" value="Active"> Active Execom projects </md-radio-button>
+                        <md-radio-button style="display: inline" value="All"> All projects (Execom and from employee history) </md-radio-button>
+                    </md-radio-group>
+                 </md-list-item>
+                 <md-list-item>
 			        <md-input-container>
 			            <label>Filter projects:</label>
 			            <input type="text" ng-model="filterForProjects"/>
