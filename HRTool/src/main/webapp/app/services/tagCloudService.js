@@ -29,6 +29,9 @@ app.service('tagCloudService', function($http){
 		},
 		generate: function(email) {
 			return $http.get("/report/cv?email=" + email);
+		},
+		getForProjectInfo: function(projectInfo) {
+			return $http.get(projectInfo._links.tagClouds.href);
 		}
 	}
 	

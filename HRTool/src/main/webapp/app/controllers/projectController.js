@@ -6,6 +6,10 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 	var allIndustries = [];
 	var allPlatforms = [];
 	var allOss = [];
+	var allTechnologies = [];
+	var allIDEs = [];
+	var allDatabases = [];
+	var allJobRoles = [];
 	
 	$scope.init = function() {
 		if (!angular.equals(selectedProject, {}	)){
@@ -13,6 +17,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.selectedProject.startDate = new Date(selectedProject.startDate);
 			getEmployees();
 			getAllTagCloudsForProject();
+			getAllTagCloudsForProjectInfo();
 			getTagCloudsForProject();
 		}else{
 			$scope.projInfos = {};
@@ -21,6 +26,7 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.employees = {};
 			getOtherEmployees();
 			getAllTagCloudsForProject();
+			getAllTagCloudsForProjectInfo();
 		}
 	};
 	
@@ -55,15 +61,13 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		});
 	};
 
-	$scope.employeeClicked = function (employee, index) {
+	$scope.employeeClicked = function (employee) {
 		console.log("tu sam");
-		if ($scope.firstTimeClicked === false) {
-			$scope.firstTimeClicked === true;
+		if ($scope.firstTimeClicked === undefined) {
+			$scope.firstTimeClicked = true;
 		}
-		projectInfoService.getForProjectAndEmployee(selectedProject._links.self.href, employee._links.self.href).success(function (data) {
-			console.log(data);
-		});
-		//$scope.employeesToClick[index];
+		$scope.clickedEmployee = employee;
+		fillChipsForClickedEmployee(employee);
 	}
 
 	//Odredjuje koji zaposleni nisu na projektu i stavlja ih u listu izbora za dodavanje
@@ -93,16 +97,18 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			$scope.selectedProject.nameProject = "No name given";
 		}
 		projInfos = [];
-		for (i=0; i<$scope.employees.length; i++) {
+		/*for (i=0; i<$scope.employees.length; i++) {
 			projInfos[i] = $scope.employees[i].projectInfo;
 			projectInfoService.update(projInfos[i]);
-		};
+		};*/
+		projectInfoService.update($scope.clickedEmployee.projectInfo);
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.startDate = $scope.selectedProject.startDate;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
 		$scope.jobResponsibilities = "";
 		$scope.projectExp = "";
-		saveTags();
+		saveProjectTags();
+		saveProjectInfoTags();
 		projectService.update(selectedProject);
 	};
 	
@@ -183,6 +189,32 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			};
 		});
 	};
+	
+	var fillChipsForClickedEmployee = function (clickedEmployee) {
+		$scope.clickedEmployee.jobRoles = [];
+		$scope.clickedEmployee.technologies = [];
+		$scope.clickedEmployee.databases = [];
+		$scope.clickedEmployee.ides = [];
+		tagCloudService.getForProjectInfo(clickedEmployee.projectInfo).success(function (data) {
+			var tagClouds = data._embedded.tagClouds;
+			for (i=0; i<tagClouds.length; i++) {
+				switch (tagClouds[i].tipTagCloud) {
+				case "JobRole":
+					$scope.clickedEmployee.jobRoles.push(tagClouds[i]);
+					break;
+				case "Technologie":
+					$scope.clickedEmployee.technologies.push(tagClouds[i]);
+					break;
+				case "Database":
+					$scope.clickedEmployee.databases.push(tagClouds[i]);
+					break;
+				case "IDE":
+					$scope.clickedEmployee.databases.push(tagClouds[i]);
+					break;
+				}
+			}
+		});
+	};
 
 	$scope.updateAllIndustries = function() {
 		$scope.allIndustries = [];
@@ -241,6 +273,83 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 		};
 	};
 	
+	$scope.updateAllJobRoles = function() {
+		$scope.allJobRoles = [];
+		if ($scope.clickedEmployee.jobRoles === undefined) {
+			$scope.clickedEmployee.jobRoles = [];
+		}
+		for (i=0; i<allJobRoles.length; i++) {
+			found = false;
+			for (j=0; j<$scope.clickedEmployee.jobRoles.length; j++) {
+				if (allJobRoles[i]._links.self.href === $scope.clickedEmployee.jobRoles[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allJobRoles.push(allJobRoles[i]);
+			}
+		};
+	};
+	
+	$scope.updateAllDatabases = function() {
+		$scope.allDatabases = [];
+		if ($scope.clickedEmployee.databases === undefined) {
+			$scope.clickedEmployee.databases = [];
+		}
+		for (i=0; i<allDatabases.length; i++) {
+			found = false;
+			for (j=0; j<$scope.clickedEmployee.databases.length; j++) {
+				if (allDatabases[i]._links.self.href === $scope.clickedEmployee.databases[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allDatabases.push(allDatabases[i]);
+			}
+		};
+	};
+	
+	$scope.updateAllIDEs = function() {
+		$scope.allIDEs = [];
+		if ($scope.clickedEmployee.ides === undefined) {
+			$scope.clickedEmployee.ides = [];
+		}
+		for (i=0; i<allIDEs.length; i++) {
+			found = false;
+			for (j=0; j<$scope.clickedEmployee.ides.length; j++) {
+				if (allIDEs[i]._links.self.href === $scope.clickedEmployee.ides[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allIDEs.push(allIDEs[i]);
+			}
+		};
+	};
+	
+	$scope.updateAllTechnologies = function() {
+		$scope.allTechnologies = [];
+		if ($scope.clickedEmployee.technologies === undefined) {
+			$scope.clickedEmployee.technologies = [];
+		}
+		for (i=0; i<allTechnologies.length; i++) {
+			found = false;
+			for (j=0; j<$scope.clickedEmployee.technologies.length; j++) {
+				if (allTechnologies[i]._links.self.href === $scope.clickedEmployee.technologies[j]._links.self.href) {
+					found = true;
+					break;
+				};
+			};
+			if (!found) {
+				$scope.allTechnologies.push(allTechnologies[i]);
+			}
+		};
+		console.log($scope.allTechnologies);
+	};
+	
 	var getAllTagCloudsForProject = function() {
 		tagCloudService.findByTip("Industry").success(function (data) {
 			allIndustries = data._embedded.tagClouds;
@@ -252,6 +361,21 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			allOss = data._embedded.tagClouds;
 		});
 	};
+	
+	var getAllTagCloudsForProjectInfo = function () {
+		tagCloudService.findByTip("JobRole").success(function (data) {
+			allJobRoles = data._embedded.tagClouds;
+		});
+		tagCloudService.findByTip("Technologie").success(function (data) {
+			allTechnologies = data._embedded.tagClouds;
+		});
+		tagCloudService.findByTip("IDE").success(function (data) {
+			allIDEs = data._embedded.tagClouds;
+		});
+		tagCloudService.findByTip("Database").success(function (data) {
+			allDatabases = data._embedded.tagClouds;
+		});
+	}
 	
 	$scope.addNewTagCloud = function(newName, type){
 		var newTag = {};
@@ -267,18 +391,44 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			} else if (data.tipTagCloud === "OS") {
 				allOss.push(data);
 				$scope.oss.push(data);
+			} else if (data.tipTagCloud === "Technologie") {
+				allTechnologies.push(data);
+				$scope.clickedEmployee.techonologies.push(data);
+			} else if (data.tipTagCloud === "Database") {
+				allDatabases.push(data);
+				$scope.clickedEmployee.databases.push(data);
+			} else if (data.tipTagCloud === "IDE") {
+				allIDEs.push(data);
+				$scope.clickedEmployee.ides.push(data);
+			} else if (data.tipTagCloud === "JobRole") {
+				allJobRoles.push(data);
+				$scope.clickedEmployee.jobRoles.push(data);
 			};
 		});
 	};
 	
-	var saveTags = function(){
+	var saveProjectTags = function(){
 		var req = "";
 		var newTags = [];
-		newTags = newTags.concat($scope.industries, $scope.platforms, $scope.oss);		
-		for(i =0; i<newTags.length; i++){
-			req += newTags[i]._links.self.href +"\n";
-		}
+		newTags = newTags.concat($scope.industries, $scope.platforms, $scope.oss);
+		if (newTags !== undefined) {
+			for(i =0; i<newTags.length; i++){
+				req += newTags[i]._links.self.href +"\n";
+			}
+		};
 		tagCloudService.saveTag(selectedProject._links.tagClouds.href, req)
+	}
+	
+	var saveProjectInfoTags = function() {
+		var req = "";
+		var newTags = [];
+		newTags = newTags.concat($scope.clickedEmployee.technologies, $scope.clickedEmployee.ides, $scope.clickedEmployee.databases, $scope.clickedEmployee.jobRoles);
+		if (newTags !== undefined) {
+			for(i =0; i<newTags.length; i++){
+				req += newTags[i]._links.self.href +"\n";
+			}
+		};
+		tagCloudService.saveTag($scope.clickedEmployee.projectInfo._links.tagClouds.href, req)
 	}
 	
 	//autocomplete search
@@ -293,6 +443,19 @@ app.controller('projectController', ['$http', '$scope', '$window', '$mdDialog', 
 			break;
 		case "OS":
 			tagClouds = $scope.allOss;
+			break;
+		case "JobRole":
+			tagClouds = $scope.allJobRoles;
+			break;
+		case "Technologie":
+			tagClouds = $scope.allTechnologies;
+			break;
+		case "Database":
+			tagClouds = $scope.allDatabases;
+			break;
+		case "IDE":
+			tagClouds = $scope.allIDEs;
+			break;
 		};
 	    var results = query ? tagClouds.filter( createFilterFor(query, tip) ) : [];
 		return results;
