@@ -1,4 +1,4 @@
-app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService, projectService ) {
+app.controller('employeeController', function($http, $rootScope, $scope, $window, $mdDialog, $mdToast, selectedEmployee, $filter, employeeService, tagCloudService, employmentInfoesService, projectInfoService, projectService ) {
 
 
 			$scope.init = function(){
@@ -374,20 +374,43 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 			}
 			
-			
 			//GET ALL PROJECTS
-			
 			$scope.getAllProjects = function(){
 				$scope.newProjectOrNot.selectedProjectToAdd = null;
 				projectService.list().success(function (data){
+					
 					$scope.allProjects = data._embedded.projects;
+					
+					//show only projects that are not previously added
+					angular.forEach($scope.projects, function(projOption, key){
+						angular.forEach($scope.allProjects, function(proj, key2){
+							if(projOption._links.self.href == proj._links.self.href){
+								console.log("splicing!");
+								console.log(projOption);
+								$scope.allProjects.splice(key2,1);
+							}
+						});
+						
+					});
 				});
 				
 			};
+			
 			//add (newProject) and newProjectInfo()
 			var projectToAdd = {};
 			$scope.addExistingProject = function(){
 				$scope.createNewProjectInfo($scope.newProjectOrNot.selectedProjectToAdd);
+				
+				//delete project from list of all projects
+				
+				angular.forEach($scope.allProjects, function(proj, key){
+					if(proj._links.self.href == $scope.newProjectOrNot.selectedProjectToAdd){
+						$scope.allProjects.splice(key, 1);
+					}
+				});
+				
+				
+				$scope.newProjectOrNot.selectedProjectToAdd = {};
 			}
 			
 			$scope.addNewProject = function(){
@@ -518,6 +541,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 						}catch(err){
 						}
 					}
+					$scope.showSimpleToast();
 					//$mdDialog.cancel();
 					
 				});
@@ -762,5 +786,27 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				array = emp._links.self.href.split('/');
 				$window.open("/report/cv?id=" + array[array.length-1],"_self");
 			}
-
+			
+			//MD-TOAST
+			$scope.toastPosition = {
+				    bottom: false,
+				    top: true,
+				    left: false,
+				    right: true
+				};
+				
+				$scope.getToastPosition = function() {
+				    return Object.keys($scope.toastPosition)
+				      .filter(function(pos) { return $scope.toastPosition[pos]; })
+				      .join(' ');
+				};
+				
+				$scope.showSimpleToast = function() {
+				    $mdToast.show(
+				      $mdToast.simple()
+				        .content("Employee " + $scope.currEmp.nameEmployee + " updated!")
+				        .position($scope.getToastPosition())
+				        .hideDelay(3000)
+				    );
+				};
 		});
