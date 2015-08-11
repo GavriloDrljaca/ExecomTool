@@ -68,7 +68,8 @@ public class SearchReportRestController {
 				}
 				for (ProjectInfo pi : projectInfoes){
 					
-					if (pi.getProject().getStartDate()!=null && pi.getProject().getStartDate().after(lastProjectDate)){
+					if (pi.getProject().getStartDate()!=null &&
+							pi.getProject().getStartDate().after(lastProjectDate)){
 						lastProjectDate = pi.getProject().getStartDate();
 					}
 				}
