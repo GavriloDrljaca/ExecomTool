@@ -47,7 +47,7 @@ public class ChartGenerator {
 		Document doc = new Document();
 
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
-				new File("chart.pdf")));
+				new File("seniority-chart.pdf")));
 
 		doc.open();
 
@@ -108,7 +108,7 @@ public class ChartGenerator {
 
 		doc.close();
 	}
-	//dodati vrednosti u "bazu" da bi radilo
+
 	public static void generateTechnology(List<ProjectInfo> projInfos, TagCloudEnum tce) throws FileNotFoundException, DocumentException, ParseException {
 
 		List<TagCloud> tagClouds = new ArrayList<>();
@@ -117,10 +117,15 @@ public class ChartGenerator {
 			tagClouds.addAll(pi.getTagClouds());
 		}
 		Document doc = new Document();
-
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
-				new File("chart.pdf")));
-
+		PdfWriter writer = null;
+		if (tce.equals(TagCloudEnum.Technologie)) {
+			writer = PdfWriter.getInstance(doc, new FileOutputStream(
+					new File("technology-chart.pdf")));
+		}
+		else {
+			writer = PdfWriter.getInstance(doc, new FileOutputStream(
+					new File("database-chart.pdf")));
+		}
 		doc.open();
 
 		doc.add(new Phrase("Used " + tce.toString() + "s:"));

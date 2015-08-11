@@ -8,14 +8,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import app.model.Employee;
 import app.model.Project;
-import app.model.ProjectInfo;
 import app.model.TagCloud;
 
 import com.lowagie.text.Cell;
@@ -34,20 +32,23 @@ public class CVGenerator {
 
 	public static Document document = new Document();
 
+	
 	SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	public static void generate(Employee e, List<TagCloud> education,
+	public static File generate(Employee e, List<TagCloud> education,
 			List<TagCloud> language, Map<Project, List<TagCloud>> projects,
-			List<TagCloud> listTechnologies, List<TagCloud> listDatabases,
-			List<TagCloud> listIdes) throws DocumentException,
-			FileNotFoundException {
+			Set<TagCloud> listTechnologies, Set<TagCloud> listDatabases,
+			Set<TagCloud> listIdes) throws DocumentException,
+			MalformedURLException, IOException {
 		Document doc = new Document();
-		OutputStream os = new FileOutputStream(new File("CV.rtf"));
+		String employeeName = e.getNameEmployee().replace(" ", "_");
+		String fileName = employeeName + "_CV.rtf";	
+		File cv =new File(fileName);
+		OutputStream os = new FileOutputStream(cv);
 		RtfWriter2.getInstance(doc, os);
 
 		doc.open();
 
-		// dark purple
 		Font font1 = new Font(Font.TIMES_ROMAN, 25, Font.BOLD,
 				Color.decode("0x170B2C"));
 		Font font2 = new Font(Font.TIMES_ROMAN, 17, Font.BOLD,
@@ -55,11 +56,12 @@ public class CVGenerator {
 		Font font3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.DARK_GRAY);
 
 		Image execomImage = null;
-		Image image = null;
+		Image image = Image.getInstance("NoImage.jpg");
 		try {
 			execomImage = Image.getInstance("execom-logo.jpg");
-			image = Image.getInstance("execom-logo.jpg");
-			//image = Image.getInstance(e.getImage());
+			if(e.getImage() != null) {
+				image = Image.getInstance(e.getImage());
+			}
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -166,16 +168,16 @@ public class CVGenerator {
 		}
 		projectInfo.add("\n");
 
-		Phrase techSkillsTitle = new Phrase("Technical skills and competences",font1);
-		techSkillsTitle.add("\n");
-		techSkillsTitle.add("\n");
+		Phrase techSkills = new Phrase("Technical skills and competences", font1);
+		Paragraph techSkillsTitle = new Paragraph(techSkills);
+		techSkillsTitle.setSpacingAfter(5);
 
 		Phrase techTitle = new Phrase("Technologies:", font2);
 		techTitle.add("\n");
 
 		Paragraph techInfo = new Paragraph();
 		techInfo.setFont(font3);
-
+		
 		for(TagCloud tc : listTechnologies) {
 			techInfo.add(tc.getNameTagCloud());
 			techInfo.add("\n");
@@ -212,6 +214,7 @@ public class CVGenerator {
 		doc.add(projectTitle);
 		doc.add(projectInfo);
 		doc.add(techSkillsTitle);
+		doc.add(new Phrase("\n"));
 		doc.add(techTitle);
 		doc.add(techInfo);
 		doc.add(databaseTitle);
@@ -219,6 +222,7 @@ public class CVGenerator {
 		doc.add(ideTitle);
 		doc.add(ideInfo);
 		doc.close();
+		return cv;
 	}
 
 }
