@@ -42,10 +42,14 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 	}
 	
+	$scope.updateEmployeeName = function(){
+		
+	}
+	
 	$scope.showEmployeeReport = function(event, employee) {
 		$http.get('/employees/'+employee.idEmployee).success(function(data){
 			$scope.selectedEmployee = data;
-			$scope.showEmployee(event, $scope.selectedEmployee)
+			$scope.showEmployee(event, $scope.selectedEmployee, employee)
 			/*	$mdDialog.show({
 				controller : 'employeeController',
 				controllerAs : 'empCtrl',
@@ -69,7 +73,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 	};
 	
-	$scope.showEmployee = function(event, employee) {
+	$scope.showEmployee = function(event, employee, employeeFromReport) {
 		$scope.selectedEmployee = employee;
 		$mdDialog.show({
 			controller : 'employeeController',
@@ -81,14 +85,22 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 				selectedEmployee : $scope.selectedEmployee
 			}
 		}).then(function(answer) {
-			console.log(answer)
+			if (!angular.equals(employeeFromReport, undefined)){	
+				$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
+					employeeFromReport.nameEmployee = data.nameEmployee; 
+				})
+			}
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
 				$scope.newEmployee ={};
 			});
 			$scope.getExecomProjects();
-			
 		}, function() {
+			if (!angular.equals(employeeFromReport, undefined)){	
+				$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
+					employeeFromReport.nameEmployee = data.nameEmployee; 
+				})
+			}
 			employeeService.list().success(function(data){
 				$scope.employees = data._embedded.employees;
 				$scope.newEmployee ={};
