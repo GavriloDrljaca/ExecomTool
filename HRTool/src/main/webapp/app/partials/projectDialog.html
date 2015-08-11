@@ -80,7 +80,7 @@
 	            </md-input-container>
 	            <md-input-container ng-show="updateable && !newProject" md-no-float = "true">
 	                <label> Experience of employee on the project:</label>
-	                <input type="text" ng-model="projectExp" /><br/><br/> 
+	                <input type="text" ng-model="projectExp" />
 	            </md-input-container>
 	            <md-button ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
 	        </div>
@@ -88,7 +88,7 @@
         <div offset="5" flex="40" layout="column">          
             <label ng-show="!newProject" style="font-size: 20px">Employees on the project:</label><br/><br/>
             <md-list>
-				<md-list-item class="md-2-line" ng-repeat="emp in employees" ng-click="employeeClicked(emp, $index)">
+				<md-list-item class="md-2-line" ng-repeat="emp in employees" ng-click="employeeClicked(emp)">
 					<div class="md-list-item-text">
 						<h3>{{ emp.nameEmployee }}</h3>
 						<p>{{ emp.email }}</p>
@@ -99,31 +99,31 @@
             <div ng-show="firstTimeClicked">
 	            <md-input-container>
 	                <label>Job responsibilities:</label>
-	                <textarea  ng-model="clickedEmployee.jobResponsibilities"></textarea> 
+	                <textarea ng-model="clickedEmployee.projectInfo.jobResponsibilities" ng-readonly="!updateable"></textarea> 
 	            </md-input-container>
 	            <md-input-container>
 	                <label>Project experience:</label>
-	                <textarea  ng-model="clickedEmployee.projectExperiance"></textarea>
+	                <textarea ng-model="clickedEmployee.projectInfo.projectExp" ng-readonly="!updateable"></textarea>
 	            </md-input-container>
 	            <md-input-container>
-	                <label>Duration of employee work on project(weeks):</label>
-	                <textarea  ng-model="clickedEmployee.durationOnProject"></textarea>
+	                <label>Duration of employee work on project (weeks):</label>
+	                <input type="number" ng-model="clickedEmployee.projectInfo.durationOnProject" ng-readonly="!updateable"/>
 	            </md-input-container>
 	            <p>Seniority</p>
-	            <md-radio-group ng-model="clickedEmployee.seniority">
-	               <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
-	               <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
-	               <md-radio-button style="display: inline" value="Senior"> Senior </md-radio-button>
+	            <md-radio-group ng-model="clickedEmployee.projectInfo.seniority">
+	               <md-radio-button style="display: inline" value="Junior" ng-disabled="!updateable"> Junior </md-radio-button>
+	               <md-radio-button style="display: inline" value="Medior" ng-disabled="!updateable"> Medior </md-radio-button>
+	               <md-radio-button style="display: inline" value="Senior" ng-disabled="!updateable"> Senior </md-radio-button>
 	            </md-radio-group>
 		        <p>Job roles</p>
-                <md-chips ng-model="infoToShow.jobRoleTags" md-autocomplete-snap md-require-match readonly = "false">
-                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                <md-chips ng-model="clickedEmployee.jobRoles" md-autocomplete-snap md-require-match ng-click="updateAllJobRoles()">
+                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
                      md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
-                     placeholder="Search for a job role">
+                     md-selected-item-change="updateAllJobRoles()" placeholder="Search for a job role">
                      
                         <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
                         <md-not-found>
-                           <span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'JobRole')">
+                           <span ng-click = "addNewTagCloud(searchText, 'JobRole')">
                            Click here to add new job role ({{searchText}})</span>
                         </md-not-found>
                     </md-autocomplete>
@@ -136,14 +136,14 @@
                     </md-chip-template>
                 </md-chips>   
 	            <p>Technologies</p>
-	            <md-chips ng-model="infoToShow.technologieTags" md-autocomplete-snap md-require-match readonly = "false">
-	                <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+	            <md-chips ng-model="clickedEmployee.technologies" md-autocomplete-snap md-require-match ng-click="updateAllTechnologies()">
+	                <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                 md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
-	                 placeholder="Search for a techonology">
+	                 md-selected-item-change="updateAllTechnologies()" placeholder="Search for a techonology">
 	                 
 	                  <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 	                  <md-not-found>
-	                     <span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'Technologie')">
+	                     <span ng-click = "addNewTagCloud(searchText, 'Technologie')">
 	                     Click here to add new technology ({{searchText}})</span>
 	                  </md-not-found>
 	                </md-autocomplete>
@@ -156,14 +156,14 @@
 	                </md-chip-template>
 	             </md-chips>   
 	             <p>Databases</p>
-	             <md-chips ng-model="infoToShow.databaseTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-	                 <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+	             <md-chips ng-model="clickedEmployee.databases" md-autocomplete-snap md-require-match ng-click="updateAllDatabases()">
+	                 <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                  md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
-	                  placeholder="Search for a database">
+	                  md-selected-item-change="updateAllDatabases()" placeholder="Search for a database">
 	                  
 	                     <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 	                     <md-not-found>
-	                         <span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'Database')">
+	                         <span ng-click = "addNewTagCloud(searchText, 'Database')">
 	                         Click here to add new database ({{searchText}})</span>
 	                     </md-not-found>
 	                 </md-autocomplete>
@@ -176,14 +176,14 @@
 	                 </md-chip-template>
 	              </md-chips>   
 	              <p>IDEs</p>
-	              <md-chips ng-model="infoToShow.ideTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-	                  <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+	              <md-chips ng-model="clickedEmployee.ides" md-autocomplete-snap md-require-match ng-click="updateAllIDEs()">
+	                  <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                   md-items='item in querySearch(searchText, "IDE")' md-item-text="item.nameTagCloud" 
-	                   placeholder="Search for a database">
+	                   md-selected-item-change="updateAllIDEs()" placeholder="Search for a database">
 	                   
 	                  <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
 	                      <md-not-found >
-	                         <span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'IDE')">
+	                         <span ng-click = "addNewTagCloud(searchText, 'IDE')">
 	                         Click here to add new ide ({{searchText}})</span>
 	                  </md-not-found>
 	                  </md-autocomplete>
