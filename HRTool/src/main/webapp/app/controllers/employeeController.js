@@ -351,7 +351,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				return $scope.uniqueProjTag;
 				
 			}
-			//NEW PROJECTI INFO ENTRY
+			//NEW PROJECT INFO ENTRY
 			
 			var clickedOnNewProjectInfo = false;
 			$scope.newProjectInfo = function(){
@@ -366,7 +366,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 			}
 			$scope.newProject = {};
-			$scope.startDateOfProject = null;
+			$scope.newProject.startDate = new Date();
 			
 			//GET ALL PROJECTS
 			
@@ -384,6 +384,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			
 			$scope.addNewProject = function(){
+				$scope.newProject.startDate = $scope.newProject.startDate.toJSON();
 				projectService.save($scope.newProject).success(function(data){
 					alert(data._links.self.href)
 					$scope.createNewProjectInfo(data._links.self.href);
