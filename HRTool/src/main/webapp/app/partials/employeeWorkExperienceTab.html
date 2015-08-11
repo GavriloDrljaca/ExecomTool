@@ -67,6 +67,7 @@
                 <md-radio-button style="display: inline" value="true"> YES </md-radio-button>
                 <md-radio-button style="display: inline" value="false"> NO </md-radio-button>
              </md-radio-group>
+
 	</form>
 	<br>
 	<br>
@@ -101,6 +102,11 @@
                 <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
                 <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
                 <md-radio-button style="display: inline" value="Senior"> Senior </md-radio-button>
+             </md-radio-group>
+             <p>Active: </p>
+             <md-radio-group ng-model="infoToShow.active">
+                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="true"> YES </md-radio-button>
+                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="false"> NO </md-radio-button>
              </md-radio-group>
 
      </form>

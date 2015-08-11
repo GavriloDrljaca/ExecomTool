@@ -250,6 +250,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
 					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
+					$scope.projInfos[$scope.index].active = $scope.infoToShow.active;
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;
 					try{
 						$scope.projectInfosTagClouds[$scope.index].technologieTags = $scope.infoToShow.technologieTags;
@@ -264,6 +265,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.infoToShow.projectName = project.nameProject;
 				$scope.infoToShow.projectDuration = project.durationOfProject;
 				$scope.infoToShow.jobResponsibilities = $scope.projInfos[index].jobResponsibilities;
+				$scope.infoToShow.active = $scope.projInfos[index].active;
 				$scope.infoToShow.projectExperiance = $scope.projInfos[index].projectExp;
 				$scope.infoToShow.seniority = $scope.projInfos[index].seniority;
 				$scope.infoToShow.durationOnProject = $scope.projInfos[index].durationOnProject;
@@ -472,6 +474,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				if($scope.index != undefined){
 					//SAVING PROJECT INFOS !
 					$scope.projInfos[$scope.index].jobResponsibilities = $scope.infoToShow.jobResponsibilities;
+					$scope.projInfos[$scope.index].active = $scope.infoToShow.active;
 					$scope.projInfos[$scope.index].projectExp = $scope.infoToShow.projectExperiance;
 					$scope.projInfos[$scope.index].seniority = $scope.infoToShow.seniority;
 					$scope.projInfos[$scope.index].durationOnProject = $scope.infoToShow.durationOnProject;

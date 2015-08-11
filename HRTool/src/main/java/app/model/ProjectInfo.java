@@ -41,6 +41,7 @@ public class ProjectInfo {
 	private String jobResponsibilities;
 	private String projectExp;
 	private int durationOnProject;
+	private boolean active;
 	
 	
 	public int getDurationOnProject() {
@@ -49,7 +50,7 @@ public class ProjectInfo {
 	public void setDurationOnProject(int durationOnProject) {
 		this.durationOnProject = durationOnProject;
 	}
-	private boolean active;
+	
 	
 	public Project getProject() {
 		return project;
