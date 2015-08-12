@@ -13,6 +13,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	
 	$scope.init = function() {
 		if (!angular.equals(selectedProject, {}	)){
+			isExecom();
 			$scope.newProject = false;
 			$scope.selectedProject.startDate = new Date(selectedProject.startDate);
 			getEmployees();
@@ -29,6 +30,14 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 			getAllTagCloudsForProjectInfo();
 		}
 	};
+	
+	var isExecom = function() {
+		if (selectedProject.execom) {
+			$scope.execom = "true";
+		} else {
+			$scope.execom = "false";
+		}
+	}
 	
 	//Da spreci automatsko sortiranje ng-repeata
 	$scope.objectKeys = function(obj){
@@ -72,19 +81,24 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	//Odredjuje koji zaposleni nisu na projektu i stavlja ih u listu izbora za dodavanje
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {
-			$scope.otherEmployees = data._embedded.employees;
+			var allEmployees = data._embedded.employees;
+			$scope.otherEmployees = [];
 			if (!$scope.newProject){
-				var temp = $scope.otherEmployees;
 				console.log(employees);
 				console.log(employees.length);
-				for(i=0; i<employees.length; i++) {
-					for (k=0; k<temp.length; k++){
-						if (temp[k]._links.self.href == employees[i]._links.self.href){
-							$scope.otherEmployees.splice(k,1);
-						}
-					}
+				for(i=0; i<allEmployees.length; i++) {
+					var found = false;
+					for (k=0; k<employees.length; k++){
+						if (employees[k]._links.self.href === allEmployees[i]._links.self.href){
+							found = true;
+						};
+					};
+					if (!found) {
+						$scope.otherEmployees.push(allEmployees[i]);
+					};
 				};
 			}
+			console.log($scope.otherEmployees);
 		});		
 	};
 	
@@ -124,9 +138,11 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
 				var temp = data;
 				projectInfoService.saveProject(temp, $scope.selectedProject._links.self.href).success(function(data){
-					projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href).success(function(){
-						$scope.otherEmployees.splice(employeeIndex,1);
-					});	
+					if ($scope.otherEmployees[employeeIndex] !== undefined) {
+						projectInfoService.saveEmployee(temp, $scope.otherEmployees[employeeIndex]._links.self.href).success(function(){
+							getEmployees();
+						});	
+					};
 				});
 			});
 		};
@@ -277,7 +293,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		}
 		for (i=0; i<allOss.length; i++) {
 			found = false;
-			for (j=0; j<$scope.platforms.length; j++) {
+			for (j=0; j<$scope.oss.length; j++) {
 				if (allOss[i]._links.self.href === $scope.oss[j]._links.self.href) {
 					found = true;
 					break;

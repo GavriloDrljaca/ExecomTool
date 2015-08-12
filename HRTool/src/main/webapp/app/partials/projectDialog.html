@@ -17,8 +17,18 @@
                 <label>Project start date: </label><input type="date" ng-model="selectedProject.startDate" ng-readonly="!updateable"/><br/>   
             </md-input-container>
 	        <md-input-container md-no-float = "true" layout="column" layout-align="center start">
-	            <label>Duration of project (in weeks): </label><input type="number" ng-model="selectedProject.durationOfProject" ng-readonly="!updateable"/><br/>   
+	            <label>Duration of project (in weeks): </label><input type="number" ng-model="selectedProject.durationOfProject" min="0" ng-readonly="!updateable"/><br/>   
 	        </md-input-container>
+            <md-input-container md-no-float = "true" layout="column" layout-align="center start">
+                <label>Companany name: </label><input type="text" ng-model="selectedProject.companyName" ng-readonly="!updateable"/><br/>   
+            </md-input-container>
+            <div layout="column" layout-align="center start">
+	            <label>Is Execom project?</label>
+	            <md-radio-group ng-model="execom">
+					<md-radio-button ng-disabled="!updateable" value="true">YES</md-radio-button>
+					<md-radio-button ng-disabled="!updateable" value="false">NO</md-radio-button>
+			    </md-radio-group>
+		    </div>
 	        <div>
 	            <label>Industries on the project: </label>
 	            <md-chips ng-model="industries" ng-click="updateAllIndustries()">
