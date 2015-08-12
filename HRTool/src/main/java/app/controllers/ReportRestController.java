@@ -103,7 +103,9 @@ public class ReportRestController {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/rtf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
-    	file.delete();
+    	if(file != null) {
+    		file.delete();
+    	}
     	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
         return response;
 	}

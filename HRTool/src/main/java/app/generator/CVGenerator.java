@@ -98,8 +98,9 @@ public class CVGenerator {
 		basicInfo.setFont(font3);
 		basicInfo.setSpacingAfter(5);
 		basicInfo.add("\n");
-
-		basicInfo.add("Date of birth: " + df.format(e.getDateOfBirth()));
+		if(e.getDateOfBirth() != null) {
+			basicInfo.add("Date of birth: " + df.format(e.getDateOfBirth()));
+		}
 		for (TagCloud tc : education) {
 			basicInfo.add("\n");
 			basicInfo.add(tc.getNameTagCloud());
