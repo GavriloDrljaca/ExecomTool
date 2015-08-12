@@ -120,6 +120,12 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.startDate = $scope.selectedProject.startDate;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
+		selectedProject.companyName = $scope.selectedProject.companyName;
+		if ($scope.execom === "true") {
+			selectedProject.execom = true;
+		} else {
+			selectedProject.execom = false;
+		}
 		$scope.jobResponsibilities = "";
 		$scope.projectExp = "";
 		saveProjectTags();
@@ -182,9 +188,16 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		};
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.durationOfProject = $scope.selectedProject.durationOfProject;
+		selectedProject.companyName = $scope.selectedProject.companyName;
+		if ($scope.execom === "true") {
+			selectedProject.execom = true;
+		} else {
+			selectedProject.execom = false;
+		}
 		projectService.save(selectedProject).success(function(data){
 			selectedProject = data;
 			$scope.selectedProject = data;
+			saveProjectTags();
 			$scope.newProject = false;
 			$scope.updateable = false;
 			$scope.init();
@@ -463,6 +476,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	};
 	
 	var saveProjectTags = function(){
+		console.log("usao sam");
 		var req = "";
 		var newTags = [];
 		if ($scope.industries !== undefined) {
