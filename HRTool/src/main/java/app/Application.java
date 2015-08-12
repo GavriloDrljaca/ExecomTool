@@ -26,7 +26,7 @@ import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
 
 @SpringBootApplication
-@PropertySource("classpath:application.properties")
+
 public class Application implements CommandLineRunner {
 
 	@Autowired

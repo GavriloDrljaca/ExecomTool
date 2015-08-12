@@ -153,6 +153,12 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.newEmpInfo.endDate = null;
 				$scope.newEmpInfo.tagClouds = [];
 				$scope.addNewEmpInfo = "true";
+				$window.document.getElementById("companyNameInput").focus();
+			}
+			//CANCEL INPUT OF NEW EMPLOYMENT HISTORY
+			
+			$scope.cancelAddNewEmpHistory = function(){
+				$scope.addNewEmpInfo = "false";
 			}
 			// SAVE NEW EMPLOYMENT HISTORY
 			$scope.saveNewEmploymentHistory = function(){
@@ -385,8 +391,6 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					angular.forEach($scope.projects, function(projOption, key){
 						angular.forEach($scope.allProjects, function(proj, key2){
 							if(projOption._links.self.href == proj._links.self.href){
-								console.log("splicing!");
-								console.log(projOption);
 								$scope.allProjects.splice(key2,1);
 							}
 						});

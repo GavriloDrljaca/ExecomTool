@@ -26,15 +26,21 @@
 			</md-input-container>
 			 </md-content>
 			</form>
-		<h2>ALL FIRMS:</h2>
+			
+		<h3>Employee employment infoes:</h3>
 		
 		<md-button class = "md-primary md-raised" ng-click = "addNewEmploymentHistory()">Add new employment history</md-button>
+		
 		<div id = "newAdd" ng-show = "addNewEmpInfo == 'true'">
-			<form>
+		<md-whiteframe class="md-whiteframe-z1" layout = "column" >
+			<form name = "newEmpInfoForm" novalidate>
 			<md-content layout-padding layout="column" layout-sm="column">
 				<md-input-container>
-						<label><font size="12">Company name:</font></label>
-						<input type = text ng-model = "newEmpInfo.companyName">	
+						<label><font size="6">Company name:</font></label>
+						<input  id="companyNameInput" type = "text"  name = "name" ng-model = "newEmpInfo.companyName" required autofocus>
+						<span style="color:red" ng-show="newEmpInfoForm.name.$invalid">
+  							<span ng-show="newEmpInfoForm.name.$error.required">Company name is required.</span>
+  						</span>	
 					</md-input-container>
 					<md-input-container md-no-float="true"> 
 						<label>Start date:</label>
@@ -47,17 +53,21 @@
 				</md-content>
 			</form>
 	
-			 
-			<md-button class = "md-primary md-raised" ng-click = "saveNewEmploymentHistory()">Save new employment history</md-button>
-			<md-button class = "md-primary md-raised" ng-click = "addNewEmpInfo = 'false'">Cancel</md-button>
+			 <br>
+			 <span layout = "row" layout-align = "right right">
+			<md-button ng-disabled = "newEmpInfoForm.name.$invalid" class = "md-primary md-raised" ng-click = "saveNewEmploymentHistory()">Save new employment history</md-button>
+			<md-button class = "md-primary md-raised" ng-click = "cancelAddNewEmpHistory()">Cancel</md-button>
+			</span>
+			</md-whiteframe>
 	    </div>
 	    
 		<md-divider></md-divider>
 		<div ng-repeat = "empInfo in employmentInfos">
+		<md-whiteframe class="md-whiteframe-z1" layout = "column" >
 		<form id = "ngEMPform">
 			<md-content layout-padding layout="column" layout-sm="column">
 				<md-input-container>
-					<label><font size="12">Company name:</font></label>
+					<label><font size="6">Company name:</font></label>
 					<input type = text ng-model = "empInfo.companyName">	
 				</md-input-container>
 				<md-input-container md-no-float="true"> 
@@ -95,5 +105,6 @@
 				      </md-chip-template>
 			  </md-chips>
 		<md-divider ng-if="!$last"></md-divider>
-
-		
+		</md-whiteframe>
+		<br><br>
+		</div>
