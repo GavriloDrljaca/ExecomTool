@@ -1,0 +1,33 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <h3>
+        <span>TagClouds (BEING DEVELOPT NOW)</span>
+      </h3>
+    </div> 
+</md-toolbar>
+<md-content>
+<div ng-init = "init()">
+ 
+<label>Choose tag cloud type<label>  
+<md-select ng-model = "listOfTagTypes" placeholder= "choose type">
+	<md-option ng-repeat = "type in listOfTagTypes" value = "{{type}}">{{type}}</md-option>
+</md-select>
+
+
+<div>
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left">
+  	<h4>Technologies</h4>
+    <div ng-repeat = "tag in tagDictionary['Technologie']" flex = "30">
+    	<md-whiteframe class = "md-whiteframe-z1" layout = "row" layout-align ="left"> 
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button>Delete</md-button>
+		</span>
+		</md-whiteframe>
+    </div>
+  </md-whiteframe>
+</div>
+
+
+    
+</div>
+</md-content>
