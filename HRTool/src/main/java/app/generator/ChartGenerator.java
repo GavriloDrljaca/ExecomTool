@@ -116,7 +116,9 @@ public class ChartGenerator {
 		List<TagCloud> tagClouds = new ArrayList<>();
 
 		for (ProjectInfo pi : projInfos) {
-			tagClouds.addAll(pi.getTagClouds());
+			if(pi.isActive()) {
+				tagClouds.addAll(pi.getTagClouds());
+			}
 		}
 		Document doc = new Document();
 		PdfWriter writer = null;
