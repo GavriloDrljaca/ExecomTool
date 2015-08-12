@@ -84,12 +84,14 @@ public class ChartGenerator {
 		int j = 0, m = 0, s = 0;
 		if (seniority.size() > 0) {
 			for (ProjectInfo pi : seniority) {
-				if (pi.getSeniority().equals(SeniorityEnum.Junior)) {
-					j++;
-				} else if (pi.getSeniority().equals(SeniorityEnum.Medior)) {
-					m++;
-				} else if (pi.getSeniority().equals(SeniorityEnum.Senior)) {
-					s++;
+				if (pi.getSeniority() != null) {
+					if (pi.getSeniority().equals(SeniorityEnum.Junior)) {
+						j++;
+					} else if (pi.getSeniority().equals(SeniorityEnum.Medior)) {
+						m++;
+					} else if (pi.getSeniority().equals(SeniorityEnum.Senior)) {
+						s++;
+					}
 				}
 			}
 		}
