@@ -8,25 +8,145 @@
 <md-content>
 <div ng-init = "init()">
  
+<div>
 <label>Choose tag cloud type<label>  
-<md-select ng-model = "listOfTagTypes" placeholder= "choose type">
+<md-select ng-model = "showType" placeholder= "choose type">
 	<md-option ng-repeat = "type in listOfTagTypes" value = "{{type}}">{{type}}</md-option>
 </md-select>
+</div>
+<div ng-show = "showType == 'Technologie' ">
 
-
-<div>
-  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left">
   	<h4>Technologies</h4>
     <div ng-repeat = "tag in tagDictionary['Technologie']" flex = "30">
-    	<md-whiteframe class = "md-whiteframe-z1" layout = "row" layout-align ="left"> 
+    	
 		<span><label>{{tag.nameTagCloud}}</label>
-		<md-button>Delete</md-button>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
 		</span>
-		</md-whiteframe>
+
+    </div>
+
+</div>
+<div ng-show = "showType == 'Position' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Positions</h4>
+    <div ng-repeat = "tag in tagDictionary['Position']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
     </div>
   </md-whiteframe>
 </div>
+<div ng-show = "showType == 'JobRole' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Job roles</h4>
+    <div ng-repeat = "tag in tagDictionary['JobRole']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
 
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'Database' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Databases</h4>
+    <div ng-repeat = "tag in tagDictionary['Database']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'IDE' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>IDEs</h4>
+    <div ng-repeat = "tag in tagDictionary['IDE']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'Industry' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Industries</h4>
+    <div ng-repeat = "tag in tagDictionary['Industry']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'Platform' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Platforms</h4>
+    <div ng-repeat = "tag in tagDictionary['Platform']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'OS' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Operative systems</h4>
+    <div ng-repeat = "tag in tagDictionary['OS']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'Education' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Education</h4>
+    <div ng-repeat = "tag in tagDictionary['Education']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<div ng-show = "showType == 'ForeignLanguage' ">
+  <md-whiteframe class="md-whiteframe-z5" layout = "column" layout-align="left" flex = "35">
+  	<h4>Foreign languages</h4>
+    <div ng-repeat = "tag in tagDictionary['ForeignLanguage']" flex = "30">
+    	
+		<span><label>{{tag.nameTagCloud}}</label>
+		<md-button class = "md-raised" ng-click = "deleteTag(tag)">Delete</md-button>
+		</span>
+
+    </div>
+  </md-whiteframe>
+</div>
+<!-- <div layout="row">
+        <div flex offset="5" flex="25">
+			<md-list layout="column" layout-align="left start">  
+
+			    <md-list-item class="md-3-line" " ng-repeat = "tag in tagDictionary['Technologie']">
+			        <div class="md-list-item-text">
+			          <label>{{tag.nameTagCloud }}</label>
+			          <md-button class = "md-raised">Delete</md-button>
+			        </div>
+			    </md-list-item>
+			</md-list>
+		</div>
+    </div> -->
 
     
 </div>

@@ -12,7 +12,7 @@ app.service('tagCloudService', function($http){
 			return $http.get(tagUrl);
 		},
 		delete: function(tagCloud){
-			return $http.delete(emp._links.self.href)
+			return $http.delete(tagCloud._links.self.href)
 		},
 		saveTag: function(empUrl, tagClouds){
 			console.log(tagClouds);
@@ -33,6 +33,15 @@ app.service('tagCloudService', function($http){
 		},
 		getForProjectInfo: function(projectInfo) {
 			return $http.get(projectInfo._links.tagClouds.href);
+		},
+		deleteEmployees: function(tag, tagClouds){
+			return $http({
+				url: tag._links.employees.href,
+				data: tagClouds,
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
 		}
 	}
 	

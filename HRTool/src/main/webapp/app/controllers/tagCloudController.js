@@ -32,7 +32,7 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 				//Platform
 				$scope.tagDictionary['Platform'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Platform"} )
 				//OS,
-				$scope.tagDictionary['OS'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"OS"} )
+				$scope.tagDictionary['OS'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"OS"}, true )
 				//Education
 				$scope.tagDictionary['Education'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Education"} )
 				//ForeignLanguage
@@ -41,8 +41,20 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		}();
 		
 		$scope.showType = "default";
-		$scope.listOfTagTypes = ["Technologie", "Position", "JobRoles", "Database", "IDE", "Industry", "Platform", "OS", "Education", "ForeignLanguage"];
+		$scope.listOfTagTypes = ["Technologie", "Position", "JobRole", "Database", "IDE", "Industry", "Platform", "OS", "Education", "ForeignLanguage"];
 	}
+	
+		$scope.deleteTag  = function(tag){
+			
+			console.log(tag);
+			tagCloudService.deleteEmployees(tag, "").success(function(data){
+				tagCloudService.delete(tag).success(function(data){
+					console.log(data);
+					$scope.init();
+				});
+			});
+			
+		}
 		/*$scope.empPic = "";
 		employeeService.getById(1).success(function(data){
 
