@@ -8,7 +8,13 @@
 <md-content>
     <div layout="row">
 		<div flex="25" flex offset="5">
-		  <md-list layout="column" layout-align="center start">   
+		  <md-list layout="column" layout-align="center start">  
+		  <md-list-item class="md-3-line">
+                    <md-radio-group ng-model="employeeGroup" ng-change="setEmployeeList(employeeGroup)">
+                        <md-radio-button style="display: inline" value="Employed"> Currently employed </md-radio-button>
+                        <md-radio-button style="display: inline" value="All"> All </md-radio-button>
+                    </md-radio-group>
+                 </md-list-item> 
             <md-list-item class="md-3-line">
                 <md-input-container>
                     <label>Filter employees:</label>

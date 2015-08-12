@@ -2,11 +2,13 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	
 	$scope.init = function() {
 		$scope.projectGroup = "Execom";
+		$scope.employeeGroup = "Employed";
 		$scope.report = {};
 		$scope.initSearchTagDictionary();
 		
 		employeeService.list().success(function(data) {
-			$scope.employees = data._embedded.employees;
+			$scope.allEmployees = data._embedded.employees;
+			$scope.setEmployeeList("Employed");
 		});
 		projectService.list().success(function(data) {
 			$scope.allProjects = data._embedded.projects;
@@ -17,8 +19,31 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		$scope.newProject = {};
 	}
 	
+	$scope.setEmployeeList = function(employeeGroup){
+		$scope.employees = [];
+		$scope.employeeGroup = employeeGroup;
+		if ($scope.employeeGroup == "Employed"){
+			angular.forEach($scope.allEmployees, function(value, key){
+				$http.get(value._links.empInfos.href).success((function(value) {
+					return	function(data){
+					if (!angular.equals(data._embedded, undefined) && !angular.equals(data._embedded.employmentInfoes, undefined)){	
+						for (i=0; i<data._embedded.employmentInfoes.length; i++){
+							if (data._embedded.employmentInfoes[i].companyName.toLowerCase() == "execom" &&
+									data._embedded.employmentInfoes[i].endDate == undefined){
+								$scope.employees.push(value);
+								break;
+							}
+						}
+					}
+				}
+				})(value)); 
+			})
+		}else {
+			$scope.employees = $scope.allEmployees;
+		}
+	}
+	
 	$scope.setProjectList = function(projectGroup){
-		console.log(projectGroup);
 		$scope.projects = [];
 		$scope.projectGroup = projectGroup
 		if (projectGroup == "Execom"){
@@ -33,7 +58,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 					return	function(data){
 					if (!angular.equals(data._embedded.projectInfoes, undefined)){	
 						for (i=0; i<data._embedded.projectInfoes.length; i++){
-							if (data._embedded.projectInfoes[i].active){
+							if (data._embedded.projectInfoes[i].active && value.execom == true){
 								$scope.projects.push(value);
 								break;
 							}
@@ -104,7 +129,8 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 				})
 			}
 			employeeService.list().success(function(data){
-				$scope.employees = data._embedded.employees;
+				$scope.allEmployees = data._embedded.employees;
+				$scope.setEmployeeList($scope.employeeGroup);
 				$scope.newEmployee ={};
 			});
 			projectService.list().success(function(data){
@@ -118,7 +144,8 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 				})
 			}
 			employeeService.list().success(function(data){
-				$scope.employees = data._embedded.employees;
+				$scope.allEmployees = data._embedded.employees;
+				$scope.setEmployeeList($scope.employeeGroup);
 				$scope.newEmployee ={};
 			});
 			projectService.list().success(function(data){
