@@ -12,7 +12,38 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 				
 			})
 		})('/tagClouds');*/
-		$scope.empPic = "";
+		$scope.loadAllTagClouds = function(){
+			tagCloudService.list("/tagClouds").success(function(data){
+				$scope.allTagClouds = data._embedded.tagClouds;
+				
+				$scope.tagDictionary = {};
+				//Technologie
+				$scope.tagDictionary['Technologie'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Technologie"} );
+				//POSITION
+				$scope.tagDictionary['Position'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Position"} );
+				//JobRole
+				$scope.tagDictionary['JobRoles'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"JobRole"} );
+				//Database
+				$scope.tagDictionary['Database'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Database"} );
+				//IDE
+				$scope.tagDictionary['IDE'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"IDE"} );
+				//Industry
+				$scope.tagDictionary['Industry'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Industry"} );				
+				//Platform
+				$scope.tagDictionary['Platform'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Platform"} )
+				//OS,
+				$scope.tagDictionary['OS'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"OS"} )
+				//Education
+				$scope.tagDictionary['Education'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"Education"} )
+				//ForeignLanguage
+				$scope.tagDictionary['ForeignLanguage'] = $filter('filter')($scope.allTagClouds, {tipTagCloud :"ForeignLanguage"} )
+			});
+		}();
+		
+		$scope.showType = "default";
+		$scope.listOfTagTypes = ["Technologie", "Position", "JobRoles", "Database", "IDE", "Industry", "Platform", "OS", "Education", "ForeignLanguage"];
+	}
+		/*$scope.empPic = "";
 		employeeService.getById(1).success(function(data){
 
 			$scope.employee = data;
@@ -79,9 +110,9 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		    $scope.numberChips2 = [];
 		    $scope.numberBuffer = '';
 	
-		    /**
+		    *//**
 		     * Search for TAGCLOUDS
-		     */
+		     *//*
 		    $scope.loadedAll = false;
 		    function querySearch (query, tipQuery) {
 		    	$scope.selectedValue = $scope.tagDictionary[tipQuery];
@@ -93,9 +124,9 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		      return results;
 		    }
 	
-		    /**
+		    *//**
 		     * Create filter function for a query string
-		     */
+		     *//*
 		    function createFilterFor(query, tipQuery) {
 		      var lowercaseQuery = angular.lowercase(query);
 		      var lowercaseTipQuery = angular.lowercase(tipQuery);
@@ -140,9 +171,9 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		$scope.addNewTagCloud= function(newName, type){
 			$scope.newTag.nameTagCloud = newName;
 			$scope.newTag.tipTagCloud = type;
-			/*if($scope.checkDuplicate(newName, type)){
+			if($scope.checkDuplicate(newName, type)){
 				return;
-			}*/
+			}
 			tagCloudService.create($scope.newTag).success(function(data){
 				$scope.tagClouds.push(data);
 				//$scope.tagC.push(data);
@@ -204,6 +235,6 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 		 
 		$scope.generateCV = function(email) {
 			employeeService.generate(email);
-		}
+		}*/
 
 });

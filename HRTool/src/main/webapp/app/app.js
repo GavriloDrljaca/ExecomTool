@@ -11,3 +11,14 @@ app.filter("jsDate", function () {
     	return new Date(parseInt(x));
     };
 });
+
+app.config(function($routeProvider, $locationProvider){
+	$routeProvider
+		.when('/tagCloudTab', {                                            
+	        templateUrl: "app/partials/tagCloudsTab.html",                                               
+	        controller:'tagCloudController',                                
+	       })                                                                      
+	       .otherwise({                      
+	           template: 'does not exists'   
+	       });      
+});

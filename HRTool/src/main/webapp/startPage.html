@@ -37,6 +37,7 @@
 <script src="app/controllers/startPageController.js"></script>
 <script src="app/controllers/employeeController.js"></script>
 <script src="app/controllers/projectController.js"></script>
+<script src="app/controllers/tagCloudController.js"></script>
 <script src="app/services/startPageService.js"></script>
 <script src="app/services/employeeService.js"></script>
 <script src="app/services/projectService.js"></script>
@@ -73,6 +74,13 @@
         		<md-tab label="Analysis">
              <md-content class="md-padding">
                 <div data-ng-include data-src="'app/partials/analysis.html'"></div>
+            
+            </md-content> 
+        </md-tab>
+         </md-tab>
+        		<md-tab label="TagClouds">
+             <md-content class="md-padding">
+                <div data-ng-include data-src="'app/partials/tagCloudsTab.html'" ng-controller = "tagCloudController"></div>
             
             </md-content> 
         </md-tab>

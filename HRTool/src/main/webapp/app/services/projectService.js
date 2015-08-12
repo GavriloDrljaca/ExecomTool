@@ -17,6 +17,7 @@ app.service('projectService', function($http) {
 			return $http.get(project._links.tagClouds.href);
 		},
 		saveTagCloudsForProject: function(projectUrl, tagClouds) {
+			console.log(tagClouds);
 			return $http({
 				url: projectUrl,
 				data: tagClouds,

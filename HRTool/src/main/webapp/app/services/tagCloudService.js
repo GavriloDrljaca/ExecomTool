@@ -15,6 +15,7 @@ app.service('tagCloudService', function($http){
 			return $http.delete(emp._links.self.href)
 		},
 		saveTag: function(empUrl, tagClouds){
+			console.log(tagClouds);
 			return $http({
 				url: empUrl,
 				data: tagClouds,
