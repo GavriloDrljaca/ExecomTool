@@ -47,7 +47,7 @@ public class ChartGenerator {
 		Document doc = new Document();
 
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
-				new File("src/main/webapp/temp/seniority-chart.pdf")));
+				new File("./seniority-chart.pdf")));
 
 		doc.open();
 
@@ -73,7 +73,7 @@ public class ChartGenerator {
 				continue;
 			}
 			for (ProjectInfo pi : projectInfoIt) {
-				if(pi.getProject().getStartDate().after(lastDate) && pi.isActive()){
+				if(pi.getProject().getStartDate()!= null && pi.getProject().getStartDate().after(lastDate) && pi.isActive()){
 					lastDate = pi.getProject().getStartDate();
 					lastDate = pi.getProject().getStartDate();
 					last = pi;
@@ -124,11 +124,11 @@ public class ChartGenerator {
 		PdfWriter writer = null;
 		if (tce.equals(TagCloudEnum.Technologie)) {
 			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("src/main/webapp/temp/technology-chart.pdf")));
+					new File("./technology-chart.pdf")));
 		}
 		else {
 			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("src/main/webapp/temp/database-chart.pdf")));
+					new File("./database-chart.pdf")));
 		}
 		doc.open();
 

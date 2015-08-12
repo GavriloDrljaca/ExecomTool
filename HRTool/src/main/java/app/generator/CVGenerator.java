@@ -42,7 +42,7 @@ public class CVGenerator {
 			MalformedURLException, IOException {
 		Document doc = new Document();
 		String employeeName = e.getNameEmployee().replace(" ", "_");
-		String fileName ="./src/main/webapp/temp/" + employeeName + "_CV.rtf";	
+		String fileName ="./" + employeeName + "_CV.rtf";	
 		File cv =new File(fileName);
 		OutputStream os = new FileOutputStream(cv);
 		RtfWriter2.getInstance(doc, os);
