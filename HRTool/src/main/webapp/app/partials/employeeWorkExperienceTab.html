@@ -51,7 +51,7 @@
         </md-input-container>
         <md-input-container>
         	<label>New project duration</label>
-        	<input type = "number" ng-model = "newProject.durationOfProject"/>
+        	<input type = "number" min="0" ng-model = "newProject.durationOfProject"/>
         </md-input-container>
         <md-input-container>
         	<label>Start date of project</label>
@@ -95,7 +95,7 @@
 	        </md-input-container>
 	        <md-input-container>
 	        	<label>Duration of employee work on project(weeks):</label>
-	            <input type = "number"  ng-model="infoToShow.durationOnProject"></input>
+	            <input type = "number" min="0" ng-model="infoToShow.durationOnProject"></input>
 	        </md-input-container>
 	        <p>Seniority</p>
              <md-radio-group ng-model="infoToShow.seniority">
