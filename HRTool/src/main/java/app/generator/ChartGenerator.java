@@ -73,7 +73,7 @@ public class ChartGenerator {
 				continue;
 			}
 			for (ProjectInfo pi : projectInfoIt) {
-				if(pi.getProject().getStartDate().after(lastDate)){
+				if(pi.getProject().getStartDate().after(lastDate) && pi.isActive()){
 					lastDate = pi.getProject().getStartDate();
 					lastDate = pi.getProject().getStartDate();
 					last = pi;
