@@ -42,7 +42,7 @@ public class CVGenerator {
 			MalformedURLException, IOException {
 		Document doc = new Document();
 		String employeeName = e.getNameEmployee().replace(" ", "_");
-		String fileName = employeeName + "_CV.rtf";	
+		String fileName ="src/main/webapp/temp/" + employeeName + "_CV.rtf";	
 		File cv =new File(fileName);
 		OutputStream os = new FileOutputStream(cv);
 		RtfWriter2.getInstance(doc, os);
@@ -56,9 +56,9 @@ public class CVGenerator {
 		Font font3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.DARK_GRAY);
 
 		Image execomImage = null;
-		Image image = Image.getInstance("NoImage.jpg");
+		Image image = Image.getInstance("src/main/webapp/images/NoImage.jpg");
 		try {
-			execomImage = Image.getInstance("execom-logo.jpg");
+			execomImage = Image.getInstance("src/main/webapp/images/execom-logo.jpg");
 			if(e.getImage() != null) {
 				System.out.println(e.getImage());
 				image = Image.getInstance("src/main/webapp/" + e.getImage());

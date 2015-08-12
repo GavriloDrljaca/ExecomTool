@@ -47,7 +47,7 @@ public class ChartGenerator {
 		Document doc = new Document();
 
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
-				new File("seniority-chart.pdf")));
+				new File("src/main/webapp/temp/seniority-chart.pdf")));
 
 		doc.open();
 
@@ -124,11 +124,11 @@ public class ChartGenerator {
 		PdfWriter writer = null;
 		if (tce.equals(TagCloudEnum.Technologie)) {
 			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("technology-chart.pdf")));
+					new File("src/main/webapp/temp/technology-chart.pdf")));
 		}
 		else {
 			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("database-chart.pdf")));
+					new File("src/main/webapp/temp/database-chart.pdf")));
 		}
 		doc.open();
 
