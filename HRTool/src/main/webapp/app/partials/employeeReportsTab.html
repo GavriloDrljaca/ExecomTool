@@ -18,7 +18,7 @@
              </md-radio-group>
              <br/>
 	        <md-input-container md-no-float = "true">
-	           <label>Years of experiance:</label><input type="number" ng-model="report.yearsOfExperiance"/>
+	           <label>Years of experiance:</label><input type="number" min="0" ng-model="report.yearsOfExperiance"/>
 	         </md-input-container>
 	         <md-radio-group ng-model="report.yearsOfExperianceRelation">
 	            <md-radio-button style="display: inline" value="Less"> Less </md-radio-button>
