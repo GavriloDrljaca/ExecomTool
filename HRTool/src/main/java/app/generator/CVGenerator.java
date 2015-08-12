@@ -56,12 +56,12 @@ public class CVGenerator {
 		Font font3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.DARK_GRAY);
 
 		Image execomImage = null;
-		Image image = Image.getInstance("src/main/webapp/images/NoImage.jpg");
+		Image image = Image.getInstance("./NoImage.jpg");
 		try {
-			execomImage = Image.getInstance("src/main/webapp/images/execom-logo.jpg");
+			execomImage = Image.getInstance("./execom-logo.jpg");
 			if(e.getImage() != null) {
 				System.out.println(e.getImage());
-				image = Image.getInstance("src/main/webapp/" + e.getImage());
+				image = Image.getInstance("./src/main/webapp/" + e.getImage());
 			}
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
