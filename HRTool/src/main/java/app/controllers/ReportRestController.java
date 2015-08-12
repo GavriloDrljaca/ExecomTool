@@ -93,7 +93,7 @@ public class ReportRestController {
 		}
 		String employeeName = e.getNameEmployee().replace(" ", "_");
 		String fileName = employeeName + "_CV.rtf";	
-		Path path = Paths.get("src/main/webapp/temp/" + fileName);
+		Path path = Paths.get("./src/main/webapp/temp/" + fileName);
     	byte[] data = null;
 		try {
 			data = Files.readAllBytes(path);
@@ -118,7 +118,7 @@ public class ReportRestController {
 			e.printStackTrace();
 		}
 		String fileName = "seniority-chart.pdf";
-		Path path = Paths.get("src/main/webapp/temp/" + fileName);
+		Path path = Paths.get("./src/main/webapp/temp/" + fileName);
     	byte[] data = null;
 		try {
 			data = Files.readAllBytes(path);
@@ -139,7 +139,7 @@ public class ReportRestController {
 			e.printStackTrace();
 		}
 		String fileName = "technology-chart.pdf";
-		Path path = Paths.get("src/main/webapp/temp/" + fileName);
+		Path path = Paths.get("./src/main/webapp/temp/" + fileName);
     	byte[] data = null;
 		try {
 			data = Files.readAllBytes(path);
@@ -161,7 +161,7 @@ public class ReportRestController {
 			e.printStackTrace();
 		}
 		String fileName = "database-chart.pdf";
-		Path path = Paths.get("src/main/webapp/temp/" + fileName);
+		Path path = Paths.get("./src/main/webapp/temp/" + fileName);
     	byte[] data = null;
 		try {
 			data = Files.readAllBytes(path);
