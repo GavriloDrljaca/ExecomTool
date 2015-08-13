@@ -1,17 +1,6 @@
 app.controller('tagCloudController', function($scope, $window, $filter, tagCloudService, employeeService){
 	
 	$scope.init = function(){
-		/*$scope.tagClouds = [];
-		(loadAllTags = function(tagUrl){
-			tagCloudService.list(tagUrl).success(function(data){
-				
-				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
-				if(data._links.hasOwnProperty('next') ){
-					loadAllTags(data._links.next.href);
-				}
-				
-			})
-		})('/tagClouds');*/
 		$scope.loadAllTagClouds = function(){
 			tagCloudService.list("/tagClouds").success(function(data){
 				$scope.allTagClouds = data._embedded.tagClouds;
@@ -45,16 +34,13 @@ app.controller('tagCloudController', function($scope, $window, $filter, tagCloud
 	}
 	
 		$scope.deleteTag  = function(tag){
-			
-			console.log(tag);
-			tagCloudService.deleteEmployees(tag, "").success(function(data){
-				tagCloudService.delete(tag).success(function(data){
-					console.log(data);
-					$scope.init();
-				});
-			});
-			
+			tagCloudService.delete(tag).success(function(data){
+				console.log(data);
+				$scope.init();
+			});	
+
 		}
+		
 		/*$scope.empPic = "";
 		employeeService.getById(1).success(function(data){
 

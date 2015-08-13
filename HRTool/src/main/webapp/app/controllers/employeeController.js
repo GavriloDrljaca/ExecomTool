@@ -569,6 +569,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			
 			$scope.deleteEmployee = function(emp) {
 				if($window.confirm("Do you really want to delete " + emp.nameEmployee + " ?")) {
+					//frist you need to delete emloyees connections to other entities!!!
 					employeeService.delete(emp).success(function (data) {
 			    	    $mdDialog.cancel();
 				    });
@@ -790,7 +791,21 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				array = emp._links.self.href.split('/');
 				$window.open("/report/cv?id=" + array[array.length-1],"_self");
 			}
-			
+			//CONFIRM EXIT
+			$scope.confirmExit = function(ev){
+				var confirm = $mdDialog.confirm()
+					.title("Do you want to save changes to employee : "+ $scope.currEmp.nameEmployee)
+					.ok("YES")
+					.cancel("NO")
+					.targetEvent(ev);
+				
+				$mdDialog.show(confirm).then(function(){
+					$scope.saveEmployee();
+					$mdDialog.cancel();
+				}, function(){
+					$mdDialog.cancel();
+				})
+			}
 			//MD-TOAST
 			$scope.toastPosition = {
 				    bottom: false,

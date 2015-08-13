@@ -63,7 +63,8 @@ public class Employee {
 	private int leadership;
 	private int coaching;
 	private int organizationalSkills;
-
+	
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "TagCloudEmp", joinColumns = @JoinColumn(name = "idEmployee"), inverseJoinColumns = @JoinColumn(name = "idTagCloud"))
 	//@JsonManagedReference

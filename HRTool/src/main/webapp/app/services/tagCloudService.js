@@ -34,15 +34,71 @@ app.service('tagCloudService', function($http){
 		getForProjectInfo: function(projectInfo) {
 			return $http.get(projectInfo._links.tagClouds.href);
 		},
-		deleteEmployees: function(tag, tagClouds){
+		updateEmployees: function(tag, tagClouds){
 			return $http({
+				url: tag._links.employees.href,
+				data:" ",
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
+			
+			
+			/*var employees = [];
+			return $http.get(tag._links.employees.href).success(function(data){
+					try{
+						
+						employees = data._embedded.employees;
+					}catch(err){
+						employees = [];
+					}
+					
+					console.log(employees);
+					angular.forEach(employees, function(emp, key){
+						$http({
+							url: emp._links.tagClouds.href,
+							data: " ",
+							method: "PUT",
+							headers: { "Content-Type":"text/uri-list" }
+							
+						});
+						
+					});
+				});*/
+			//return $http.delete(tag._links.employees.href);
+			/*return $http({
 				url: tag._links.employees.href,
 				data: tagClouds,
 				method: "PUT",
 				headers: { "Content-Type":"text/uri-list" }
 				
+			});*/
+		},
+		updateEmploymentInfoes: function(tag, tagClouds){
+			return $http({
+				url: tag._links.employmentInfos.href,
+				data: " ",
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
+		},
+		updateProjectInfoes: function(tag, tagClouds){
+			return $http({
+				url: tag._links.projectInfos.href,
+				data: " ",
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
+				
+			});
+		},
+		updateProjects: function(tag, tagClouds){
+			return $http({
+				url: tag._links.projects.href,
+				data:  " ",
+				method: "PUT",
+				headers: { "Content-Type":"text/uri-list" }
 			});
 		}
 	}
-	
 });
