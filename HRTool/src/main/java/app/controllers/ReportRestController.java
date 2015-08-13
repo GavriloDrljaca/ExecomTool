@@ -3,6 +3,7 @@ package app.controllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -61,6 +62,12 @@ public class ReportRestController {
     private ServletContext servletContext;
 	
 	@RequestMapping("/cv")
+	/**
+	 * Sends generates cv file to response.
+	 * @param id employee's id
+	 * @return File as an array of bytes.
+	 * @throws IOException
+	 */
 	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee e = employeeRepository.findOne(id);
 		List<TagCloud> allEducation = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
@@ -127,6 +134,10 @@ public class ReportRestController {
 	}
 	
 	@RequestMapping("/seniority")
+	/**
+	 * Sends seniority pie chart as an array of bytes.
+	 * @return Seniority pie chart
+	 */
 	public ResponseEntity<byte[]> generateChart() {
 		try {
 			ChartGenerator.generatePieChart(employeeRepository.findAll());
@@ -148,6 +159,10 @@ public class ReportRestController {
         return response;
 	}
 	@RequestMapping("/technology") 
+	/**
+	 * Sends technologies pie chart as an array of bytes.
+	 * @return Technologies pie chart
+	 */
 	public ResponseEntity<byte[]> generatePieTech() {
 		try {
 			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
@@ -170,6 +185,10 @@ public class ReportRestController {
 	}
 	
 	@RequestMapping("/database") 
+	/**
+	 * Sends databases pie chart as an array of bytes.
+	 * @return Databases pie chart
+	 */
 	public ResponseEntity<byte[]> generatePieDB() {
 		try {
 			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Database);

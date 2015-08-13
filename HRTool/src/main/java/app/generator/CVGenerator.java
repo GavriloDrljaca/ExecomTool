@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -36,7 +37,11 @@ public class CVGenerator {
 
 	public static Document document = new Document();
 
-	
+	/**
+	 * Calculates years of @param employee's working experience.
+	 * @param employee
+	 * @return years of employee's working experience
+	 */
 	private static int calculateYears(Employee employee) {
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
@@ -47,15 +52,15 @@ public class CVGenerator {
 				endDate.setTime(ei.getEndDate());
 				int diffYear = endDate.get(Calendar.YEAR)
 						- startDate.get(Calendar.YEAR);
-				totalMonths += diffYear * (12 + endDate.get(Calendar.MONTH)
-						- startDate.get(Calendar.MONTH));
+				totalMonths += diffYear * 12 + endDate.get(Calendar.MONTH)
+						- startDate.get(Calendar.MONTH);
 			} else {
 				startDate.setTime(ei.getStartDate());
 				endDate = Calendar.getInstance();
 				int diffYear = endDate.get(Calendar.YEAR)
 						- startDate.get(Calendar.YEAR);
-				totalMonths += diffYear * (12 + endDate.get(Calendar.MONTH)
-						- startDate.get(Calendar.MONTH));
+				totalMonths += diffYear * 12 + endDate.get(Calendar.MONTH)
+						- startDate.get(Calendar.MONTH);
 			}
 		}
 		employee.setYearsOfWorking((int) (totalMonths / 12));
@@ -64,12 +69,26 @@ public class CVGenerator {
 	
 	SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
+	/**
+	 * Makes .rtf file and put all the given parameters in it.
+	 * @param servletContext Output stream for .rtf file
+	 * @param e employee which cv is generated
+	 * @param education employee's education
+	 * @param language employee's languages
+	 * @param projects employee's projects
+	 * @param listTechnologies employee's list of technologies
+	 * @param listDatabases employee's list of databases
+	 * @param listIdes employee's list of ides
+	 * @return cv .rtf
+	 * @throws DocumentException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
 	public static File generate(ServletContext servletContext,Employee e, Set<TagCloud> education,Set<TagCloud> language, Map<Project, List<TagCloud>> projects,
 			Set<TagCloud> listTechnologies, Set<TagCloud> listDatabases,Set<TagCloud> listIdes) throws DocumentException,
 			MalformedURLException, IOException {
 		Document doc = new Document();
 		String employeeName = e.getNameEmployee().replace(" ", "_");
-		//String fileName ="./" + employeeName + "_CV.rtf";	
 		String fileName = servletContext.getRealPath("/temp/")+employeeName + "_CV.rtf";
 		File cv =new File(fileName);
 		OutputStream os = new FileOutputStream(cv);

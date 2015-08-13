@@ -41,13 +41,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class ChartGenerator {
 
+	/**
+	 * Generates seniority pie chart and saves it in a pdf.
+	 * @param emps All employees
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 * @throws ParseException
+	 */
 	public static void generatePieChart(List<Employee> emps) throws FileNotFoundException, DocumentException, ParseException {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		Document doc = new Document();
 
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
-				new File("./seniority-chart.pdf")));
+		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./seniority-chart.pdf")));
 
 		doc.open();
 
@@ -110,7 +116,14 @@ public class ChartGenerator {
 
 		doc.close();
 	}
-
+	/**
+	 * Generates a @param tce pie chart and saves it in a pdf.
+	 * @param projInfos
+	 * @param tce
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 * @throws ParseException
+	 */
 	public static void generateTechnology(List<ProjectInfo> projInfos, TagCloudEnum tce) throws FileNotFoundException, DocumentException, ParseException {
 
 		List<TagCloud> tagClouds = new ArrayList<>();
@@ -123,12 +136,10 @@ public class ChartGenerator {
 		Document doc = new Document();
 		PdfWriter writer = null;
 		if (tce.equals(TagCloudEnum.Technologie)) {
-			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("./technology-chart.pdf")));
+			writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./technology-chart.pdf")));
 		}
 		else {
-			writer = PdfWriter.getInstance(doc, new FileOutputStream(
-					new File("./database-chart.pdf")));
+			writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./database-chart.pdf")));
 		}
 		doc.open();
 
@@ -163,8 +174,7 @@ public class ChartGenerator {
 		JFreeChart chart = ChartFactory.createPieChart(tce.toString() + "s", pieDataset,
 				true, true, false);
 		PiePlot plot = (PiePlot) chart.getPlot();
-		plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator(
-				"{0}: {2}"));
+		plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {2}"));
 		chart.draw(gr, rec);
 		gr.dispose();
 		cb.addTemplate(pie, 0, 0);
