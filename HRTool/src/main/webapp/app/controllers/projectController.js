@@ -136,10 +136,12 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	};
 	
 	$scope.addEmployeeToProject = function(employeeIndex) {
+		console.log(employeeIndex);
 		$scope.newProjectInfo = {};
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
-		if(!angular.equals(selectedProject, {})){
+		if(!angular.equals(selectedProject, {}) && employeeIndex !== undefined){
+			console.log("usao sam");
 			$scope.newProjectInfo.active = true;
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
 				var temp = data;

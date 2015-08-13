@@ -31,7 +31,7 @@
 		    </div>
 	        <div>
 	            <label>Industries on the project: </label>
-	            <md-chips ng-model="industries" ng-click="updateAllIndustries()">
+	            <md-chips ng-show="updateable" ng-model="industries" md-autocomplete-snap md-require-match ng-click="updateAllIndustries()">
 					<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
 					       md-items='item in querySearch(searchText, "Industry")'
 					       md-item-text="item.nameTagCloud" placeholder="Search for Industry" 
@@ -47,8 +47,14 @@
 						<em>(Industry)</em>
 				    </md-chip-template>
 			    </md-chips>
+			    <md-chips ng-hide="updateable" ng-model="industries" readonly="true">
+                    <md-chip-template>
+                        <strong>{{$chip.nameTagCloud}}</strong>
+                        <em>(Industry)</em>
+                    </md-chip-template>
+                </md-chips>
 				<label>Platforms on the project: </label>             
-				<md-chips ng-model="platforms" md-autocomplete-snap md-require-match ng-click="updateAllPlatforms()">
+				<md-chips ng-show="updateable" ng-model="platforms" md-autocomplete-snap md-require-match ng-click="updateAllPlatforms()">
 				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
 				       md-items='item in querySearch(searchText, "Platform")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for Platform" md-no-cache="true" md-selected-item-change="updateAllPlatforms()">                       
@@ -63,8 +69,14 @@
 				        <em>(Platform)</em>
 				    </md-chip-template>
 				</md-chips>
+				<md-chips ng-hide="updateable" ng-model="platforms" readonly="true">
+                    <md-chip-template>
+                        <strong>{{$chip.nameTagCloud}}</strong>
+                        <em>(Platform)</em>
+                    </md-chip-template>
+                </md-chips>
 				<label>OS' on the project: </label>            
-				<md-chips ng-model="oss" md-autocomplete-snap md-require-match ng-click="updateAllOss()">
+				<md-chips ng-show="updateable" ng-model="oss" md-autocomplete-snap md-require-match ng-click="updateAllOss()">
 				    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
 				       md-items='item in querySearch(searchText, "OS")' md-item-text="item.nameTagCloud" 
 				       placeholder="Search for OS" md-no-cache="true" md-selected-item-change="updateAllOss()">                       
@@ -79,6 +91,12 @@
 				        <em>(OS)</em>
 				    </md-chip-template>
 				</md-chips>
+				<md-chips ng-hide="updateable" ng-model="oss" readonly="true">
+                    <md-chip-template>
+                        <strong>{{$chip.nameTagCloud}}</strong>
+                        <em>(OS)</em>
+                    </md-chip-template>
+                </md-chips>
 	        </div>
 	        <div flex="100">
 	            <md-select ng-show="updateable && !newProject" placeholder="Employees" ng-model="otherEmps" ng-change="setSelectedEmployee(otherEmps)">
@@ -92,7 +110,7 @@
 	                <label> Experience of employee on the project:</label>
 	                <input type="text" ng-model="projectExp" />
 	            </md-input-container>
-	            <md-button ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
+	            <md-button ng-disabled="otherEmployees.length <= 0" ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
 	        </div>
         </div>
         <div offset="5" flex="40" layout="column">          
