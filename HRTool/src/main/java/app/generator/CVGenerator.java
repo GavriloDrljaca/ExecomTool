@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import app.model.Employee;
 import app.model.EmploymentInfo;
 import app.model.Project;
@@ -62,14 +64,13 @@ public class CVGenerator {
 	
 	SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	public static File generate(Employee e, Set<TagCloud> education,
-			Set<TagCloud> language, Map<Project, List<TagCloud>> projects,
-			Set<TagCloud> listTechnologies, Set<TagCloud> listDatabases,
-			Set<TagCloud> listIdes) throws DocumentException,
+	public static File generate(ServletContext servletContext,Employee e, Set<TagCloud> education,Set<TagCloud> language, Map<Project, List<TagCloud>> projects,
+			Set<TagCloud> listTechnologies, Set<TagCloud> listDatabases,Set<TagCloud> listIdes) throws DocumentException,
 			MalformedURLException, IOException {
 		Document doc = new Document();
 		String employeeName = e.getNameEmployee().replace(" ", "_");
-		String fileName ="./" + employeeName + "_CV.rtf";	
+		//String fileName ="./" + employeeName + "_CV.rtf";	
+		String fileName = servletContext.getRealPath("/temp/")+employeeName + "_CV.rtf";
 		File cv =new File(fileName);
 		OutputStream os = new FileOutputStream(cv);
 		RtfWriter2.getInstance(doc, os);
@@ -83,12 +84,12 @@ public class CVGenerator {
 		Font font3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.DARK_GRAY);
 
 		Image execomImage = null;
-		Image image = Image.getInstance("./NoImage.jpg");
+		Image image = Image.getInstance(servletContext.getRealPath("/temp/") + "NoImage.jpg");
 		try {
-			execomImage = Image.getInstance("./execom-logo.jpg");
+			execomImage = Image.getInstance(servletContext.getRealPath("/temp/") + "execom-logo.jpg");
 			if(e.getImage() != null) {
 				System.out.println(e.getImage());
-				image = Image.getInstance("./src/main/webapp/" + e.getImage());
+				image = Image.getInstance(servletContext.getRealPath("/temp/") + e.getImage());
 			}
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
