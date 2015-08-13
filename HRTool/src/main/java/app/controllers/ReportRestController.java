@@ -59,8 +59,20 @@ public class ReportRestController {
 	@RequestMapping("/cv")
 	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee e = employeeRepository.findOne(id);
-		List<TagCloud> education = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
-		List<TagCloud> language = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
+		List<TagCloud> allEducation = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
+		Set<TagCloud> education = new HashSet<>();
+		for (TagCloud tc : allEducation) {
+			if (tc.getEmployees().contains(e)) {
+				education.add(tc);
+			}
+		}
+		List<TagCloud> allLanguage = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
+		Set<TagCloud> language = new HashSet<>();
+		for (TagCloud tc : allLanguage) {
+			if (tc.getEmployees().contains(e)) {
+				language.add(tc);
+			}
+		}
 		Set<ProjectInfo> pinfos = e.getProjectInfos();
 		Set<TagCloud> databases = new HashSet<>();
 		Set<TagCloud> ides = new HashSet<>();

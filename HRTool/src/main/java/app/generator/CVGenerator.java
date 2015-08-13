@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import app.model.Employee;
+import app.model.EmploymentInfo;
 import app.model.Project;
 import app.model.TagCloud;
 
@@ -33,10 +35,35 @@ public class CVGenerator {
 	public static Document document = new Document();
 
 	
+	private static int calculateYears(Employee employee) {
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		int totalMonths = 0;
+		for (EmploymentInfo ei : employee.getEmpInfos()) {
+			if (ei.getEndDate() != null) {
+				startDate.setTime(ei.getStartDate());
+				endDate.setTime(ei.getEndDate());
+				int diffYear = endDate.get(Calendar.YEAR)
+						- startDate.get(Calendar.YEAR);
+				totalMonths += diffYear * (12 + endDate.get(Calendar.MONTH)
+						- startDate.get(Calendar.MONTH));
+			} else {
+				startDate.setTime(ei.getStartDate());
+				endDate = Calendar.getInstance();
+				int diffYear = endDate.get(Calendar.YEAR)
+						- startDate.get(Calendar.YEAR);
+				totalMonths += diffYear * (12 + endDate.get(Calendar.MONTH)
+						- startDate.get(Calendar.MONTH));
+			}
+		}
+		employee.setYearsOfWorking((int) (totalMonths / 12));
+		return employee.getYearsOfWorking();
+	}
+	
 	SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	public static File generate(Employee e, List<TagCloud> education,
-			List<TagCloud> language, Map<Project, List<TagCloud>> projects,
+	public static File generate(Employee e, Set<TagCloud> education,
+			Set<TagCloud> language, Map<Project, List<TagCloud>> projects,
 			Set<TagCloud> listTechnologies, Set<TagCloud> listDatabases,
 			Set<TagCloud> listIdes) throws DocumentException,
 			MalformedURLException, IOException {
@@ -112,7 +139,7 @@ public class CVGenerator {
 		Paragraph workExpInfo = new Paragraph();
 		workExpInfo.setFont(font3);
 		workExpInfo.add("\n");
-		workExpInfo.add(e.getNameEmployee() + " has " + e.getYearsOfWorking()
+		workExpInfo.add(e.getNameEmployee() + " has " + calculateYears(e)
 				+ " years of working experience of which "
 				+ e.getYearsOfWorkingExpInExecom() + " are in Execom.");
 		workExpInfo.add("\n");
