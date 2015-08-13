@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,9 @@ public class ReportRestController {
 	@Autowired
 	ProjectInfoRepository projectInfoRepository;
 
+	@Autowired
+    private ServletContext servletContext;
+	
 	@RequestMapping("/cv")
 	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee e = employeeRepository.findOne(id);
@@ -97,7 +101,7 @@ public class ReportRestController {
 		}
 		File file = null;
 		try {
-			file = CVGenerator.generate(e,education,language,projects, technologies, databases, ides);
+			file = CVGenerator.generate(servletContext,e,education,language,projects, technologies, databases, ides);
 		} catch (FileNotFoundException e2) {
 			e2.printStackTrace();
 		} catch (DocumentException e2) {
@@ -105,7 +109,7 @@ public class ReportRestController {
 		}
 		String employeeName = e.getNameEmployee().replace(" ", "_");
 		String fileName = employeeName + "_CV.rtf";	
-		Path path = Paths.get("./" + fileName);
+		Path path = Paths.get(servletContext.getRealPath("/temp/")+ fileName);
     	byte[] data = null;
 		try {
 			data = Files.readAllBytes(path);
@@ -116,7 +120,7 @@ public class ReportRestController {
     	headers.setContentType(MediaType.parseMediaType("application/rtf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
     	if(file != null) {
-    		//file.delete();
+    		file.delete();
     	}
     	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
         return response;
