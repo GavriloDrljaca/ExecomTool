@@ -117,7 +117,7 @@
             <label ng-show="!newProject" style="font-size: 20px">Employees on the project:</label><br/><br/>
             <md-list>
 				<md-list-item class="md-2-line" ng-repeat="emp in employees">
-					<div class="md-list-item-text" ng-click="employeeClicked(emp)">
+					<div class="md-list-item-text" ng-click="employeeClicked($index)">
 						<h3>{{ emp.nameEmployee }}</h3>
 						<p>{{ emp.email }}</p>
 					</div>
@@ -144,7 +144,7 @@
 	               <md-radio-button style="display: inline" value="Senior" ng-disabled="!updateable"> Senior </md-radio-button>
 	            </md-radio-group>
 		        <p>Job roles</p>
-                <md-chips ng-model="clickedEmployee.jobRoles" md-autocomplete-snap md-require-match ng-click="updateAllJobRoles()">
+                <md-chips ng-show="updateable" ng-model="clickedEmployee.jobRoles" md-autocomplete-snap md-require-match ng-click="updateAllJobRoles()">
                     <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
                      md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
                      md-selected-item-change="updateAllJobRoles()" placeholder="Search for a job role">
@@ -162,9 +162,17 @@
                             <em>({{$chip.tipTagCloud}})</em>
                         </span>
                     </md-chip-template>
+                </md-chips>
+                <md-chips ng-hide="updateable" ng-model="clickedEmployee.jobRoles" readonly="true">
+                    <md-chip-template>
+                        <span>
+                            <strong>{{$chip.nameTagCloud}}</strong>
+                            <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                    </md-chip-template>
                 </md-chips>   
 	            <p>Technologies</p>
-	            <md-chips ng-model="clickedEmployee.technologies" md-autocomplete-snap md-require-match ng-click="updateAllTechnologies()">
+	            <md-chips ng-show="updateable" ng-model="clickedEmployee.technologies" md-autocomplete-snap md-require-match ng-click="updateAllTechnologies()">
 	                <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                 md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
 	                 md-selected-item-change="updateAllTechnologies()" placeholder="Search for a techonology">
@@ -175,16 +183,23 @@
 	                     Click here to add new technology ({{searchText}})</span>
 	                  </md-not-found>
 	                </md-autocomplete>
-	               
 	                <md-chip-template>
 	                    <span>
 	                        <strong>{{$chip.nameTagCloud}}</strong>
 	                        <em>({{$chip.tipTagCloud}})</em>
 	                    </span>
 	                </md-chip-template>
-	             </md-chips>   
+	             </md-chips>
+	             <md-chips ng-hide="updateable" ng-model="clickedEmployee.technologies" readonly="true">
+                    <md-chip-template>
+                        <span>
+                            <strong>{{$chip.nameTagCloud}}</strong>
+                            <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                    </md-chip-template>
+                </md-chips> 
 	             <p>Databases</p>
-	             <md-chips ng-model="clickedEmployee.databases" md-autocomplete-snap md-require-match ng-click="updateAllDatabases()">
+	             <md-chips ng-show="updateable" ng-model="clickedEmployee.databases" md-autocomplete-snap md-require-match ng-click="updateAllDatabases()">
 	                 <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                  md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
 	                  md-selected-item-change="updateAllDatabases()" placeholder="Search for a database">
@@ -202,9 +217,17 @@
 	                         <em>({{$chip.tipTagCloud}})</em>
 	                     </span>
 	                 </md-chip-template>
-	              </md-chips>   
+	              </md-chips>
+	              <md-chips ng-hide="updateable" ng-model="clickedEmployee.databases" readonly="true">
+                    <md-chip-template>
+                        <span>
+                            <strong>{{$chip.nameTagCloud}}</strong>
+                            <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                    </md-chip-template>
+                  </md-chips> 
 	              <p>IDEs</p>
-	              <md-chips ng-model="clickedEmployee.ides" md-autocomplete-snap md-require-match ng-click="updateAllIDEs()">
+	              <md-chips ng-show="updateable" ng-model="clickedEmployee.ides" md-autocomplete-snap md-require-match ng-click="updateAllIDEs()">
 	                  <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-no-cache="true"
 	                   md-items='item in querySearch(searchText, "IDE")' md-item-text="item.nameTagCloud" 
 	                   md-selected-item-change="updateAllIDEs()" placeholder="Search for a database">
@@ -222,6 +245,14 @@
 	                          <em>({{$chip.tipTagCloud}})</em>
 	                      </span>
 	                  </md-chip-template>
+	               </md-chips>
+	               <md-chips ng-hide="updateable" ng-model="clickedEmployee.ides" readonly="true">
+	                 <md-chip-template>
+	                     <span>
+	                         <strong>{{$chip.nameTagCloud}}</strong>
+	                         <em>({{$chip.tipTagCloud}})</em>
+	                     </span>
+	                 </md-chip-template>
 	               </md-chips>
               </div>                  
         </div>

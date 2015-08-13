@@ -70,22 +70,12 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		});
 	};
 
-	$scope.employeeClicked = function (employee) {
-		if ($scope.firstTimeClicked !== true) {
-			$scope.firstTimeClicked = true;
-		}
-		$scope.clickedEmployee = employee;
-		fillChipsForClickedEmployee(employee);
-	}
-
 	//Odredjuje koji zaposleni nisu na projektu i stavlja ih u listu izbora za dodavanje
 	function getOtherEmployees(employees) {
 		employeeService.list().success(function(data) {
 			var allEmployees = data._embedded.employees;
 			$scope.otherEmployees = [];
 			if (!$scope.newProject){
-				console.log(employees);
-				console.log(employees.length);
 				for(i=0; i<allEmployees.length; i++) {
 					var found = false;
 					for (k=0; k<employees.length; k++){
@@ -98,12 +88,45 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 					};
 				};
 			}
-			console.log($scope.otherEmployees);
 		});		
 	};
 	
 	$scope.setSelectedEmployee = function(employeeIndex){
 		$scope.selectedEmployeeIndex = employeeIndex;
+	}
+
+	var previousClickedEmployee = undefined;
+	$scope.employeeClicked = function (index) {
+		if ($scope.firstTimeClicked !== true) {
+			$scope.firstTimeClicked = true;
+		};
+		if (previousClickedEmployee === undefined) {
+			$scope.clickedEmployee = $scope.employees[index];
+			previousClickedEmployee = index;
+			fillChipsForClickedEmployee($scope.clickedEmployee);
+			$scope.clickedEmployee.firstTimeChipsInit = false;
+		} else {
+			console.log($scope.clickedEmployee);
+			console.log($scope.employees[previousClickedEmployee]);
+			$scope.employees[previousClickedEmployee] = $scope.clickedEmployee;
+			/*$scope.employees[previousClickedEmployee].projectInfo.jobResponsibilities = $scope.clickedEmployee.projectInfo.jobResponsibilities;
+			$scope.employees[previousClickedEmployee].projectInfo.projectExp = $scope.clickedEmployee.projectInfo.projectExp;
+			$scope.employees[previousClickedEmployee].projectInfo.durationOnProject = $scope.clickedEmployee.projectInfo.durationOnProject;
+			$scope.employees[previousClickedEmployee].projectInfo.seniority = $scope.clickedEmployee.projectInfo.seniority;
+			$scope.employees[previousClickedEmployee].jobRoles = $scope.clickedEmployee.jobRoles;
+			$scope.employees[previousClickedEmployee].technologies = $scope.clickedEmployee.technologies;
+			$scope.employees[previousClickedEmployee].databases = $scope.clickedEmployee.databases;
+			$scope.employees[previousClickedEmployee].ides = $scope.clickedEmployee.ides;*/
+			
+			$scope.clickedEmployee = $scope.employees[index];
+			if ($scope.clickedEmployee.firstTimeChipsInit === undefined || $scope.clickedEmployee.firstTimeChipsInit) {
+				console.log("usao sam");
+				fillChipsForClickedEmployee($scope.clickedEmployee);
+				$scope.clickedEmployee.firstTimeChipsInit = false;
+			};
+			previousClickedEmployee = index;
+		};
+		
 	}
 	
 	//Cuva izmene nad projektom na serveru
@@ -114,8 +137,13 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		projInfos = [];
 		
 		// if none of the employees is clicked
+		for (i=0; i<$scope.employees.length; i++) {
+			projectInfoService.update($scope.employees[i].projectInfo);
+			saveProjectInfoTags($scope.employees[i]);
+		}
 		if ($scope.clickedEmployee !== undefined) {
-			projectInfoService.update($scope.clickedEmployee.projectInfo);			
+			projectInfoService.update($scope.clickedEmployee.projectInfo);
+			saveProjectInfoTags($scope.clickedEmployee);			
 		}
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.startDate = $scope.selectedProject.startDate;
@@ -129,19 +157,16 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		$scope.jobResponsibilities = "";
 		$scope.projectExp = "";
 		saveProjectTags();
-		saveProjectInfoTags();
 		projectService.update(selectedProject).success(function (data) {
 			$scope.showSimpleToast();
 		});
 	};
 	
 	$scope.addEmployeeToProject = function(employeeIndex) {
-		console.log(employeeIndex);
 		$scope.newProjectInfo = {};
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
 		if(!angular.equals(selectedProject, {}) && employeeIndex !== undefined){
-			console.log("usao sam");
 			$scope.newProjectInfo.active = true;
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
 				var temp = data;
@@ -498,28 +523,28 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		tagCloudService.saveTag(selectedProject._links.tagClouds.href, req)
 	}
 	
-	var saveProjectInfoTags = function() {
+	var saveProjectInfoTags = function(emp) {
 		var req = "";
 		var newTags = [];
-		if ($scope.clickedEmployee !== undefined) {
-			if ($scope.clickedEmployee.technologies !== undefined) {
-				newTags = newTags.concat($scope.clickedEmployee.technologies);
+		if (emp !== undefined) {
+			if (emp.technologies !== undefined) {
+				newTags = newTags.concat(emp.technologies);
 			};
-			if ($scope.clickedEmployee.ides !== undefined) {
-				newTags = newTags.concat($scope.clickedEmployee.ides);
+			if (emp.ides !== undefined) {
+				newTags = newTags.concat(emp.ides);
 			};
-			if ($scope.clickedEmployee.databases !== undefined) {
-				newTags = newTags.concat($scope.clickedEmployee.databases);
+			if (emp.databases !== undefined) {
+				newTags = newTags.concat(emp.databases);
 			};
-			if ($scope.clickedEmployee.jobRoles !== undefined) {
-				newTags = newTags.concat($scope.clickedEmployee.jobRoles);
+			if (emp.jobRoles !== undefined) {
+				newTags = newTags.concat(emp.jobRoles);
 			};
 			if (newTags.length > 0) {
 				for(i =0; i<newTags.length; i++){
 					req += newTags[i]._links.self.href +"\n";
 				}
 			};
-			tagCloudService.saveTag($scope.clickedEmployee.projectInfo._links.tagClouds.href, req);
+			tagCloudService.saveTag(emp.projectInfo._links.tagClouds.href, req);
 		}
 	}
 	
