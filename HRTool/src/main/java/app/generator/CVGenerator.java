@@ -89,7 +89,7 @@ public class CVGenerator {
 			execomImage = Image.getInstance(servletContext.getRealPath("/temp/") + "execom-logo.jpg");
 			if(e.getImage() != null) {
 				System.out.println(e.getImage());
-				image = Image.getInstance(servletContext.getRealPath("/temp/") + e.getImage());
+				image = Image.getInstance(servletContext.getRealPath("/") + e.getImage());
 			}
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
