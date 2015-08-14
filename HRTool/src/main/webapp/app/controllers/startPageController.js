@@ -1,5 +1,5 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
-	$scope.role = "OFF"
+	$scope.role = "HRM"
 		
 	$scope.init = function() {
 		if ($scope.role=="HRM"){	
