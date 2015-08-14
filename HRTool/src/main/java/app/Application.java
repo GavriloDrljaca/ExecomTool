@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.ErrorPage;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 
 import app.model.Employee;
 import app.model.EmployeeRole;
@@ -31,7 +29,7 @@ import app.repository.TagCloudRepository;
 
 @SpringBootApplication
 
-public class Application implements CommandLineRunner {
+public class Application extends SpringBootServletInitializer implements CommandLineRunner {
 
 	@Autowired
 	TagCloudRepository tagRep;
@@ -46,26 +44,19 @@ public class Application implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
 	}
-	
-	
-	
-	@Bean
-	public EmbeddedServletContainerCustomizer containerCustomizer() {
-	 
-	   return (container -> {
-	        ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/app/errorpages/401.html");
-	        ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/app/errorpages/403.html");
-	        ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/app/errorpages/404.html");
-	        ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/app/errorpages/500.html");
 
-	        container.addErrorPages(error401Page, error404Page, error500Page, error403Page);
-	   });
-	}
-	
+    private static Class<Application> applicationClass = Application.class;
+    
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(applicationClass);
+    }
+
+    
 	//aaaaaaaaaaaaaaaaaaaaaaaaaa
 	@Override
 	public void run(String... strings) throws Exception {
-		addEmployees();
+		/*addEmployees();
 		addProjects();
 		addTagClouds();
 		addProjectInfos();
@@ -73,7 +64,7 @@ public class Application implements CommandLineRunner {
 		addEmploymentInfos();
 		addTagsToEmpInfo();
 		addTagsToProject();
-		addTagsToProjectInfos();
+		addTagsToProjectInfos();*/
 		//add position into employmentInfoes
 		
 		/*empInfoRep.findOne(1).getTagClouds().add(tagRep.findOne(24));
@@ -285,7 +276,7 @@ public class Application implements CommandLineRunner {
 		emp.setCoaching(5);
 		emp.setOrganizationalSkills(3);
 		
-		emp.setEmployeeRole(EmployeeRole.HRM);
+		emp.setEmployeeRole(EmployeeRole.EMP);
 		empRep.save(emp);
 
 	}
