@@ -10,7 +10,7 @@
 		<div flex="25" flex offset="5">
 		  <md-list layout="column" layout-align="center start">  
 		  <md-list-item class="md-3-line">
-                    <md-radio-group ng-model="employeeGroup" ng-change="setEmployeeList(employeeGroup)">
+                    <md-radio-group ng-if="role=='HRM'" ng-model="employeeGroup" ng-change="setEmployeeList(employeeGroup)">
                         <md-radio-button style="display: inline" value="Employed"> Currently employed </md-radio-button>
                         <md-radio-button style="display: inline" value="All"> All </md-radio-button>
                     </md-radio-group>
@@ -21,7 +21,7 @@
                     <input type="text" ng-model="filterForEmployees"/>
                 </md-input-container>
             </md-list-item>
-            <md-list-item class="md-3-line" ng-click="showEmployee($event, newEmployee)">New entry</md-list-item>
+            <md-list-item ng-if="role=='HRM'" class="md-3-line" ng-click="showEmployee($event, newEmployee)">New entry</md-list-item>
             <md-list-item class="md-3-line" ng-click="showEmployee($event, emp)" ng-repeat="emp in employees | filter:filterForEmployees">
                 <div class="md-list-item-text">
                      <h3>{{ emp.nameEmployee }}</h3>

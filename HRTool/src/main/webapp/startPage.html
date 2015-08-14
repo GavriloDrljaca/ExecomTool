@@ -35,6 +35,7 @@
 <script src="app/js/ng-flow.js"></script>
 <script src="app/js/ng-flow.min.js"></script>
 <script src="app/controllers/startPageController.js"></script>
+<script src="app/controllers/restrictedEmployeeController.js"></script>
 <script src="app/controllers/employeeController.js"></script>
 <script src="app/controllers/projectController.js"></script>
 <script src="app/controllers/tagCloudController.js"></script>
@@ -53,7 +54,7 @@
 		
 		
 			
-		<md-tabs md-dynamic-height="" md-border-bottom=""> <md-tab
+		<md-tabs ng-if="role=='HRM'" md-dynamic-height="" md-border-bottom=""> <md-tab
 				label="Employees"> <md-content class="md-padding">
 			 <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
 			</md-content>
@@ -86,6 +87,9 @@
         </md-tab>
 		</md-tabs>
 
+        <div ng-if="role!='HRM'">
+         <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
+        </div>
 
 		</div>
 

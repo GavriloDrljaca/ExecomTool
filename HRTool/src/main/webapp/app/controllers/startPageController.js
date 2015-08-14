@@ -1,22 +1,34 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
 	
 	$scope.init = function() {
-		$scope.projectGroup = "Execom";
-		$scope.employeeGroup = "Employed";
-		$scope.report = {};
-		$scope.initSearchTagDictionary();
-		
-		employeeService.list().success(function(data) {
-			$scope.allEmployees = data._embedded.employees;
-			$scope.setEmployeeList("Employed");
-		});
-		projectService.list().success(function(data) {
-			$scope.allProjects = data._embedded.projects;
-		});
-		$scope.getExecomProjects();
-		
-		$scope.newEmployee = {};
-		$scope.newProject = {};
+		$scope.role = "OFF"
+			
+		if ($scope.role=="HRM"){	
+			$scope.projectGroup = "Execom";
+			$scope.employeeGroup = "Employed";
+			$scope.report = {};
+			$scope.initSearchTagDictionary();
+			
+			employeeService.list().success(function(data) {
+				$scope.allEmployees = data._embedded.employees;
+				$scope.setEmployeeList("Employed");
+			});
+			projectService.list().success(function(data) {
+				$scope.allProjects = data._embedded.projects;
+			});
+			$scope.getExecomProjects();
+			
+			$scope.newEmployee = {};
+			$scope.newProject = {};
+		}else if($scope.role=="EMP"){
+			$http.get('/restrictedEmployees/employee').success(function(data){
+				$scope.employees = data;
+			})
+		}else if ($scope.role=="OFF"){
+			$http.get('/restrictedEmployees/officeManager').success(function(data){
+				$scope.employees = data;
+			})
+		}
 	}
 	
 	$scope.setEmployeeList = function(employeeGroup){
@@ -113,46 +125,64 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	
 	$scope.showEmployee = function(event, employee, employeeFromReport) {
 		$scope.selectedEmployee = employee;
-		$mdDialog.show({
-			controller : 'employeeController',
-			controllerAs : 'empCtrl',
-			templateUrl : 'app/partials/employeeDialog.html',
-			parent : angular.element(document.body),
-			targetEvent : event,
-			locals : {
-				selectedEmployee : $scope.selectedEmployee
-			}
-		}).then(function(answer) {
-			if (!angular.equals(employeeFromReport, undefined)){	
-				$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
-					employeeFromReport.nameEmployee = data.nameEmployee; 
+		if($scope.role=="HRM"){
+			$mdDialog.show({
+				controller : 'employeeController',
+				controllerAs : 'empCtrl',
+				templateUrl : 'app/partials/employeeDialog.html',
+				parent : angular.element(document.body),
+				targetEvent : event,
+				locals : {
+					selectedEmployee : $scope.selectedEmployee
+				}
+			}).then(function(answer) {
+				if (!angular.equals(employeeFromReport, undefined)){	
+					$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
+						employeeFromReport.nameEmployee = data.nameEmployee; 
+					})
+				}
+				employeeService.list().success(function(data){
+					$scope.allEmployees = data._embedded.employees;
+					$scope.setEmployeeList($scope.employeeGroup);
+					$scope.newEmployee ={};
+				});
+				projectService.list().success(function(data){
+					$scope.allProjects = data._embedded.projects;
+					$scope.setProjectList($scope.projectGroup);
 				})
-			}
-			employeeService.list().success(function(data){
-				$scope.allEmployees = data._embedded.employees;
-				$scope.setEmployeeList($scope.employeeGroup);
-				$scope.newEmployee ={};
-			});
-			projectService.list().success(function(data){
-				$scope.allProjects = data._embedded.projects;
-				$scope.setProjectList($scope.projectGroup);
-			})
-		}, function() {
-			if (!angular.equals(employeeFromReport, undefined)){	
-				$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
-					employeeFromReport.nameEmployee = data.nameEmployee; 
+			}, function() {
+				if (!angular.equals(employeeFromReport, undefined)){	
+					$http.get('/employees/'+employeeFromReport.idEmployee).success(function(data){	
+						employeeFromReport.nameEmployee = data.nameEmployee; 
+					})
+				}
+				employeeService.list().success(function(data){
+					$scope.allEmployees = data._embedded.employees;
+					$scope.setEmployeeList($scope.employeeGroup);
+					$scope.newEmployee ={};
+				});
+				projectService.list().success(function(data){
+					$scope.allProjects = data._embedded.projects;
+					$scope.setProjectList($scope.projectGroup);
 				})
-			}
-			employeeService.list().success(function(data){
-				$scope.allEmployees = data._embedded.employees;
-				$scope.setEmployeeList($scope.employeeGroup);
-				$scope.newEmployee ={};
 			});
-			projectService.list().success(function(data){
-				$scope.allProjects = data._embedded.projects;
-				$scope.setProjectList($scope.projectGroup);
-			})
-		});
+		}else{
+			$mdDialog.show({
+				controller : 'restrictedEmployeeController',
+				controllerAs : 'restrEmpCtrl',
+				templateUrl : 'app/partials/restrictedEmployeeDialog.html',
+				parent : angular.element(document.body),
+				targetEvent : event,
+				locals : {
+					selectedEmployee : $scope.selectedEmployee,
+					role : $scope.role
+				}
+			}).then(function(answer) {
+				
+			}, function() {
+
+			});
+		}
 	};
 
 	$scope.showProject = function(ev, prj) {
