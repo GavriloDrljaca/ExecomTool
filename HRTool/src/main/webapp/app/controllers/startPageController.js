@@ -1,33 +1,44 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
-	$scope.role = "HRM"
+	
 		
 	$scope.init = function() {
-		if ($scope.role=="HRM"){	
-			$scope.projectGroup = "Execom";
-			$scope.employeeGroup = "Employed";
-			$scope.report = {};
-			$scope.initSearchTagDictionary();
+		
+		$http({
+			url: "/employeeRole",
+			method: "GET"
+		}).success(function(data){
 			
-			employeeService.list().success(function(data) {
-				$scope.allEmployees = data._embedded.employees;
-				$scope.setEmployeeList("Employed");
-			});
-			projectService.list().success(function(data) {
-				$scope.allProjects = data._embedded.projects;
-			});
-			$scope.getExecomProjects();
 			
-			$scope.newEmployee = {};
-			$scope.newProject = {};
-		}else if($scope.role=="EMP"){
-			$http.get('/restrictedEmployees/employee').success(function(data){
-				$scope.employees = data;
-			})
-		}else if ($scope.role=="OFF"){
-			$http.get('/restrictedEmployees/officeManager').success(function(data){
-				$scope.employees = data;
-			})
-		}
+			console.log(data.role);
+			$scope.role = data.role;
+			
+			if ($scope.role=="HRM"){	
+				$scope.projectGroup = "Execom";
+				$scope.employeeGroup = "Employed";
+				$scope.report = {};
+				$scope.initSearchTagDictionary();
+				
+				employeeService.list().success(function(data) {
+					$scope.allEmployees = data._embedded.employees;
+					$scope.setEmployeeList("Employed");
+				});
+				projectService.list().success(function(data) {
+					$scope.allProjects = data._embedded.projects;
+				});
+				$scope.getExecomProjects();
+				
+				$scope.newEmployee = {};
+				$scope.newProject = {};
+			}else if($scope.role=="EMP"){
+				$http.get('/restrictedEmployees/employee').success(function(data){
+					$scope.employees = data;
+				})
+			}else if ($scope.role=="OFF"){
+				$http.get('/restrictedEmployees/officeManager').success(function(data){
+					$scope.employees = data;
+				})
+			}
+		});
 	}
 	
 	$scope.setEmployeeList = function(employeeGroup){

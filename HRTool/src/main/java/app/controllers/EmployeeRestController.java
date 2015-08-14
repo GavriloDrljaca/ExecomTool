@@ -17,12 +17,6 @@ import app.repository.EmployeeRepository;
 @RequestMapping("/employees")
 @RepositoryEventHandler(Employee.class)
 public class EmployeeRestController {
-	/* @Autowired
-	 EmployeeRepository empRep;
-	 @RequestMapping(method = RequestMethod.GET)
-	 public ResponseEntity list(){
-		 
-		 return new ResponseEntity<>(empRep.findAll(), HttpStatus.OK);
-	 }*/
+	
 }
 
