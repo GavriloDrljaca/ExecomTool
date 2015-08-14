@@ -135,9 +135,6 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		var counter = 0;
 		for (i=0; i<$scope.employees.length; i++) {
 			projectInfoService.update($scope.employees[i].projectInfo).success(function (data) {
-				console.log("FOR");
-				console.log(data);
-				console.log($scope.employees[counter]);
 				saveProjectInfoTags($scope.employees[counter]);
 				counter++;
 			});
@@ -161,6 +158,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	
 	$scope.isAddEmpToProjectEnabled = false;
 	var enableAddEmpToProject = function() {
+		console.log($scope.otherEmployees);
 		if($scope.otherEmployees.length <= 0) {
 			$scope.isAddEmpToProjectEnabled = false;
 		} else {
@@ -189,7 +187,6 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	};
 	
 	var checkDuplicateEmployeeOnTheProject = function (employee, array) {
-		console.log(array);
 		for (i=0; i<array.length; i++) {
 			if (employee._links.self.href === array[i]._links.self.href) {
 				return true;
@@ -551,7 +548,6 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 					req += newTags[i]._links.self.href +"\n";
 				}
 			};
-			console.log(newTags);
 			tagCloudService.saveTag(emp.projectInfo._links.tagClouds.href, req);
 		}
 	}
