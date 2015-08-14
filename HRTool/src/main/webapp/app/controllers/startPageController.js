@@ -1,5 +1,5 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
-	$scope.role = "EMP"
+	$scope.role = "OFF"
 		
 	$scope.init = function() {
 		if ($scope.role=="HRM"){	
@@ -33,24 +33,26 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	$scope.setEmployeeList = function(employeeGroup){
 		$scope.employees = [];
 		$scope.employeeGroup = employeeGroup;
-		if ($scope.employeeGroup == "Employed"){
-			angular.forEach($scope.allEmployees, function(value, key){
-				$http.get(value._links.empInfos.href).success((function(value) {
-					return	function(data){
-					if (!angular.equals(data._embedded, undefined) && !angular.equals(data._embedded.employmentInfoes, undefined)){	
-						for (i=0; i<data._embedded.employmentInfoes.length; i++){
-							if (data._embedded.employmentInfoes[i].companyName.toLowerCase() == "execom" &&
-									data._embedded.employmentInfoes[i].endDate == undefined){
-								$scope.employees.push(value);
-								break;
+		if ($scope.role == "HRM"){
+			if ($scope.employeeGroup == "Employed"){
+				angular.forEach($scope.allEmployees, function(value, key){
+					$http.get(value._links.empInfos.href).success((function(value) {
+						return	function(data){
+						if (!angular.equals(data._embedded, undefined) && !angular.equals(data._embedded.employmentInfoes, undefined)){	
+							for (i=0; i<data._embedded.employmentInfoes.length; i++){
+								if (data._embedded.employmentInfoes[i].companyName.toLowerCase() == "execom" &&
+										data._embedded.employmentInfoes[i].endDate == undefined){
+									$scope.employees.push(value);
+									break;
+								}
 							}
 						}
 					}
-				}
-				})(value)); 
-			})
-		}else {
-			$scope.employees = $scope.allEmployees;
+					})(value)); 
+				})
+			}else {
+				$scope.employees = $scope.allEmployees;
+			}
 		}
 	}
 	
