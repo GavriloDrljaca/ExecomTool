@@ -1,8 +1,7 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
-	
+	$scope.role = "EMP"
+		
 	$scope.init = function() {
-		$scope.role = "OFF"
-			
 		if ($scope.role=="HRM"){	
 			$scope.projectGroup = "Execom";
 			$scope.employeeGroup = "Employed";
@@ -68,7 +67,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 			angular.forEach($scope.allProjects, function(value, key){
 				$http.get(value._links.projectInfo.href).success((function(value) {
 					return	function(data){
-					if (!angular.equals(data._embedded.projectInfoes, undefined)){	
+					if (!angular.equals(data._embedded, undefined) && !angular.equals(data._embedded.projectInfoes, undefined)){	
 						for (i=0; i<data._embedded.projectInfoes.length; i++){
 							if (data._embedded.projectInfoes[i].active && value.execom == true){
 								$scope.projects.push(value);
@@ -277,17 +276,18 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	
 	// TAGCLOUD: EVERYTHING FOR CHIPS AND AUTOCOMPLETE
 	$scope.tagClouds = [];
-	(loadAllTags = function(tagUrl){
-		tagCloudService.list(tagUrl).success(function(data){
-			
-			$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
-			if(data._links.hasOwnProperty('next') ){
-				loadAllTags(data._links.next.href);
-			}
-			// $scope.tagC = $scope.tagClouds;
-		})
-	})('/tagClouds');
-	
+	if($scope.role=="HRM"){	
+		(loadAllTags = function(tagUrl){
+			tagCloudService.list(tagUrl).success(function(data){
+				
+				$scope.tagClouds =$scope.tagClouds.concat( data._embedded.tagClouds);
+				if(data._links.hasOwnProperty('next') ){
+					loadAllTags(data._links.next.href);
+				}
+				// $scope.tagC = $scope.tagClouds;
+			})
+		})('/tagClouds');
+	}
 		// $scope.tagC = $scope.tagClouds;
 		// $scope.tagClouds = $scope.tagC;
 	 	var self = this;
