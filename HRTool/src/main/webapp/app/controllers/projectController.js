@@ -88,6 +88,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 					};
 				};
 			}
+			enableAddEmpToProject();
 		});		
 	};
 	
@@ -106,21 +107,10 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 			fillChipsForClickedEmployee($scope.clickedEmployee);
 			$scope.clickedEmployee.firstTimeChipsInit = false;
 		} else {
-			console.log($scope.clickedEmployee);
-			console.log($scope.employees[previousClickedEmployee]);
 			$scope.employees[previousClickedEmployee] = $scope.clickedEmployee;
-			/*$scope.employees[previousClickedEmployee].projectInfo.jobResponsibilities = $scope.clickedEmployee.projectInfo.jobResponsibilities;
-			$scope.employees[previousClickedEmployee].projectInfo.projectExp = $scope.clickedEmployee.projectInfo.projectExp;
-			$scope.employees[previousClickedEmployee].projectInfo.durationOnProject = $scope.clickedEmployee.projectInfo.durationOnProject;
-			$scope.employees[previousClickedEmployee].projectInfo.seniority = $scope.clickedEmployee.projectInfo.seniority;
-			$scope.employees[previousClickedEmployee].jobRoles = $scope.clickedEmployee.jobRoles;
-			$scope.employees[previousClickedEmployee].technologies = $scope.clickedEmployee.technologies;
-			$scope.employees[previousClickedEmployee].databases = $scope.clickedEmployee.databases;
-			$scope.employees[previousClickedEmployee].ides = $scope.clickedEmployee.ides;*/
 			
 			$scope.clickedEmployee = $scope.employees[index];
 			if ($scope.clickedEmployee.firstTimeChipsInit === undefined || $scope.clickedEmployee.firstTimeChipsInit) {
-				console.log("usao sam");
 				fillChipsForClickedEmployee($scope.clickedEmployee);
 				$scope.clickedEmployee.firstTimeChipsInit = false;
 			};
@@ -134,16 +124,23 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		if ($scope.selectedProject.nameProject == ""){
 			$scope.selectedProject.nameProject = "No name given";
 		}
-		projInfos = [];
-		
 		// if none of the employees is clicked
-		for (i=0; i<$scope.employees.length; i++) {
-			projectInfoService.update($scope.employees[i].projectInfo);
-			saveProjectInfoTags($scope.employees[i]);
-		}
 		if ($scope.clickedEmployee !== undefined) {
-			projectInfoService.update($scope.clickedEmployee.projectInfo);
-			saveProjectInfoTags($scope.clickedEmployee);			
+			console.log("usao sam");
+			projectInfoService.update($scope.clickedEmployee.projectInfo).success(function (data) {
+				saveProjectInfoTags($scope.clickedEmployee);		
+			});	
+		}
+		console.log($scope.employees);
+		var counter = 0;
+		for (i=0; i<$scope.employees.length; i++) {
+			projectInfoService.update($scope.employees[i].projectInfo).success(function (data) {
+				console.log("FOR");
+				console.log(data);
+				console.log($scope.employees[counter]);
+				saveProjectInfoTags($scope.employees[counter]);
+				counter++;
+			});
 		}
 		selectedProject.nameProject = $scope.selectedProject.nameProject;
 		selectedProject.startDate = $scope.selectedProject.startDate;
@@ -162,11 +159,21 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 		});
 	};
 	
+	$scope.isAddEmpToProjectEnabled = false;
+	var enableAddEmpToProject = function() {
+		if($scope.otherEmployees.length <= 0) {
+			$scope.isAddEmpToProjectEnabled = false;
+		} else {
+			$scope.isAddEmpToProjectEnabled = true;
+		}
+	};
+	
 	$scope.addEmployeeToProject = function(employeeIndex) {
+		$scope.isAddEmpToProjectEnabled = false;
 		$scope.newProjectInfo = {};
 		$scope.newProjectInfo.jobResponsibilities = $scope.jobResponsibilities;
 		$scope.newProjectInfo.projectExp = $scope.projectExp;
-		if(!angular.equals(selectedProject, {}) && employeeIndex !== undefined){
+		if(!angular.equals(selectedProject, {}) && $scope.otherEmployees[employeeIndex] !== undefined && !checkDuplicateEmployeeOnTheProject($scope.otherEmployees[employeeIndex], $scope.employees)){
 			$scope.newProjectInfo.active = true;
 			projectInfoService.create($scope.newProjectInfo).success(function(data){
 				var temp = data;
@@ -182,6 +189,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	};
 	
 	var checkDuplicateEmployeeOnTheProject = function (employee, array) {
+		console.log(array);
 		for (i=0; i<array.length; i++) {
 			if (employee._links.self.href === array[i]._links.self.href) {
 				return true;
@@ -503,7 +511,6 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	};
 	
 	var saveProjectTags = function(){
-		console.log("usao sam");
 		var req = "";
 		var newTags = [];
 		if ($scope.industries !== undefined) {
@@ -544,6 +551,7 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 					req += newTags[i]._links.self.href +"\n";
 				}
 			};
+			console.log(newTags);
 			tagCloudService.saveTag(emp.projectInfo._links.tagClouds.href, req);
 		}
 	}

@@ -110,7 +110,7 @@
 	                <label> Experience of employee on the project:</label>
 	                <input type="text" ng-model="projectExp" />
 	            </md-input-container>
-	            <md-button ng-disabled="otherEmployees.length <= 0" ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
+	            <md-button ng-disabled="!isAddEmpToProjectEnabled" ng-show="updateable && !newProject" ng-click="addEmployeeToProject(otherEmps)" class="md-primary">Add employee to project</md-button>
 	        </div>
         </div>
         <div offset="5" flex="40" layout="column">          
