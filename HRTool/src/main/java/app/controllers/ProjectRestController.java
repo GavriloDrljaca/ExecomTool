@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.model.Project;
@@ -27,9 +27,8 @@ public class ProjectRestController {
 	@Autowired
 	private ProjectInfoRepository projectInfoRepository;
 	
-	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public Project deleteProject(@RequestParam("id") String idProject){
-		int id = Integer.parseInt(idProject);
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public Project deleteProject(@PathVariable("id") int id){
 		List<ProjectInfo> projectInfoes = projectInfoRepository.findAll();
 		for (ProjectInfo pi : projectInfoes){
 			if (pi.getProject().getIdProject() == id){
