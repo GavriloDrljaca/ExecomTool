@@ -33,14 +33,10 @@ public class ProjectRestController {
 		List<ProjectInfo> projectInfoes = projectInfoRepository.findAll();
 		for (ProjectInfo pi : projectInfoes){
 			if (pi.getProject().getIdProject() == id){
-				System.out.println("Pre nasao");
 			//	pi.setEmployee(null);
 			//	pi.setProject(null);
 				pi.setTagClouds(null);
-				System.out.println(pi.getIdProjectInfo());
 				projectInfoRepository.delete(pi.getIdProjectInfo());
-				System.out.println(projectInfoRepository.getOne(pi.getIdProjectInfo()));
-				System.out.println("Posle nasao");
 			}
 		}
 		projectRepository.delete(id);
