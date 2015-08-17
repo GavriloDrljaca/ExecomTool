@@ -396,6 +396,56 @@ public class Application extends SpringBootServletInitializer implements Command
 		
 		emp.setEmployeeRole(EmployeeRole.HRM);
 		empRep.save(emp);
+		
+		//Employee Andrej
+		emp = new Employee();
+		emp.setNameEmployee("Andrej Miletic");
+		emp.setGender("Male");
+		try {
+			emp.setDateOfBirth(sdf.parse("1985-11-11"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		emp.setAddress("Brace Ribnikar 3, Novi Sad");
+		emp.setPhoneNumber("0691221225");
+		emp.setEmail("miletic_andrej@yahoo.com");
+		emp.setEmergencyPhoneNumber("021488599");
+		
+
+		try {
+			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		emp.setUsername("amiletic");
+		emp.setIdCardNumber("122133122");
+		emp.setPassportNumber("504400500");
+		emp.setYearsOfWorkingExpInExecom(5);
+		emp.setYearsOfWorking(5);
+		emp.setPlaceOfBirth("Zrenjanin");
+		emp.setTrainingLearningPriority("srednja");
+		emp.setLicencesCertificates("Microsoft Licence, Cisco licence");
+		emp.setAwards("Best cook in Execom, xD");
+		emp.setContractType("na neodredjeno");
+		emp.setCommunication(3);
+		emp.setFastLearning(4);
+		emp.setOpenToChange(5);
+		emp.setTeamPlayer(3);
+		emp.setProactiveCommunication(4);
+		emp.setInterpersonalSkills(5);
+		emp.setKnowledgeSharing(3);
+		emp.setJudgement(4);
+		emp.setDecisionMaking(5);
+		emp.setInfluencing(3);
+		emp.setLeadership(4);
+		emp.setCoaching(5);
+		emp.setOrganizationalSkills(3);
+		emp.setEmployeeRole(EmployeeRole.HRM);
+		empRep.save(emp);
 
 	}
 
