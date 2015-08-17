@@ -3,8 +3,10 @@
 	<h3>Basic information</h3>
     <form>
     <md-content layout-padding layout="column" layout-sm="column" layout-align="center start">
-    	<md-input-container md-no-float = "true">
-    	   <label>Name:</label><input required type = "text" ng-model = "currEmp.nameEmployee"/>
+    	<md-input-container md-no-float = "true" class="md-icon-float">
+    	   <label>Name:</label>
+    	   <md-icon md-svg-src="icons/ic_account_box_black_24px.svg"></md-icon>
+    	   <input required type = "text" ng-model = "currEmp.nameEmployee"/>
     	</md-input-container>
     	<md-input-container flex="20">
     		<md-select placeholder = "Gender" ng-model = "currEmp.gender">
