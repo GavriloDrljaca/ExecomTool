@@ -45,7 +45,7 @@ public class GoogleLoginVerifierController {
 	
 	private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport
 	, new JacksonFactory())
-    .setAudience(Arrays.asList("282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com"))
+    .setAudience(Arrays.asList("282087479252-h14kfr8t4von3g7e4j1i2nop1tu6ai4l.apps.googleusercontent.com"))
     .build();
 
 	@Autowired
@@ -80,7 +80,7 @@ public class GoogleLoginVerifierController {
 				  
 				  if (
 				      // If multiple clients access the backend server:
-				    Arrays.asList("282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com").contains(payload.getAuthorizedParty())) {
+				    Arrays.asList("282087479252-h14kfr8t4von3g7e4j1i2nop1tu6ai4l.apps.googleusercontent.com").contains(payload.getAuthorizedParty())) {
 					  
 					  
 					    System.out.println("GLVC User ID: " + payload.getSubject());

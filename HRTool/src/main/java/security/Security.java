@@ -27,11 +27,6 @@ public class Security extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		/*http
-			.authenticationProvider(preAuthProvider());*/
-		
-		//http.addFilterBefore(responseFilter(), UsernamePasswordAuthenticationFilter.class);
-		
 		
 		http
 		.formLogin().disable()
@@ -72,11 +67,6 @@ public class Security extends WebSecurityConfigurerAdapter{
     	filter.setAuthenticationManager(authenticationManager());
     	return filter;
     }
-    
-    /*
-    @Bean 
-    ResponseFilter responseFilter(){
-    	return new ResponseFilter();
-    }*/
+
     
 }
