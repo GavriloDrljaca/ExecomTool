@@ -18,11 +18,16 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 
 repositories {
  	mavenLocal()
  	mavenCentral()
+}
+
+configurations {
+    providedRuntime
 }
 
 dependencies {
@@ -36,6 +41,7 @@ dependencies {
     compile('com.itextpdf:itextpdf:5.5.6')
     compile('jfree:jfreechart:1.0.13')
     compile("com.h2database:h2")
+    compile('mysql:mysql-connector-java:5.1.36')
     testCompile("junit:junit")
 
 }
@@ -44,10 +50,13 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
-
-    
     baseName = 'test'
     version = '1'
+}
+
+war {
+    baseName = 'HRTool'
+    version = '1.0'
 }
 
 
