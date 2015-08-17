@@ -29,6 +29,34 @@ app.service('employeeService', function($http){
 				method: "PUT",
 				headers: {"Content-Type": "text/uri-list"}
 			});
+		},
+
+		deleteAllEmpInfos: function (emp){
+			return $http({
+				url: emp._links.empInfos.href,
+				data: " ",
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
+		},
+		deleteAllTags : function(emp){
+			return $http({
+				url: emp._links.tagClouds.href,
+				data: " ",
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
+		},
+		deleteAllProjectInfos: function(emp){
+			projIn = [];
+			return $http.get(emp._links.projectInfos.href);
+			
+			/*return $http({
+				url: emp._links.projectInfos.href,
+				data: " ",
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});*/
 		}
 	}
 });

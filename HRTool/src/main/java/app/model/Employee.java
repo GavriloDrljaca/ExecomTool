@@ -15,7 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Employee {
@@ -69,11 +70,13 @@ public class Employee {
 	@JoinTable(name = "TagCloudEmp", joinColumns = @JoinColumn(name = "idEmployee"), inverseJoinColumns = @JoinColumn(name = "idTagCloud"))
 	//@JsonManagedReference
 	private Set<TagCloud> tagClouds;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
+	
+	@OneToMany( mappedBy = "employee", cascade = { CascadeType.ALL}, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<ProjectInfo> projectInfos;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany( mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	//@JsonManagedReference
 	private Set<EmploymentInfo> empInfos;
 

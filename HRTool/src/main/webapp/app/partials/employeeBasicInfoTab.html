@@ -15,6 +15,13 @@
     	<md-input-container flex="20">
     	   <label>Date of birth:</label>
     	   <input type = "date"  ng-model = "dateBirth" />
+ 		</md-input-container> 
+ 		<md-input-container>
+ 			<md-select placeholder = "Employee role" ng-model = "currEmp.employeeRole">
+ 				<md-option value = "EMP">Employee</md-option>
+ 				<md-option value = "OFF">Office manager</md-option>
+ 				<md-option value = "HRM">Human resource manager</md-option>
+ 			</md-select>
  		</md-input-container>
  	</md-content>
     </form>

@@ -31,6 +31,14 @@ app.service('employmentInfoesService', function($http){
 				method: "PUT",
 				headers: {"Content-Type": "text/uri-list"}
 			});
+		},
+		deleteEmployee: function(employmentInfo, employee){
+			return $http({
+				url:employmentInfo._links.employee.href,
+				data: " ",
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
 		}
 		
 	}

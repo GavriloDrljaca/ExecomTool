@@ -570,9 +570,48 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.deleteEmployee = function(emp) {
 				if($window.confirm("Do you really want to delete " + emp.nameEmployee + " ?")) {
 					//frist you need to delete emloyees connections to other entities!!!
-					employeeService.delete(emp).success(function (data) {
-			    	    $mdDialog.cancel();
-				    });
+				/*	employeeService.deleteAllTags(emp).success(function(data){
+						employeeService.getEmploymentInfos(emp).success(function(data){
+							angular.forEach(data._embedded.employmentInfoes, function(empInf, key){
+								employmentInfoesService.deleteEmployee(empInf, " ");
+							});
+							employeeService.deleteAllProjectInfos(emp).success(function(data){
+								angular.forEach(data._embedded.projectInfoes, function(projInf, key){
+									projectInfoService.saveEmployee(projInf, " ");
+								});
+								employeeService.delete(emp).success(function (data) {
+									$mdDialog.cancel();
+								});
+							})
+						})
+
+					});*/
+					employeeService.deleteAllTags(emp).success(function(data){
+						employeeService.deleteAllProjectInfos(emp).success(function(data){
+							try{
+							angular.forEach(data._embedded.projectInfoes, function(projInf, key){
+								projectInfoService.saveTagClouds(projInf, " ");
+							});
+							}catch(err){
+								
+							}
+							
+						}).then(function(){
+							employeeService.getEmploymentInfos(emp).success(function(data){
+								try{
+									angular.forEach(data._embedded.employmentInfoes, function(empInf, key){
+										employmentInfoesService.updateEmploymentInfoesTags (empInf, " ");
+									});
+								}catch(err){
+									
+								}
+							}).then(function(){
+								employeeService.delete(emp).success(function (data) {
+									$mdDialog.cancel();
+								});
+							});
+						});
+					});
 				};
 			};
 			
