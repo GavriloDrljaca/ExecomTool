@@ -1,196 +1,195 @@
 <div layout = "row">
-<div flex = "80">
-	<h3>Work experience</h3>
-	<md-list>
-	<md-divider></md-divider>
-	<md-list-item>
-		<md-button class= " md-primary" ng-click = "newProjectInfo()">
-		New entry
-		</md-button>
+	<div flex = "25">
+		<h3>Work experience</h3>
+		<md-list>
 		<md-divider></md-divider>
-	</md-list-item>
-	<md-divider></md-divider>
-		<md-list-item class="md-3-line" ng-repeat="key in objectKeys(projects)" ng-init="value = projects[key]">
-		   <div class="md-list-item-text" ng-click="showInfo(value, $index)">
-		   <md-input-container>
-		   <label> Project name:</label>
-		    <input type = "text" ng-model = "value.nameProject" ng-readonly = "1==1"/>
-		    </md-input-container>
-		    </div>
-		   
+		<md-list-item>
+			<md-button class="md-primary" ng-click = "newProjectInfo()">
+			New entry
+			</md-button>
+			<md-divider></md-divider>
 		</md-list-item>
-	</md-list>
-
-</div>
-<div flex = 100 flex offset = "10"ng-show = "newProjectInfoEntry">
+		<md-divider></md-divider>
+			<md-list-item class="md-3-line" ng-repeat="key in objectKeys(projects)" ng-init="value = projects[key]">
+			   <div class="md-list-item-text" ng-click="showInfo(value, $index)">
+			   <md-input-container>
+			   <label> Project name:</label>
+			    <input type = "text" ng-model = "value.nameProject" ng-readonly = "1==1"/>
+			    </md-input-container>
+			    </div>
+			   
+			</md-list-item>
+		</md-list>
 	
-		<p>Choose existing project or make new one</p>
-			 <md-radio-group ng-model="newProjectOrNot.bool">
-                <md-radio-button style="display: inline" value="Existing">Existing </md-radio-button>
-                <md-radio-button style="display: inline" value="New"> New </md-radio-button>
-             </md-radio-group>
-     <div ng-show = "newProjectOrNot.bool == 'Existing'">
-     <h3>Choose existing project</h3>
-     <label>Choose project: </label>
-       <md-select placeholder = "project" ng-model = "newProjectOrNot.selectedProjectToAdd">
-       	<md-option ng-repeat = "proj in allProjects" value = "{{proj._links.self.href}}">
-       		{{proj.nameProject}}
-       	</md-option>
-       </md-select>
-       <br>
-       <md-divider></md-divider>
-        <md-button class = "md-raised md-primary" ng-click = "addExistingProject()" ng-disabled = "newProjectOrNot.selectedProjectToAdd == null">Add existing project to employee</md-button>
-        <md-divider></md-divider>
-     </div>
-     <div ng-show = "newProjectOrNot.bool == 'New'">
-     <h3>Add new project</h3>
-   	 <form>
-        <md-input-container>
-        	<label>New project name</label>
-        	<input type = "text" ng-model = "newProject.nameProject"/>
-        </md-input-container>
-        <md-input-container>
-        	<label>New project duration</label>
-        	<input type = "number" min="0" ng-model = "newProject.durationOfProject"/>
-        </md-input-container>
-        <md-input-container>
-        	<label>Start date of project</label>
-        	<input type = "date" ng-model = "newProject.startDate"/>
-        </md-input-container>
-        <md-input-container>
-        	<label>New project company name</label>
-        	<input type = "text" ng-model = "newProject.companyName"/>
-        </md-input-container>
-        <br>
-        <label>Execom project: </label>
-             <md-radio-group ng-model="newProject.execom" title = "Execom project">
-                <md-radio-button style="display: inline" value="true"> YES </md-radio-button>
-                <md-radio-button style="display: inline" value="false"> NO </md-radio-button>
-             </md-radio-group>
-
-	</form>
-	<br>
-	<br>
-	<md-divider></md-divider>
-	<md-button class = "md-raised md-primary" ng-click = "addNewProject()">Add new project to employee</md-button>
-	<md-divider></md-divider>
 	</div>
-
-</div>
-<div flex = "100">
-	<form>
-		<div ng-show="firstTimeClicked && !newProjectInfoEntry">
-	        <md-input-container><label>Project name:</label>
-            <input type="text" ng-model="infoToShow.projectName" ng-readonly = "1==1"> </md-input-container> 
-       		 <md-input-container><label>Project duration in weeks:</label>
-            <input type="text" ng-model="infoToShow.projectDuration" ng-readonly = "1==1" > </md-input-container> </md-content>
-            <md-divider></md-divider>
+	<div offset="10" flex="35" ng-show = "newProjectInfoEntry">
+		
+			<p>Choose existing project or make new one</p>
+				 <md-radio-group ng-model="newProjectOrNot.bool">
+	                <md-radio-button style="display: inline" value="Existing">Existing </md-radio-button>
+	                <md-radio-button style="display: inline" value="New"> New </md-radio-button>
+	             </md-radio-group>
+	     <div ng-show = "newProjectOrNot.bool == 'Existing'">
+	     <h3>Choose existing project</h3>
+	     <label>Choose project: </label>
+	       <md-select placeholder = "project" ng-model = "newProjectOrNot.selectedProjectToAdd">
+	       	<md-option ng-repeat = "proj in allProjects" value = "{{proj._links.self.href}}">
+	       		{{proj.nameProject}}
+	       	</md-option>
+	       </md-select>
+	       <br>
+	       <md-divider></md-divider>
+	        <md-button class = "md-raised md-primary" ng-click = "addExistingProject()" ng-disabled = "newProjectOrNot.selectedProjectToAdd == null">Add existing project to employee</md-button>
+	        <md-divider></md-divider>
+	     </div>
+	     <div ng-show = "newProjectOrNot.bool == 'New'">
+	     <h3>Add new project</h3>
+	   	 <form>
 	        <md-input-container>
-	        	<label>Job responsibilities:</label>
-	            <textarea  ng-model="infoToShow.jobResponsibilities"></textarea> 
+	        	<label>New project name</label>
+	        	<input type = "text" ng-model = "newProject.nameProject"/>
 	        </md-input-container>
 	        <md-input-container>
-	        	<label>Project experience:</label>
-	            <textarea  ng-model="infoToShow.projectExperiance"></textarea>
+	        	<label>New project duration</label>
+	        	<input type = "number" min="0" ng-model = "newProject.durationOfProject"/>
 	        </md-input-container>
 	        <md-input-container>
-	        	<label>Duration of employee work on project(weeks):</label>
-	            <input type="number" min="0" ng-model="infoToShow.durationOnProject"></input>
+	        	<label>Start date of project</label>
+	        	<input type = "date" ng-model = "newProject.startDate"/>
 	        </md-input-container>
-	        <p>Seniority</p>
-             <md-radio-group ng-model="infoToShow.seniority">
-                <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
-                <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
-                <md-radio-button style="display: inline" value="Senior"> Senior </md-radio-button>
-             </md-radio-group>
-             <p>Active: </p>
-             <md-radio-group ng-model="infoToShow.active">
-                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="true"> YES </md-radio-button>
-                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="false"> NO </md-radio-button>
-             </md-radio-group>
-
-     </form>
-      <p>Job roles</p>
-			 <md-chips ng-model="infoToShow.jobRoleTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
-				       placeholder="Search for a job role>
-				       
-				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-				         <md-not-found >
-				        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'JobRole')">
-				        	Click here to add new job role ({{searchText}})</span>
-				        </md-not-found>
-				      </md-autocomplete>
-				
-				      <md-chip-template>
-				        <span>
-				          <strong>{{$chip.nameTagCloud}}</strong>
-				          <em>({{$chip.tipTagCloud}})</em>
-				        </span>
-				      </md-chip-template>
-			  </md-chips>   
-          <p>Technologies</p>
-			 <md-chips ng-model="infoToShow.technologieTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
-				       placeholder="Search for a techonology">
-				       
-				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-				         <md-not-found >
-				        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'Technologie')">
-				        	Click here to add new technology ({{searchText}})</span>
-				        </md-not-found>
-				      </md-autocomplete>
-				
-				      <md-chip-template>
-				        <span>
-				          <strong>{{$chip.nameTagCloud}}</strong>
-				          <em>({{$chip.tipTagCloud}})</em>
-				        </span>
-				      </md-chip-template>
-			  </md-chips>   
-	<p>Databases</p>
-			 <md-chips ng-model="infoToShow.databaseTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
-				       placeholder="Search for a database">
-				       
-				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-				         <md-not-found >
-				        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'Database')">
-				        	Click here to add new database ({{searchText}})</span>
-				        </md-not-found>
-				      </md-autocomplete>
-				
-				      <md-chip-template>
-				        <span>
-				          <strong>{{$chip.nameTagCloud}}</strong>
-				          <em>({{$chip.tipTagCloud}})</em>
-				        </span>
-				      </md-chip-template>
-			  </md-chips>   
-	<p>IDEs</p>
-			 <md-chips ng-model="infoToShow.ideTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
-				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-				       md-items='item in querySearch(searchText, "IDE")' md-item-text="item.nameTagCloud" 
-				       placeholder="Search for a database">
-				       
-				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
-				         <md-not-found >
-				        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'IDE')">
-				        	Click here to add new ide ({{searchText}})</span>
-				        </md-not-found>
-				      </md-autocomplete>
-				
-				      <md-chip-template>
-				        <span>
-				          <strong>{{$chip.nameTagCloud}}</strong>
-				          <em>({{$chip.tipTagCloud}})</em>
-				        </span>
-				      </md-chip-template>
-			  </md-chips>  
+	        <md-input-container>
+	        	<label>New project company name</label>
+	        	<input type = "text" ng-model = "newProject.companyName"/>
+	        </md-input-container>
+	        <br>
+	        <label>Execom project: </label>
+	             <md-radio-group ng-model="newProject.execom" title = "Execom project">
+	                <md-radio-button style="display: inline" value="true"> YES </md-radio-button>
+	                <md-radio-button style="display: inline" value="false"> NO </md-radio-button>
+	             </md-radio-group>
+	
+		</form>
+		<br>
+		<br>
+		<md-divider></md-divider>
+		<md-button class = "md-raised md-primary" ng-click = "addNewProject()">Add new project to employee</md-button>
+		<md-divider></md-divider>
+		</div>
+	
+	</div>
+	<div offset="10" flex="35">
+		<form>
+			<div ng-show="firstTimeClicked && !newProjectInfoEntry">
+		        <md-input-container><label>Project name:</label>
+	            <input type="text" ng-model="infoToShow.projectName" ng-readonly = "1==1"> </md-input-container> 
+	       		 <md-input-container><label>Project duration in weeks:</label>
+	            <input type="text" ng-model="infoToShow.projectDuration" ng-readonly = "1==1" > </md-input-container> </md-content>
+	            <md-divider></md-divider>
+		        <md-input-container>
+		        	<label>Job responsibilities:</label>
+		            <textarea  ng-model="infoToShow.jobResponsibilities"></textarea> 
+		        </md-input-container>
+		        <md-input-container>
+		        	<label>Project experience:</label>
+		            <textarea  ng-model="infoToShow.projectExperiance"></textarea>
+		        </md-input-container>
+		        <md-input-container>
+		        	<label>Duration of employee work on project(weeks):</label>
+		            <input type="number" min="0" ng-model="infoToShow.durationOnProject"></input>
+		        </md-input-container>
+		        <p>Seniority</p>
+	             <md-radio-group ng-model="infoToShow.seniority">
+	                <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
+	                <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
+	                <md-radio-button style="display: inline" value="Senior"> Senior </md-radio-button>
+	             </md-radio-group>
+	             <p>Active: </p>
+	             <md-radio-group ng-model="infoToShow.active">
+	                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="true"> YES </md-radio-button>
+	                <md-radio-button style="display: inline" ng-checked = "infoToShow.active" ng-value="false"> NO </md-radio-button>
+	             </md-radio-group>
+	
+	     </form>
+	      <p>Job roles</p>
+				 <md-chips ng-model="infoToShow.jobRoleTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+					      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+					       md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
+					       placeholder="Search for a job role>
+					       
+					        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+					         <md-not-found >
+					        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'JobRole')">
+					        	Click here to add new job role ({{searchText}})</span>
+					        </md-not-found>
+					      </md-autocomplete>
+					
+					      <md-chip-template>
+					        <span>
+					          <strong>{{$chip.nameTagCloud}}</strong>
+					          <em>({{$chip.tipTagCloud}})</em>
+					        </span>
+					      </md-chip-template>
+				  </md-chips>   
+	          <p>Technologies</p>
+				 <md-chips ng-model="infoToShow.technologieTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+					      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+					       md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
+					       placeholder="Search for a techonology">
+					       
+					        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+					         <md-not-found >
+					        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'Technologie')">
+					        	Click here to add new technology ({{searchText}})</span>
+					        </md-not-found>
+					      </md-autocomplete>
+					
+					      <md-chip-template>
+					        <span>
+					          <strong>{{$chip.nameTagCloud}}</strong>
+					          <em>({{$chip.tipTagCloud}})</em>
+					        </span>
+					      </md-chip-template>
+				  </md-chips>   
+		<p>Databases</p>
+				 <md-chips ng-model="infoToShow.databaseTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+					      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+					       md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
+					       placeholder="Search for a database">
+					       
+					        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+					         <md-not-found >
+					        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'Database')">
+					        	Click here to add new database ({{searchText}})</span>
+					        </md-not-found>
+					      </md-autocomplete>
+					
+					      <md-chip-template>
+					        <span>
+					          <strong>{{$chip.nameTagCloud}}</strong>
+					          <em>({{$chip.tipTagCloud}})</em>
+					        </span>
+					      </md-chip-template>
+				  </md-chips>   
+		<p>IDEs</p>
+				 <md-chips ng-model="infoToShow.ideTags" md-autocomplete-snap="" md-require-match="" readonly = "false">
+					      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+					       md-items='item in querySearch(searchText, "IDE")' md-item-text="item.nameTagCloud" 
+					       placeholder="Search for a database">
+					       
+					        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+					         <md-not-found >
+					        	<span ng-click = "addNewTagCloudProjectInfo(searchText, 'IDE')">
+					        	Click here to add new ide ({{searchText}})</span>
+					        </md-not-found>
+					      </md-autocomplete>
+					
+					      <md-chip-template>
+					        <span>
+					          <strong>{{$chip.nameTagCloud}}</strong>
+					          <em>({{$chip.tipTagCloud}})</em>
+					        </span>
+					      </md-chip-template>
+				  </md-chips>  
 	</div>
 		  
-</div>
 </div>
