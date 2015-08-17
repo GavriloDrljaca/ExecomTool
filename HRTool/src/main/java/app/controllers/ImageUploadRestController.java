@@ -36,8 +36,8 @@ public class ImageUploadRestController {
                
                 FileOutputStream output = new FileOutputStream(
                 		new File(servletContext.getRealPath("/images/")+uniqueDate+"_"+fileName), true);
-                //output.write(bytes);
-                output.write(bytes, (chunkNumber-1)*chunkSize,bytes.length);
+                output.write(bytes);
+               // output.write(bytes, (chunkNumber-1)*chunkSize,bytes.length);
                // stream.write(bytes);
                 //stream.
                // stream.close();
