@@ -460,8 +460,8 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// endDate
 			$scope.endDate = new Date($scope.currEmp.endDate);
 			// startDate from booklet
-			$scope.startDateFromBooklet = new Date(
-					$scope.currEmp.startDateFromBooklet);
+			/*$scope.startDateFromBooklet = new Date(
+					$scope.currEmp.startDateFromBooklet);*/
 
 			$scope.createEmployee = function(){
 				if ($scope.currEmp.nameEmployee == "" || angular.equals($scope.currEmp.nameEmployee,undefined)){
@@ -493,7 +493,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
 
 				// saving (new) startDateFromBooklet
-				$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+				//$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
 
 				$scope.saveEmploymentInfos();
 				$scope.updateEmploymentInfoesTagClouds();
