@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +23,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 
 public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedProcessingFilter{
-	
+	private static final Logger log = Logger.getLogger(PreAuthenticatedProcessingFilter.class);
 	NetHttpTransport transport = new NetHttpTransport();
 	
 	private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport
@@ -39,6 +40,7 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
 		String token = request.getParameter("idtoken");
+		log.warn("PREAUTH [idtoken]: "+token);
 		System.out.println("PREAUTH [idtoken]: "+token);
 		
 		GoogleIdToken idToken;
@@ -58,11 +60,14 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 						Arrays.asList("282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com").contains(payload.getAuthorizedParty())
 					) { //2
 					
-					System.out.println("FILTER User ID: " + payload.getSubject());
-				    System.out.println("FILTER User email: "+payload.getEmail());
+					log.info("FILTER User ID: " + payload.getSubject());
+					log.info("FILTER User ID: " + payload.getSubject());
+					//System.out.println("FILTER User ID: " + payload.getSubject());
+				   // System.out.println("FILTER User email: "+payload.getEmail());
 
 				    if(employeeRepo.findByEmail(payload.getEmail()) != null){ //3
-				    	System.out.println(employeeRepo.findByEmail(payload.getEmail()));
+				    	log.info(employeeRepo.findByEmail(payload.getEmail()));
+				    	//System.out.println(employeeRepo.findByEmail(payload.getEmail()));
 				    	
 				    	
 				    	Authentication auth = new UsernamePasswordAuthenticationToken(userDetailsService.loadUserByUsername(payload.getEmail()),

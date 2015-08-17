@@ -4,15 +4,13 @@ package security;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import app.model.Employee;
@@ -21,15 +19,14 @@ import app.repository.EmployeeRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
+	
+	private static final Logger log = Logger.getLogger(UserDetailsServiceImpl.class);
     @Autowired
-    private EmployeeRepository employeeRepo;
-
-    
+    private EmployeeRepository employeeRepository;
 	@Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Employee user = employeeRepo.findByEmail(email);
+        Employee user = employeeRepository.findByEmail(email);
         
         
         if (user == null) {
@@ -37,7 +34,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         
         
-        System.out.println("UDSImpl: USER FOUND");
+        log.info("UDSImpl: USER FOUND");
+        //System.out.println("UDSImpl: USER FOUND");
 
         
         

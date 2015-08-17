@@ -17,14 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled = true)
 public class Security extends WebSecurityConfigurerAdapter{
-	//jen, jen, test, dva dvaa
-	
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-    
-    
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
