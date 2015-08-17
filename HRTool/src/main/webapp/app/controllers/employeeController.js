@@ -821,9 +821,10 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// IMAGE CONTROLS
 			
 			$scope.imageSwitch = true;
-			$scope.imageUploaded = function(serverResponse){
+			$scope.imageUploaded = function(serverResponse, size){
 				$scope.currEmp.image = serverResponse;
 				$scope.imageSwitch = true;
+				alert(size);
 			}
 			$scope.generateCV = function() {
 				emp = $scope.currEmp;
