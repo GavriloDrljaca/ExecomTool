@@ -3,20 +3,24 @@
 		<div flex="45" layout="row" layout-wrap>
 			<md-content flex="50" layout-padding layout="column" layout-sm="column">
                 <h3>Employment information</h3>
-				<md-input-container>
+				<md-input-container class="md-icon-float">
 				    <label>Username:</label>
+                    <md-icon md-svg-src="icons/ic_account_box_black_24px.svg"></md-icon>
 				    <input type="text" ng-model="currEmp.username"> 
 				</md-input-container>
-			    <md-input-container>
+			    <md-input-container class="md-icon-float">
 				    <label>Total work experience:</label>
+                    <md-icon md-svg-src="icons/ic_stars_black_24px.svg"></md-icon>
 				    <input type="text" ng-model="totalExperienceString" ng-readonly = "1==1">
 			    </md-input-container>
-				<md-input-container>
+				<md-input-container class="md-icon-float">
 				    <label>Id card number:</label>
+                    <md-icon md-svg-src="icons/ic_credit_card_black_24px.svg"></md-icon>
 				    <input type="text" ng-model="currEmp.idCardNumber" numeric-only> 
 				</md-input-container>
-				<md-input-container>
+				<md-input-container class="md-icon-float">
 				    <label>Passport number:</label>
+                    <md-icon md-svg-src="icons/ic_public_black_24px.svg"></md-icon>
 				    <input type="text" ng-model="currEmp.passportNumber" numeric-only>
 				</md-input-container>
 			</md-content>

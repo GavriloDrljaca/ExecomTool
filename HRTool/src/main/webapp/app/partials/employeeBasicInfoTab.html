@@ -8,23 +8,26 @@
     	   <md-icon md-svg-src="icons/ic_account_box_black_24px.svg"></md-icon>
     	   <input required type = "text" ng-model = "currEmp.nameEmployee"/>
     	</md-input-container>
-    	<md-input-container flex="20">
+    	<div flex="20" layout="row" layout-align="start center">
+            <md-icon md-svg-src="icons/ic_wc_black_24px.svg"></md-icon>
     		<md-select placeholder = "Gender" ng-model = "currEmp.gender">
     			<md-option value = "Female">Female</md-option>
     			<md-option value = "Male">Male</md-option>								
 			</md-select>
-    	</md-input-container>
-    	<md-input-container flex="20">
+    	</div>
+    	<md-input-container flex="20" class="md-icon-float">
     	   <label>Date of birth:</label>
+           <md-icon md-svg-src="icons/ic_cake_black_24px.svg"></md-icon>
     	   <input type = "date"  ng-model = "dateBirth" />
  		</md-input-container> 
- 		<md-input-container>
- 			<md-select placeholder = "Employee role" ng-model = "currEmp.employeeRole">
+ 		<div flex="20" layout="row" layout-align="start center">
+            <md-icon md-svg-src="icons/ic_assignment_ind_black_24px.svg"></md-icon>
+ 			<md-select placeholder="Employee role" ng-model = "currEmp.employeeRole">
  				<md-option value = "EMP">Employee</md-option>
  				<md-option value = "OFF">Office manager</md-option>
  				<md-option value = "HRM">Human resource manager</md-option>
  			</md-select>
- 		</md-input-container>
+ 		</div>
  	</md-content>
     </form>
  	
