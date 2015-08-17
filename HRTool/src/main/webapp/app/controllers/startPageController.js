@@ -1,23 +1,17 @@
 app.controller('startPageController', function($http, $scope, $window, $mdDialog, startPageFactory, employeeService, projectService, tagCloudService) {
-	
-		
+
+	//Initializes starting data 
 	$scope.init = function() {
-		
 		$http({
 			url: "/employeeRole",
 			method: "GET"
 		}).success(function(data){
-			
-			
-			console.log(data.role);
 			$scope.role = data.role;
-			
 			if ($scope.role=="HRM"){	
 				$scope.projectGroup = "Execom";
 				$scope.employeeGroup = "Employed";
 				$scope.report = {};
 				$scope.initSearchTagDictionary();
-				
 				employeeService.list().success(function(data) {
 					$scope.allEmployees = data._embedded.employees;
 					$scope.setEmployeeList("Employed");
@@ -41,6 +35,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		});
 	}
 	
+	//Sets the employees that should be visible in the employee table depending on the checked radio button 
 	$scope.setEmployeeList = function(employeeGroup){
 		$scope.employees = [];
 		$scope.employeeGroup = employeeGroup;
@@ -67,6 +62,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		}
 	}
 	
+	//Sets the projects that should be visible in the projects table depending on the checked radio button
 	$scope.setProjectList = function(projectGroup){
 		$scope.projects = [];
 		$scope.projectGroup = projectGroup
@@ -96,6 +92,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		}
 	}
 	
+	//Gets the projects that are marked as Execom projects from the server
 	$scope.getExecomProjects = function(){
 		projectService.list().success(function(data) {
 			$scope.projects = [];
@@ -109,25 +106,18 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 	}
 	
 	$scope.submit = function(){
-		employeeService.create($scope.currEmp).success(function(data){
-			
-		})
+		employeeService.create($scope.currEmp);
 	}
 
 	$scope.deleteProject = function(project){
-		projectService.delete(project).success(function(data){
-		
-		})
+		projectService.delete(project);
 	}
 	
 	$scope.deleteEmployee = function(emp){
-		employeeService.delete(emp).success(function(data){
-		})
+		employeeService.delete(emp);
 	}
-	
-	$scope.updateEmployeeName = function(){
-	}
-	
+
+	//Opens the employee dialog when opened from report tab 
 	$scope.showEmployeeReport = function(event, employee) {
 		$http.get('/employees/'+employee.idEmployee).success(function(data){
 			$scope.selectedEmployee = data;
@@ -135,6 +125,8 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 	};
 	
+	
+	//Opens the employee dialog(depends on role of employee)
 	$scope.showEmployee = function(event, employee, employeeFromReport) {
 		$scope.selectedEmployee = employee;
 		if($scope.role=="HRM"){
@@ -197,6 +189,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		}
 	};
 
+	//Opens the project dialog
 	$scope.showProject = function(ev, prj) {
 		$scope.selectedProject = prj;
 		$mdDialog.show({
@@ -223,6 +216,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		});
 	};
 	
+	//Sends search parameters and receives the employees from the server 
 	$scope.makeReport = function(){
 		$scope.report.technology = [];
 		$scope.report.education = [];
@@ -256,6 +250,7 @@ app.controller('startPageController', function($http, $scope, $window, $mdDialog
 		})
 	}
 	
+	//Clears the form and search results in the report tab
 	$scope.clearForm = function(){
 		$scope.reportResult = {};
 		$scope.report = {};
