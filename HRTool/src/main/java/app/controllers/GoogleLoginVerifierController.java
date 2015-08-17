@@ -83,6 +83,7 @@ public class GoogleLoginVerifierController {
 				    Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com").contains(payload.getAuthorizedParty())) {
 					  
 					  
+					  
 					    System.out.println("GLVC User ID: " + payload.getSubject());
 					    System.out.println("GLVC User email: "+payload.getEmail());
 					    
