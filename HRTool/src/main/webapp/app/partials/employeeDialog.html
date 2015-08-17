@@ -14,7 +14,8 @@
 			     <div flex offset = "15">
 					<div flow-init="{target: '/upload'  , testChunks:false, singleFile: 'true', uploadMethod: 'post', method: 'multipart', fileParameterName:'slika' }"
 					     flow-files-submitted="$flow.upload()"
-					     flow-file-success="imageUploaded($message)">
+					     flow-file-success="imageUploaded($message, $file.size)"
+					     flow-file-added = "!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()] && $file.size < 1024000">
 					    <div class="thumbnail" ng-hide="imageSwitch" >
 					      	<img src="images/Koala.jpg" height = "250" width = "250"/>
 					    </div>
