@@ -44,6 +44,12 @@ public class ProjectInfo {
 	private boolean active;
 	
 	
+	public int getIdProjectInfo() {
+		return idProjectInfo;
+	}
+	public void setIdProjectInfo(int idProjectInfo) {
+		this.idProjectInfo = idProjectInfo;
+	}
 	public int getDurationOnProject() {
 		return durationOnProject;
 	}

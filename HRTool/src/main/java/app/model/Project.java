@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 public class Project {
 	
@@ -33,6 +36,7 @@ public class Project {
 	private Set<TagCloud> tagClouds;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<ProjectInfo> projectInfo;
 	
 	public Set<TagCloud> getTagClouds() {

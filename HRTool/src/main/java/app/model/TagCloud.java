@@ -31,12 +31,10 @@ public class TagCloud {
 	
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	//@JsonBackReference
 	@JsonIgnore
 	private Set<Employee> employees;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
-	//@JsonBackReference
 	@JsonIgnore
 	private Set<EmploymentInfo> employmentInfos;
 	

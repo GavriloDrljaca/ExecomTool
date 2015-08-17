@@ -238,9 +238,14 @@ app.controller('projectController', ['$http', '$scope', '$mdToast', '$animate','
 	
 	$scope.deleteProject = function(){
 		if ($window.confirm("Do you really want to delete the project " + selectedProject.nameProject)) {
-			projectService.delete(selectedProject).success(function(){
+			var id = $scope.selectedProject._links.self.href.split("/");
+			id = id[id.length-1];
+			$http.post('projects/delete?id='+id).success(function(){
 				$mdDialog.cancel();
 			});
+			/*projectService.delete(selectedProject).success(function(){
+				$mdDialog.cancel();
+			});*/
 		};
 	};
 	
