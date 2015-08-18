@@ -1,6 +1,5 @@
 package app.controllers;
 
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
@@ -8,6 +7,7 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -39,105 +39,112 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 @ComponentScan("security")
 @RequestMapping("/signin")
 public class GoogleLoginVerifierController {
-	
-	
+
+	private static final Logger log = Logger
+			.getLogger(GoogleLoginVerifierController.class);
+
 	NetHttpTransport transport = new NetHttpTransport();
-	
-	private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport
-	, new JacksonFactory())
-    .setAudience(Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com"))
-    .build();
+
+	private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
+			transport, new JacksonFactory())
+			.setAudience(
+					Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com"))
+			.build();
 
 	@Autowired
 	private EmployeeRepository employeeRepo;
-	
+
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
-	
-	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public String logIn(@RequestParam("idtoken") String id_Token, HttpServletRequest request,
-			HttpServletResponse response){
-		
-		System.out.println("Token granted from frontend: " + id_Token);
-		
+	public String logIn(@RequestParam("idtoken") String id_Token,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		log.info("Token granted from frontend: " + id_Token);
+
 		GoogleIdToken idToken;
 		Payload payload = null;
 		UserDetails uDetails;
-		  
+
 		try {
 			idToken = verifier.verify(id_Token);
-			
+
 			if (idToken != null) {
-				  payload = idToken.getPayload();
-				  
-				  System.out.println("PAYLOAD: " +payload);
-				  System.out.println("DOMAIN: "+ payload.getHostedDomain());
-				  System.out.println("AUTH PARTY: "+payload.getAuthorizedParty());
-				  
-				  
-				  if (
-				      // If multiple clients access the backend server:
-				    Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com").contains(payload.getAuthorizedParty())) {
-					  
-					  
-					  
-					    System.out.println("GLVC User ID: " + payload.getSubject());
-					    System.out.println("GLVC User email: "+payload.getEmail());
-					    
-					    
-					    Employee emp = null;
-				    if((emp = employeeRepo.findByEmail(payload.getEmail())) != null){
-				    	System.out.println(emp);
-				    	uDetails = userDetailsService.loadUserByUsername(payload.getEmail());
-				    	
-				    	request.getSession();
+				payload = idToken.getPayload();
 
-				    	Authentication auth = new UsernamePasswordAuthenticationToken(uDetails = userDetailsService.loadUserByUsername(payload.getEmail()),
-				    			null, uDetails.getAuthorities());				    	
+				log.info("PAYLOAD: " + payload);
+				log.info("DOMAIN: " + payload.getHostedDomain());
+				log.info("AUTH PARTY: " + payload.getAuthorizedParty());
 
-				    	SecurityContextHolder.getContext().setAuthentication(auth);
-				    	
-				    	System.out.println("GLVC SCH username: "+((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-				    	System.out.println("GLVC SCH authorities: "+((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities());
-				    	
-				    	System.out.println("GLVC AUTHORITIES: "+auth.getAuthorities());
-				    	
-				    	System.out.println("GLVC principal: "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-				    	
-				    	return "redirect:/startPage.html";
-				    	
-				    }else{
-				    	throw new UserNotFoundException(payload.getEmail());
-				    }
-				    
-				   
-				  } else {
-				    System.out.println("Invalid ID token.");
-				  }
+				if (
+				// If multiple clients access the backend server:
+				Arrays.asList(
+						"282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com")
+						.contains(payload.getAuthorizedParty())) {
+
+					log.info("GLVC User ID: " + payload.getSubject());
+					log.info("GLVC User email: " + payload.getEmail());
+
+					Employee emp = null;
+					if ((emp = employeeRepo.findByEmail(payload.getEmail())) != null) {
+						log.info(emp);
+						uDetails = userDetailsService
+								.loadUserByUsername(payload.getEmail());
+
+						request.getSession();
+
+						Authentication auth = new UsernamePasswordAuthenticationToken(
+								uDetails = userDetailsService.loadUserByUsername(payload
+										.getEmail()), null,
+								uDetails.getAuthorities());
+
+						SecurityContextHolder.getContext().setAuthentication(
+								auth);
+
+						log.info("GLVC SCH username: "
+								+ ((UserDetails) SecurityContextHolder
+										.getContext().getAuthentication()
+										.getPrincipal()).getUsername());
+						log.info("GLVC SCH authorities: "
+								+ ((UserDetails) SecurityContextHolder
+										.getContext().getAuthentication()
+										.getPrincipal()).getAuthorities());
+
+						log.info("GLVC AUTHORITIES: " + auth.getAuthorities());
+
+						log.info("GLVC principal: "
+								+ SecurityContextHolder.getContext()
+										.getAuthentication().getPrincipal());
+
+						return "redirect:/startPage.html";
+
+					} else {
+						throw new UserNotFoundException(payload.getEmail());
+					}
+
 				} else {
-				  System.out.println("Invalid ID token.");
+					log.info("Invalid ID token.");
 				}
+			} else {
+				log.info("Invalid ID token.");
+			}
 
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}  	
-	
+		}
+
 		return "";
 	}
-	
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logOut(){
+	public String logOut() {
 		SecurityContextHolder.getContext().setAuthentication(null);
-		
+
 		return "redirect:/index.html";
 	}
-	
 
-	
 }

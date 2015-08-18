@@ -15,9 +15,7 @@ public class PreUserDetailService implements AuthenticationUserDetailsService<Pr
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token)
 			throws UsernameNotFoundException {
 		
-		log.info("!!!!!!!!!!!!!!!!!!!!!!!!PreUserDetailService : loadUserDetails");
-		//System.out.println("PreUserDetailService : loadUserDetails");
-		
+		log.info("PreUserDetailService : loadUserDetails");
 		return null;
 	}
 

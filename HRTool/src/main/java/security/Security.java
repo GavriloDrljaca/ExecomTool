@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled = true)
@@ -21,8 +19,6 @@ public class Security extends WebSecurityConfigurerAdapter{
     private UserDetailsServiceImpl userDetailsService;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		
 		http
 		.formLogin().disable()
 		.authorizeRequests()
@@ -44,9 +40,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 		.and()
         .csrf()
             .disable();
-		
 	}
-	
     
     @Bean
     public PreUserDetailService preUserDetailService(){
@@ -54,14 +48,10 @@ public class Security extends WebSecurityConfigurerAdapter{
     	return ser;
     }
     
-    
-    
     @Bean
     public PreAuthenticatedProcessingFilter preFilter() throws Exception {
     	PreAuthenticatedProcessingFilter filter = new PreAuthenticatedProcessingFilter();
     	filter.setAuthenticationManager(authenticationManager());
     	return filter;
     }
-
-    
 }

@@ -41,8 +41,6 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
 		String token = request.getParameter("idtoken");
 		log.warn("PREAUTH [idtoken]: "+token);
-		System.out.println("PREAUTH [idtoken]: "+token);
-		
 		GoogleIdToken idToken;
 		Payload payload = null;
 		
@@ -50,44 +48,24 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 		{
 		try {
 			idToken = verifier.verify(token);
-			
-			
 			if (idToken != null) {	//1
 				payload = idToken.getPayload();
-				
-				
-				if (
-						Arrays.asList("282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com").contains(payload.getAuthorizedParty())
-					) { //2
+				if (Arrays.asList("282087479252-b8d869knnsqb3k7dtuhe5dlasl9e9orf.apps.googleusercontent.com")
+						.contains(payload.getAuthorizedParty())){ //2
 					
 					log.info("FILTER User ID: " + payload.getSubject());
 					log.info("FILTER User ID: " + payload.getSubject());
-					//System.out.println("FILTER User ID: " + payload.getSubject());
-				   // System.out.println("FILTER User email: "+payload.getEmail());
 
 				    if(employeeRepo.findByEmail(payload.getEmail()) != null){ //3
 				    	log.info(employeeRepo.findByEmail(payload.getEmail()));
-				    	//System.out.println(employeeRepo.findByEmail(payload.getEmail()));
-				    	
-				    	
 				    	Authentication auth = new UsernamePasswordAuthenticationToken(userDetailsService.loadUserByUsername(payload.getEmail()),
 				    			null, userDetailsService.loadUserByUsername(payload.getEmail()).getAuthorities());
 				    	
-				    	
-				    	//System.out.println("***PRINCIPAL: "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-				    	
 				    	return userDetailsService.loadUserByUsername(payload.getEmail());
-
-				    	//return payload.getEmail();
-				    	
 				    }//3
 				    else throw new UserNotFoundException(payload.getEmail());
 				}//2
-				
-				
 			}//1
-			
-			
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,7 +74,6 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 			e.printStackTrace();
 		}
 		}
-		
 		return true;
 	}
 

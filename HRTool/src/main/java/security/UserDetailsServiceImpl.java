@@ -33,12 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("user not found");
         }
         
-        
         log.info("UDSImpl: USER FOUND");
-        //System.out.println("UDSImpl: USER FOUND");
-
-        
-        
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
