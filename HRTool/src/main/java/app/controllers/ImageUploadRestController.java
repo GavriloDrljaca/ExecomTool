@@ -21,12 +21,11 @@ public class ImageUploadRestController {
     private ServletContext servletContext;
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody String uploadingPOST(@RequestParam("flowFilename") String fileName,
-			@RequestParam("slika") MultipartFile file){
+	public @ResponseBody String uploadingPOST(@RequestParam("slika") MultipartFile file){
 		if (!file.isEmpty()) {
             try {
                 file.transferTo(new File(servletContext.getRealPath("/images") + file.getOriginalFilename()));
-                return "images/"+fileName;
+                return "images/" + file.getOriginalFilename();
             } catch (Exception e) {
                 return "You failed to upload " + e.getMessage();
             }
