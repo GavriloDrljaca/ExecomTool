@@ -148,12 +148,8 @@ public class ReportRestController {
 	 */
 	public ResponseEntity generateChart() {
 		File file = null;
-		try {
-			file = ChartGenerator.generatePieChart(employeeRepository.findAll());
-		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			logger.log(Level.SEVERE, e.getMessage());
-			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		file = ChartGenerator.generatePieChart(employeeRepository.findAll());
+		
 		String fileName = "seniority-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
@@ -174,19 +170,15 @@ public class ReportRestController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping("/technology") 
+	@RequestMapping(value = "/technology") 
 	/**
 	 * Sends technologies pie chart as an array of bytes.
 	 * @return Technologies pie chart
 	 */
 	public ResponseEntity generatePieTech() {
 		File file = null;
-		try {
-			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
-		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			logger.log(Level.SEVERE, e.getMessage());
-			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
+		
 		String fileName = "technology-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
@@ -214,12 +206,7 @@ public class ReportRestController {
 	 */
 	public ResponseEntity generatePieDB() {
 		File file = null;
-		try {
-			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Database);
-		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			logger.log(Level.SEVERE, e.getMessage());
-			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Database);
 		String fileName = "database-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
