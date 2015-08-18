@@ -58,7 +58,7 @@ signOut = function signOut() {
     var request;
   	
   	request = $.ajax({
-        url: "/signin/logout",
+        url: "/logout",
         type: "GET"
     });
     

@@ -139,11 +139,5 @@ public class GoogleLoginVerifierController {
 		return "";
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logOut() {
-		SecurityContextHolder.getContext().setAuthentication(null);
-
-		return "redirect:/index.html";
-	}
 
 }

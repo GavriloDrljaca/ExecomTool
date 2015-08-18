@@ -19,19 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeRoleRestController {
 	private static final Logger log = Logger.getLogger(EmployeeRoleRestController.class);
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<String> getRole(){
+	public ResponseEntity getRole(){
 
 		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null){
 			UserDetails ud = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			@SuppressWarnings("unchecked")
 			ArrayList<SimpleGrantedAuthority> sga = (ArrayList<SimpleGrantedAuthority>) ud.getAuthorities();
 			
 			log.info("SGA : "+sga.get(0).getAuthority());
-			return new ResponseEntity<String>("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
+			return new ResponseEntity("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
+			//OR THIS WAY
+			/*
+			 * 	HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("role", sga.get(0).getAuthority());
+				return new ResponseEntity(hm, HttpStatus.OK);
+			 */
 		}
-		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 
 }
