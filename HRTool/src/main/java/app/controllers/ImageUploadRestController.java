@@ -1,8 +1,8 @@
 package app.controllers;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 
@@ -17,52 +17,40 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-
 public class ImageUploadRestController {
 
 	@Autowired
     private ServletContext servletContext;
-
-	
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public @ResponseBody String uploading(){
-		
-		
-		System.out.println("---------------------------------");
-		return "BLA BLA";
-
-
-	}
-	
+	private Long uniqueDate = new Date().getTime();
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadingPOST(@RequestParam("flowFilename") String fileName,
-			@RequestParam("flowTotalChunks") int totalChunks,
+			@RequestParam("flowTotalChunks") int totalChunks, @RequestParam("flowChunkSize") int chunkSize,
+			@RequestParam("flowChunkNumber") int chunkNumber,
 			@RequestParam("slika") MultipartFile file){
 		System.out.println("----------------POST-------------");
 		if (!file.isEmpty()) {
-			System.out.println("nije prazan  "+ fileName+ "  totalchunks: "+totalChunks);
+			System.out.println("nije prazan  "+ fileName+ "  totalchunks: "+totalChunks+"  chunkSize: "+ chunkSize + "  chunkNumber: "+ chunkNumber);
             try {
             	
                 byte[] bytes = ((MultipartFile) file).getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(
-                        		new File(servletContext.getRealPath("/images/")+fileName)));
-                stream.write(bytes);
-                stream.close();
+               
+                FileOutputStream output = new FileOutputStream(
+                		new File(servletContext.getRealPath("/images/")+uniqueDate+"_"+fileName), true);
+                output.write(bytes);
+               // output.write(bytes, (chunkNumber-1)*chunkSize,bytes.length);
+               // stream.write(bytes);
+                //stream.
+               // stream.close();
+                output.close();
                 System.out.println("---------------FILE UPLOADED------------" + servletContext.getRealPath("/images"));
-                return "images/"+fileName;
+                return "images/"+uniqueDate+"_"+fileName;
             } catch (Exception e) {
+            	e.printStackTrace();
                 return "You failed to upload " + e.getMessage();
             }
         } else {
             return "You failed to upload  because the file was empty.";
         }
 	}
-	
 
-	public String returnPath(String path){
-		System.out.println(servletContext.getRealPath("images"));
-		return servletContext.getRealPath("images");
-	}
-	
 }
