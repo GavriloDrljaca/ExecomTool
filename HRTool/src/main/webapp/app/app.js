@@ -3,7 +3,7 @@
  * created by Gavrilo Drljaca
  */
 
-var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ng', 'flow']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial', 'flow']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
@@ -12,17 +12,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 	        templateUrl: 'app/partials/tagCloudsTab.html',
 	    })
 	    .when('/', {
-	    	controller: 'app/controllers/LoginController',
+	    	controller: 'LoginController',
 	    	templateUrl: 'app/partials/login.html',
+	    })
+	    .when('/startPage', {
+	    	controller: 'startPageController',
+	    	templateUrl: 'app/partials/startPage.html',
 	    })
 	    .otherwise({                      
 	        redirectTo: '/'
 	    });      
 }]);
-
-app.filter("jsDate", function () {
-    return function (x) {
-       // return new Date(parseInt(x.toString().substring(6)));
-    	return new Date(parseInt(x));
-    };
-});

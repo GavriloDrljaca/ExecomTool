@@ -107,7 +107,7 @@ public class GoogleLoginVerifierController {
 				    	
 				    	System.out.println("GLVC principal: "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 				    	
-				    	return "redirect:/startPage.html";
+				    	return "redirect:/startPage";
 				    	
 				    }else{
 				    	throw new UserNotFoundException(payload.getEmail());

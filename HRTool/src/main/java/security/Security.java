@@ -28,7 +28,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		
-		http
+		http.httpBasic().disable()
 		.formLogin().disable()
 		.authorizeRequests()
 			.antMatchers("/").permitAll()

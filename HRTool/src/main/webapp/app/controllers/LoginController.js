@@ -1,16 +1,10 @@
-app.controller('LoginController', ['$scope', function($scope) {
+app.controller('LoginController', function($scope) {
 
-	$scope.onSignIn = function(googleUser) {
+	onSignIn = function onSignIn(googleUser) {
 
 	  	var profile = googleUser.getBasicProfile();
 			
-		var id_token = googleUser.getAuthResponse().id_token;  
-		  
-	  	console.log('ID: ' + profile.getId());
-	  	console.log('Name: ' + profile.getName());
-	  	console.log('Image URL: ' + profile.getImageUrl());
-	  	console.log('Email: ' + profile.getEmail());
-	  	console.log('id_token: '+ id_token);
+		var id_token = googleUser.getAuthResponse().id_token;
 	  	
 	  	var request;
 	  	
@@ -21,10 +15,6 @@ app.controller('LoginController', ['$scope', function($scope) {
 	  	
 	  	
 	        success: function(data, textStatus, xhr) {
-
-		        console.log('success : status: '+xhr.status);
-		        console.log('success : data: '+data);
-		        console.log('success : textStatus: '+textStatus)
 		        
 		        var split = data.split(":");
 		        var first = split[0];
@@ -50,7 +40,7 @@ app.controller('LoginController', ['$scope', function($scope) {
 	  	
 	}
 
-	$scope.signOut = function() {
+	signOut = function signOut() {
 	    var auth2 = gapi.auth2.getAuthInstance();
 	    
 	    var request;
@@ -65,7 +55,7 @@ app.controller('LoginController', ['$scope', function($scope) {
 	    });
 	}
 
-	$scope.revokeAllScopes = function() {
+	revokeAllScopes = function revokeAllScopes() {
 		var auth2 = gapi.auth2.getAuthInstance();
 		
 		auth2.signOut().then(function () {
@@ -79,4 +69,4 @@ app.controller('LoginController', ['$scope', function($scope) {
 		});
 	}
 	
-}]);
+});

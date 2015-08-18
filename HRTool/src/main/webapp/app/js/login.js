@@ -79,7 +79,7 @@ revokeAllScopes = function revokeAllScopes() {
 	  auth2.disconnect();
 	  
 	  request = $.ajax({
-	        url: "/signin/logout",
+	        url: "/employees/logout",
 	        type: "GET" 	
 	    });
 	} 
