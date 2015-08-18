@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 @Controller
 public class ImageUploadRestController {
 
 	@Autowired
-    private ServletContext servletContext;
-	
+	private ServletContext servletContext;
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody String uploadingPOST(@RequestParam("picture") MultipartFile file){
+	public @ResponseBody String uploadingPOST(
+			@RequestParam("picture") MultipartFile file) {
 		if (!file.isEmpty()) {
-            try {
-                file.transferTo(new File(servletContext.getRealPath("/images") + file.getOriginalFilename()));
-                return "images/" + file.getOriginalFilename();
-            } catch (Exception e) {
-                return "You failed to upload " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload  because the file was empty.";
-        }
+			try {
+				file.transferTo(new File(servletContext.getRealPath("/images")
+						+ file.getOriginalFilename()));
+				return "images/" + file.getOriginalFilename();
+			} catch (Exception e) {
+				return "You failed to upload " + e.getMessage();
+			}
+		} else {
+			return "You failed to upload  because the file was empty.";
+		}
 	}
-	
+
 }
