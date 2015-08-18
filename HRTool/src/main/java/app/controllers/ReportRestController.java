@@ -65,13 +65,8 @@ public class ReportRestController {
 	 * @param employee
 	 * @return
 	 */
-	private Set<TagCloud> extractClouds(Set<TagCloud> extracted, List<TagCloud> toExtract, Employee employee){
-		for (TagCloud tc : toExtract) {
-			if (tc.getEmployees().contains(employee)) {
-				extracted.add(tc);
-			}
-		}
-		return extracted;
+	private void extractClouds(Set<TagCloud> extracted, List<TagCloud> toExtract, Employee employee){
+		toExtract.stream().filter(tc -> tc.getEmployees().contains(employee)).forEach(tc -> extracted.add(tc));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -86,11 +81,11 @@ public class ReportRestController {
 		Employee e = employeeRepository.findOne(id);
 		List<TagCloud> allEducation = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		Set<TagCloud> education = new HashSet<>();
-		education = extractClouds(education, allEducation, e);
+		extractClouds(education, allEducation, e);
 		
 		List<TagCloud> allLanguage = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<TagCloud> language = new HashSet<>();
-		language = extractClouds(language, allLanguage, e);
+		extractClouds(language, allLanguage, e);
 		
 		Set<ProjectInfo> projectInfoes = e.getProjectInfos();
 		Set<TagCloud> databases = new HashSet<>();
