@@ -37,6 +37,9 @@ import app.model.TagCloudEnum;
 
 public class ChartGenerator {
 
+	public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	public static Date currentDate = new Date();
+	
 	/**
 	 * Generates seniority pie chart and saves it in a pdf.
 	 * @param emps All employees
@@ -44,12 +47,14 @@ public class ChartGenerator {
 	 * @throws DocumentException
 	 * @throws ParseException
 	 */
-	public static void generatePieChart(List<Employee> emps) throws FileNotFoundException, DocumentException, ParseException {
+	public static File generatePieChart(List<Employee> emps) throws FileNotFoundException, DocumentException, ParseException {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		Document doc = new Document();
-
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./seniority-chart.pdf")));
+		currentDate = new Date();
+		String fileName = "./seniority-chart_" + sdf.format(currentDate) + ".pdf";
+		File pc = new File(fileName);
+		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(pc));
 
 		doc.open();
 
@@ -76,7 +81,6 @@ public class ChartGenerator {
 			}
 			for (ProjectInfo pi : projectInfoIt) {
 				if(pi.getProject().getStartDate()!= null && pi.getProject().getStartDate().after(lastDate) && pi.isActive()){
-					lastDate = pi.getProject().getStartDate();
 					lastDate = pi.getProject().getStartDate();
 					last = pi;
 				}
@@ -113,6 +117,7 @@ public class ChartGenerator {
 		cb.addTemplate(pie, 0, 0);
 
 		doc.close();
+		return pc;
 	}
 	/**
 	 * Generates a @param tce pie chart and saves it in a pdf.
@@ -122,7 +127,7 @@ public class ChartGenerator {
 	 * @throws DocumentException
 	 * @throws ParseException
 	 */
-	public static void generateTechnology(List<ProjectInfo> projInfos, TagCloudEnum tce) throws FileNotFoundException, DocumentException, ParseException {
+	public static File generateTechnologyOrDatabase(List<ProjectInfo> projInfos, TagCloudEnum tce) throws FileNotFoundException, DocumentException, ParseException {
 
 		List<TagCloud> tagClouds = new ArrayList<>();
 
@@ -133,12 +138,25 @@ public class ChartGenerator {
 		}
 		Document doc = new Document();
 		PdfWriter writer = null;
-		if (tce.equals(TagCloudEnum.Technologie)) {
-			writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./technology-chart.pdf")));
+		String fileName = null;
+		File pc = null;
+		switch (tce){
+			case Technologie:
+				currentDate = new Date();
+				fileName = "./technology-chart_" + sdf.format(currentDate) + ".pdf";
+				pc = new File(fileName);
+				writer = PdfWriter.getInstance(doc, new FileOutputStream(pc));
+				break;
+			case Database:
+				currentDate = new Date();
+				fileName = "./database-chart_" + sdf.format(currentDate) + ".pdf";
+				pc = new File(fileName);
+				writer = PdfWriter.getInstance(doc, new FileOutputStream(pc));
+				break;
+			default:
+				break;
 		}
-		else {
-			writer = PdfWriter.getInstance(doc, new FileOutputStream(new File("./database-chart.pdf")));
-		}
+
 		doc.open();
 
 		doc.add(new Phrase("Used " + tce.toString() + "s:"));
@@ -178,5 +196,6 @@ public class ChartGenerator {
 		cb.addTemplate(pie, 0, 0);
 
 		doc.close();
+		return pc;
 	}
 }

@@ -149,12 +149,13 @@ public class ReportRestController {
 	 * @return Seniority pie chart
 	 */
 	public ResponseEntity generateChart() {
+		File file = null;
 		try {
-			ChartGenerator.generatePieChart(employeeRepository.findAll());
+			file = ChartGenerator.generatePieChart(employeeRepository.findAll());
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "seniority-chart.pdf";
+		String fileName = "seniority-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
 		try {
@@ -165,6 +166,9 @@ public class ReportRestController {
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
+    	if(file != null) {
+    		file.delete();
+    	}
     	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
@@ -176,12 +180,13 @@ public class ReportRestController {
 	 * @return Technologies pie chart
 	 */
 	public ResponseEntity generatePieTech() {
+		File file = null;
 		try {
-			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
+			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "technology-chart.pdf";
+		String fileName = "technology-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
 		try {
@@ -192,6 +197,9 @@ public class ReportRestController {
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
+    	if(file != null) {
+    		file.delete();
+    	}
     	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
@@ -203,12 +211,13 @@ public class ReportRestController {
 	 * @return Databases pie chart
 	 */
 	public ResponseEntity generatePieDB() {
+		File file = null;
 		try {
-			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Database);
+			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Database);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
 			e.printStackTrace();
 		}
-		String fileName = "database-chart.pdf";
+		String fileName = "database-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
     	byte[] data = null;
 		try {
@@ -220,6 +229,9 @@ public class ReportRestController {
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
     	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
+    	if(file != null) {
+    		file.delete();
+    	}
         return response;
 	}
 }
