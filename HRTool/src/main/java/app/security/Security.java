@@ -1,4 +1,4 @@
-package security;
+package app.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 			.antMatchers("/index.html").permitAll()
 			.antMatchers("/signin/login").permitAll()
 			.antMatchers("/signin/logout").permitAll()
+			.antMatchers("/logout").permitAll()
 			.antMatchers("/startPage.html").authenticated()
 			.antMatchers("/app/**").permitAll()
 			.antMatchers("/projects/**").hasAuthority("HRM")

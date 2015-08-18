@@ -1,4 +1,4 @@
-package security;
+package app.security;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;

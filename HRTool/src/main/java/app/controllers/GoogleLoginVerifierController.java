@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import security.UserDetailsServiceImpl;
 import app.controllers.http.response.UserNotFoundException;
 import app.model.Employee;
 import app.repository.EmployeeRepository;
+import app.security.UserDetailsServiceImpl;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
@@ -35,7 +35,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 @RestController
 @Configuration
-@ComponentScan("security")
 @RequestMapping("/signin")
 public class GoogleLoginVerifierController {
 
@@ -61,8 +60,6 @@ public class GoogleLoginVerifierController {
 	public HttpStatus logIn(@RequestParam("idtoken") String id_Token,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		log.info("Token granted from frontend: " + id_Token);
-
 		GoogleIdToken idToken;
 		Payload payload = null;
 		UserDetails uDetails;
@@ -73,9 +70,6 @@ public class GoogleLoginVerifierController {
 			if (idToken != null) {
 				payload = idToken.getPayload();
 
-				log.info("PAYLOAD: " + payload);
-				log.info("DOMAIN: " + payload.getHostedDomain());
-				log.info("AUTH PARTY: " + payload.getAuthorizedParty());
 
 				if (
 				// If multiple clients access the backend server:
@@ -83,12 +77,10 @@ public class GoogleLoginVerifierController {
 						"282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com")
 						.contains(payload.getAuthorizedParty())) {
 
-					log.info("GLVC User ID: " + payload.getSubject());
 					log.info("GLVC User email: " + payload.getEmail());
 
 					Employee emp = null;
 					if ((emp = employeeRepository.findByEmail(payload.getEmail())) != null) {
-						log.info(emp);
 						uDetails = userDetailsService
 								.loadUserByUsername(payload.getEmail());
 
@@ -106,17 +98,9 @@ public class GoogleLoginVerifierController {
 								+ ((UserDetails) SecurityContextHolder
 										.getContext().getAuthentication()
 										.getPrincipal()).getUsername());
-						log.info("GLVC SCH authorities: "
-								+ ((UserDetails) SecurityContextHolder
-										.getContext().getAuthentication()
-										.getPrincipal()).getAuthorities());
 
 						log.info("GLVC AUTHORITIES: " + auth.getAuthorities());
 
-						log.info("GLVC principal: "
-								+ SecurityContextHolder.getContext()
-										.getAuthentication().getPrincipal());
-						
 						return HttpStatus.OK;
 
 					} else {

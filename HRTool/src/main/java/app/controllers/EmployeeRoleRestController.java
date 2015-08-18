@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeRoleRestController {
 	private static final Logger log = Logger.getLogger(EmployeeRoleRestController.class);
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity getRole(){
@@ -29,7 +28,7 @@ public class EmployeeRoleRestController {
 			ArrayList<SimpleGrantedAuthority> sga = (ArrayList<SimpleGrantedAuthority>) ud.getAuthorities();
 			
 			log.info("SGA : "+sga.get(0).getAuthority());
-			return new ResponseEntity("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
+			return new ResponseEntity<>("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
 			//OR THIS WAY
 			/*
 			 * 	HashMap<String, String> hm = new HashMap<String, String>();
@@ -37,7 +36,7 @@ public class EmployeeRoleRestController {
 				return new ResponseEntity(hm, HttpStatus.OK);
 			 */
 		}
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 }

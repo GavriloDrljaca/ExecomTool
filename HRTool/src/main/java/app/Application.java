@@ -17,7 +17,6 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
-import security.UserDetailsServiceImpl;
 import app.model.Employee;
 import app.model.EmployeeRole;
 import app.model.EmploymentInfo;
@@ -31,6 +30,7 @@ import app.repository.EmploymentInfoRepository;
 import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
+import app.security.UserDetailsServiceImpl;
 
 @SpringBootApplication
 
