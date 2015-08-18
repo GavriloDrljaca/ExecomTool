@@ -8,10 +8,8 @@ import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +21,6 @@ import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
-import app.model.Employee;
-import app.model.ProjectInfo;
-import app.model.SeniorityEnum;
-import app.model.TagCloud;
-import app.model.TagCloudEnum;
-import app.repository.ProjectInfoRepository;
-
 import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -38,6 +29,11 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import app.model.Employee;
+import app.model.ProjectInfo;
+import app.model.TagCloud;
+import app.model.TagCloudEnum;
 
 public class ChartGenerator {
 
@@ -91,14 +87,16 @@ public class ChartGenerator {
 		if (seniority.size() > 0) {
 			for (ProjectInfo pi : seniority) {
 				if (pi.getSeniority() != null) {
-					if (pi.getSeniority().equals(SeniorityEnum.Junior)) {
-						j++;
-					} else if (pi.getSeniority().equals(SeniorityEnum.Medior)) {
-						m++;
-					} else if (pi.getSeniority().equals(SeniorityEnum.Senior)) {
-						s++;
+					switch (pi.getSeniority()){
+						case Junior:
+							j++; break;
+						case Medior:
+							m++; break;
+						case Senior:	
+							s++;
 					}
 				}
+				
 			}
 		}
 		pieDataset.setValue(j + " - Juniors", j * 100 / 3);

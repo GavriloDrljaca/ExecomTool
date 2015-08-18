@@ -3,7 +3,6 @@ package app.controllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,14 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +58,23 @@ public class ReportRestController {
 	@Autowired
     private ServletContext servletContext;
 	
+	/**
+	 * Returns only the tag clouds that contain the given employee
+	 * @param extracted
+	 * @param toExtract
+	 * @param employee
+	 * @return
+	 */
+	private Set<TagCloud> extractClouds(Set<TagCloud> extracted, List<TagCloud> toExtract, Employee employee){
+		for (TagCloud tc : toExtract) {
+			if (tc.getEmployees().contains(employee)) {
+				extracted.add(tc);
+			}
+		}
+		return extracted;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/cv")
 	/**
 	 * Sends generates cv file to response.
@@ -68,39 +82,34 @@ public class ReportRestController {
 	 * @return File as an array of bytes.
 	 * @throws IOException
 	 */
-	public ResponseEntity<byte[]> generateRtf(@RequestParam("id") int id) throws IOException {
+	public ResponseEntity generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee e = employeeRepository.findOne(id);
 		List<TagCloud> allEducation = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
 		Set<TagCloud> education = new HashSet<>();
-		for (TagCloud tc : allEducation) {
-			if (tc.getEmployees().contains(e)) {
-				education.add(tc);
-			}
-		}
+		education = extractClouds(education, allEducation, e);
+		
 		List<TagCloud> allLanguage = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<TagCloud> language = new HashSet<>();
-		for (TagCloud tc : allLanguage) {
-			if (tc.getEmployees().contains(e)) {
-				language.add(tc);
-			}
-		}
-		Set<ProjectInfo> pinfos = e.getProjectInfos();
+		language = extractClouds(language, allLanguage, e);
+		
+		Set<ProjectInfo> projectInfoes = e.getProjectInfos();
 		Set<TagCloud> databases = new HashSet<>();
 		Set<TagCloud> ides = new HashSet<>();
 		Set<TagCloud> technologies = new HashSet<>();
 		Map<Project, List<TagCloud>> projects = new HashMap<>();
-		for(ProjectInfo pi : pinfos) {
+		for(ProjectInfo pi : projectInfoes) {
 			List<TagCloud> tempTech = new ArrayList<>(); 
 			for(TagCloud tc : pi.getTagClouds()) {
-				if(tc.getTipTagCloud().equals(TagCloudEnum.Technologie)) {
-					tempTech.add(tc);
-					technologies.add(tc);
-				}
-				else if(tc.getTipTagCloud().equals(TagCloudEnum.Database)) {
-					databases.add(tc);
-				}
-				else if(tc.getTipTagCloud().equals(TagCloudEnum.IDE)) {
-					ides.add(tc);
+				switch(tc.getTipTagCloud()){
+					case Technologie:
+						tempTech.add(tc);
+						technologies.add(tc);
+						break;
+					case Database:
+						databases.add(tc); break;
+					case IDE:
+						ides.add(tc); break;
+					default:
 				}
 			}
 			projects.put(pi.getProject(),tempTech);
@@ -114,7 +123,7 @@ public class ReportRestController {
 		} catch (DocumentException e2) {
 			e2.printStackTrace();
 		}
-		String employeeName = e.getNameEmployee().replace(" ", "_");
+		String employeeName = e.getNameEmployee().trim().replace(" ", "_");
 		String fileName = employeeName + "_CV.rtf";	
 		Path path = Paths.get(servletContext.getRealPath("/temp/")+ fileName);
     	byte[] data = null;
@@ -129,16 +138,17 @@ public class ReportRestController {
     	if(file != null) {
     		file.delete();
     	}
-    	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+    	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/seniority")
 	/**
 	 * Sends seniority pie chart as an array of bytes.
 	 * @return Seniority pie chart
 	 */
-	public ResponseEntity<byte[]> generateChart() {
+	public ResponseEntity generateChart() {
 		try {
 			ChartGenerator.generatePieChart(employeeRepository.findAll());
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
@@ -155,15 +165,17 @@ public class ReportRestController {
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
-    	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+    	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/technology") 
 	/**
 	 * Sends technologies pie chart as an array of bytes.
 	 * @return Technologies pie chart
 	 */
-	public ResponseEntity<byte[]> generatePieTech() {
+	public ResponseEntity generatePieTech() {
 		try {
 			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
@@ -180,16 +192,17 @@ public class ReportRestController {
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
-    	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+    	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/database") 
 	/**
 	 * Sends databases pie chart as an array of bytes.
 	 * @return Databases pie chart
 	 */
-	public ResponseEntity<byte[]> generatePieDB() {
+	public ResponseEntity generatePieDB() {
 		try {
 			ChartGenerator.generateTechnology(projectInfoRepository.findAll(),TagCloudEnum.Database);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
@@ -206,7 +219,7 @@ public class ReportRestController {
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
     	headers.add("content-disposition", "inline; filename=" + fileName);
-    	ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+    	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
 }
