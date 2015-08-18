@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,7 +51,7 @@ public class GoogleLoginVerifierController {
 			.build();
 
 	@Autowired
-	private EmployeeRepository employeeRepo;
+	private EmployeeRepository employeeRepository;
 
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
@@ -88,7 +87,7 @@ public class GoogleLoginVerifierController {
 					log.info("GLVC User email: " + payload.getEmail());
 
 					Employee emp = null;
-					if ((emp = employeeRepo.findByEmail(payload.getEmail())) != null) {
+					if ((emp = employeeRepository.findByEmail(payload.getEmail())) != null) {
 						log.info(emp);
 						uDetails = userDetailsService
 								.loadUserByUsername(payload.getEmail());

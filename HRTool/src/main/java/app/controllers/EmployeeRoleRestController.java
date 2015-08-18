@@ -25,12 +25,13 @@ public class EmployeeRoleRestController {
 
 		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null){
 			UserDetails ud = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			@SuppressWarnings("unchecked")
 			ArrayList<SimpleGrantedAuthority> sga = (ArrayList<SimpleGrantedAuthority>) ud.getAuthorities();
 			
 			log.info("SGA : "+sga.get(0).getAuthority());
 			return new ResponseEntity<String>("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 
 }
