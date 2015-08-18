@@ -24,28 +24,16 @@ public class ImageUploadRestController {
     private ServletContext servletContext;
 
 	
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public @ResponseBody String uploading(){
-		
-		
-		System.out.println("---------------------------------");
-		return "BLA BLA";
 
-
-	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadingPOST(@RequestParam("flowFilename") String fileName,
-			@RequestParam("flowTotalChunks") int totalChunks,
 			@RequestParam("slika") MultipartFile file){
-		System.out.println("----------------POST-------------");
 		if (!file.isEmpty()) {
-			System.out.println("nije prazan  "+ fileName+ "  totalchunks: "+totalChunks);
             try {
             	
                 byte[] bytes = ((MultipartFile) file).getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(
                         		new File(servletContext.getRealPath("/images/")+fileName)));
                 stream.write(bytes);
                 stream.close();
