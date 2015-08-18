@@ -42,12 +42,12 @@ public class ChartGenerator {
 	
 	/**
 	 * Generates seniority pie chart and saves it in a pdf.
-	 * @param emps All employees
+	 * @param employees All employees
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 * @throws ParseException
 	 */
-	public static File generatePieChart(List<Employee> emps) throws FileNotFoundException, DocumentException, ParseException {
+	public static File generatePieChart(List<Employee> employees) throws FileNotFoundException, DocumentException, ParseException {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		Document doc = new Document();
@@ -72,10 +72,10 @@ public class ChartGenerator {
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
 		List<ProjectInfo> seniority = new ArrayList<>();
-		for (Employee e : emps) {
+		for (Employee employee : employees) {
 			Date lastDate = df.parse("1900-02-01");
 			ProjectInfo last = new ProjectInfo();
-			Set<ProjectInfo> projectInfoIt = e.getProjectInfos();
+			Set<ProjectInfo> projectInfoIt = employee.getProjectInfos();
 			if (projectInfoIt.size() == 0) {
 				continue;
 			}
@@ -87,25 +87,25 @@ public class ChartGenerator {
 			}
 			seniority.add(last);
 		}
-		int j = 0, m = 0, s = 0;
+		int juniors = 0, mediors = 0, seniors = 0;
 		if (seniority.size() > 0) {
 			for (ProjectInfo pi : seniority) {
 				if (pi.getSeniority() != null) {
 					switch (pi.getSeniority()){
 						case Junior:
-							j++; break;
+							juniors++; break;
 						case Medior:
-							m++; break;
+							mediors++; break;
 						case Senior:	
-							s++;
+							seniors++;
 					}
 				}
 				
 			}
 		}
-		pieDataset.setValue(j + " - Juniors", j * 100 / 3);
-		pieDataset.setValue(m + " - Mediors", m * 100 / 3);
-		pieDataset.setValue(s + " - Seniors", s * 100 / 3);
+		pieDataset.setValue(juniors + " - Juniors", juniors * 100 / 3);
+		pieDataset.setValue(mediors + " - Mediors", mediors * 100 / 3);
+		pieDataset.setValue(seniors + " - Seniors", seniors * 100 / 3);
 
 		JFreeChart chart = ChartFactory.createPieChart("Seniority", pieDataset,
 				true, true, false);
@@ -122,12 +122,12 @@ public class ChartGenerator {
 	/**
 	 * Generates a @param tce pie chart and saves it in a pdf.
 	 * @param projInfos
-	 * @param tce
+	 * @param tagCloudEnum
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 * @throws ParseException
 	 */
-	public static File generateTechnologyOrDatabase(List<ProjectInfo> projInfos, TagCloudEnum tce) throws FileNotFoundException, DocumentException, ParseException {
+	public static File generateTechnologyOrDatabase(List<ProjectInfo> projInfos, TagCloudEnum tagCloudEnum) throws FileNotFoundException, DocumentException, ParseException {
 
 		List<TagCloud> tagClouds = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public class ChartGenerator {
 		PdfWriter writer = null;
 		String fileName = null;
 		File pc = null;
-		switch (tce){
+		switch (tagCloudEnum){
 			case Technologie:
 				currentDate = new Date();
 				fileName = "./technology-chart_" + sdf.format(currentDate) + ".pdf";
@@ -159,7 +159,7 @@ public class ChartGenerator {
 
 		doc.open();
 
-		doc.add(new Phrase("Used " + tce.toString() + "s:"));
+		doc.add(new Phrase("Used " + tagCloudEnum.toString() + "s:"));
 
 		PdfContentByte cb = writer.getDirectContent();
 
@@ -174,7 +174,7 @@ public class ChartGenerator {
 
 		Map<String, Integer> numberOfNames = new HashMap<>();
 		for (TagCloud tc : tagClouds) {
-			if (tc.getTipTagCloud().equals(tce)) {
+			if (tc.getTipTagCloud().equals(tagCloudEnum)) {
 				int count = numberOfNames.containsKey(tc.getNameTagCloud()) ? numberOfNames.get(tc.getNameTagCloud()) : 0;
 				numberOfNames.put(tc.getNameTagCloud(), count + 1);
 			}
@@ -187,7 +187,7 @@ public class ChartGenerator {
 			it.remove();
 		}
 
-		JFreeChart chart = ChartFactory.createPieChart(tce.toString() + "s", pieDataset,
+		JFreeChart chart = ChartFactory.createPieChart(tagCloudEnum.toString() + "s", pieDataset,
 				true, true, false);
 		PiePlot plot = (PiePlot) chart.getPlot();
 		plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {2}"));
