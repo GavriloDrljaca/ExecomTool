@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
@@ -58,6 +60,7 @@ public class ReportRestController {
 	@Autowired
     private ServletContext servletContext;
 	
+	private Logger logger = Logger.getLogger(ReportRestController.class.getName());
 	/**
 	 * Returns only the tag clouds that contain the given employee
 	 * @param extracted
@@ -85,7 +88,7 @@ public class ReportRestController {
 		
 		Set<TagCloud> language = new HashSet<>();
 		getTagClouds(language, employee, TagCloudEnum.ForeignLanguage);
-		
+
 		Set<ProjectInfo> projectInfoes = employee.getProjectInfos();
 		Set<TagCloud> databases = new HashSet<>();
 		Set<TagCloud> ides = new HashSet<>();
@@ -124,7 +127,8 @@ public class ReportRestController {
 		try {
 			data = Files.readAllBytes(path);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.log(Level.SEVERE, e1.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/rtf"));
@@ -147,7 +151,8 @@ public class ReportRestController {
 		try {
 			file = ChartGenerator.generatePieChart(employeeRepository.findAll());
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		String fileName = "seniority-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
@@ -155,7 +160,8 @@ public class ReportRestController {
 		try {
 			data = Files.readAllBytes(path);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.log(Level.SEVERE, e1.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
@@ -178,7 +184,8 @@ public class ReportRestController {
 		try {
 			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		String fileName = "technology-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
@@ -186,7 +193,8 @@ public class ReportRestController {
 		try {
 			data = Files.readAllBytes(path);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.log(Level.SEVERE, e1.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
@@ -209,7 +217,8 @@ public class ReportRestController {
 		try {
 			file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Database);
 		} catch (FileNotFoundException | com.itextpdf.text.DocumentException | ParseException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		String fileName = "database-chart_" + ChartGenerator.sdf.format(ChartGenerator.currentDate) + ".pdf";
 		Path path = Paths.get("./" + fileName);
@@ -217,7 +226,8 @@ public class ReportRestController {
 		try {
 			data = Files.readAllBytes(path);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.log(Level.SEVERE, e1.getMessage());
+			return new ResponseEntity("",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.parseMediaType("application/pdf"));
