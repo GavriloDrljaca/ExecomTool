@@ -58,7 +58,7 @@ public class GoogleLoginVerifierController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public String logIn(@RequestParam("idtoken") String id_Token,
+	public HttpStatus logIn(@RequestParam("idtoken") String id_Token,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		log.info("Token granted from frontend: " + id_Token);
@@ -116,8 +116,8 @@ public class GoogleLoginVerifierController {
 						log.info("GLVC principal: "
 								+ SecurityContextHolder.getContext()
 										.getAuthentication().getPrincipal());
-
-						return "redirect:/startPage.html";
+						
+						return HttpStatus.OK;
 
 					} else {
 						throw new UserNotFoundException(payload.getEmail());
@@ -136,7 +136,7 @@ public class GoogleLoginVerifierController {
 			e.printStackTrace();
 		}
 
-		return "";
+		return HttpStatus.BAD_REQUEST;
 	}
 
 
