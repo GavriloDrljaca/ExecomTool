@@ -65,8 +65,9 @@ public class ReportRestController {
 	 * @param employee
 	 * @return
 	 */
-	private void extractClouds(Set<TagCloud> extracted, List<TagCloud> toExtract, Employee employee){
-		toExtract.stream().filter(tc -> tc.getEmployees().contains(employee)).forEach(tc -> extracted.add(tc));
+	
+	private void getTagClouds(Set<TagCloud> extracted, Employee employee, TagCloudEnum tagCloudType) {
+		employee.getTagClouds().stream().filter(tc -> tc.getTipTagCloud().equals(tagCloudType)).forEach(tc -> extracted.add(tc));;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -78,16 +79,14 @@ public class ReportRestController {
 	 * @throws IOException
 	 */
 	public ResponseEntity generateRtf(@RequestParam("id") int id) throws IOException {
-		Employee e = employeeRepository.findOne(id);
-		List<TagCloud> allEducation = tagCloudRepository.findByTipTagCloud(TagCloudEnum.Education);
+		Employee employee = employeeRepository.findOne(id);
 		Set<TagCloud> education = new HashSet<>();
-		extractClouds(education, allEducation, e);
+		getTagClouds(education, employee, TagCloudEnum.Education);
 		
-		List<TagCloud> allLanguage = tagCloudRepository.findByTipTagCloud(TagCloudEnum.ForeignLanguage);
 		Set<TagCloud> language = new HashSet<>();
-		extractClouds(language, allLanguage, e);
+		getTagClouds(language, employee, TagCloudEnum.ForeignLanguage);
 		
-		Set<ProjectInfo> projectInfoes = e.getProjectInfos();
+		Set<ProjectInfo> projectInfoes = employee.getProjectInfos();
 		Set<TagCloud> databases = new HashSet<>();
 		Set<TagCloud> ides = new HashSet<>();
 		Set<TagCloud> technologies = new HashSet<>();
@@ -112,13 +111,13 @@ public class ReportRestController {
 		}
 		File file = null;
 		try {
-			file = CVGenerator.generate(servletContext,e,education,language,projects, technologies, databases, ides);
+			file = CVGenerator.generate(servletContext,employee,education,language,projects, technologies, databases, ides);
 		} catch (FileNotFoundException e2) {
 			e2.printStackTrace();
 		} catch (DocumentException e2) {
 			e2.printStackTrace();
 		}
-		String employeeName = e.getNameEmployee().trim().replace(" ", "_");
+		String employeeName = employee.getNameEmployee().trim().replace(" ", "_");
 		String fileName = employeeName + "_CV.rtf";	
 		Path path = Paths.get(servletContext.getRealPath("/temp/")+ fileName);
     	byte[] data = null;
