@@ -5,7 +5,11 @@
                 <h3>Employment information</h3>
 				<md-input-container>
 				    <label>Username:</label>
-				    <input type="text" ng-model="currEmp.username"> 
+				    <input type="text" ng-model="currentEmployee.username"> 
+				</md-input-container>
+				<md-input-container layout="column" layout-align="center start">
+				<label>Start day from employment booklet:</label>
+				<input type="date" ng-model="startDateFromBooklet">
 				</md-input-container>
 			    <md-input-container>
 				    <label>Total work experience:</label>
@@ -13,11 +17,11 @@
 			    </md-input-container>
 				<md-input-container>
 				    <label>Id card number:</label>
-				    <input type="text" ng-model="currEmp.idCardNumber" numeric-only> 
+				    <input type="text" ng-model="currentEmployee.idCardNumber"> 
 				</md-input-container>
 				<md-input-container>
 				    <label>Passport number:</label>
-				    <input type="text" ng-model="currEmp.passportNumber" numeric-only>
+				    <input type="text" ng-model="currentEmployee.passportNumber">
 				</md-input-container>
 			</md-content>
 		</div>
@@ -44,7 +48,7 @@
 	                            </md-input-container>
                                 <md-input-container layout="column" layout-align="center start">
 	                                <label>End date:</label>
-	                                <input type="date" ng-model = "newEmpInfo.endDate"> 
+	                                <input type="date" ng-model = "newEmpInfo.endDate" > 
 	                            </md-input-container> 
 	                        </md-content>
 	                    </form>

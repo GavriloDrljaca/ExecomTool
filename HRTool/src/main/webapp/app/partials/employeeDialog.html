@@ -2,7 +2,7 @@
 <form>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>{{currEmp.nameEmployee}}</h2>
+		<h2>{{currentEmployee.nameEmployee}}</h2>
 	</div>
 	</md-toolbar>
 
@@ -12,12 +12,12 @@
 		      <md-content class="md-padding" layout="row">
 			     <div data-ng-include data-src="'app/partials/employeeBasicInfoTab.html'" flex="50"></div>
 			     <div flex offset = "15">
-					<div flow-init="{target: '/upload'  , testChunks:false, singleFile: 'true', uploadMethod: 'post', method: 'multipart', fileParameterName:'picture' }"
+					<div flow-init="{target: '/{{currentEmployee.username}}/image'  , testChunks:false, singleFile: 'true', uploadMethod: 'post', method: 'multipart', fileParameterName:'picture' }"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-success="imageUploaded($message, $file.size)"
 					     flow-file-added = "!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()] && $file.size < 1024000">
 					    <div class="thumbnail" ng-show="imageSwitch">
-					      <img src= {{currEmp.image}} alt = "defaultImage" onError="this.onerror=null;this.src='images/defaultImage.png';" height = "250" width = "250"/>
+					      <img src= {{currentEmployee.image}} alt = "defaultImage" onError="this.onerror=null;this.src='images/defaultImage.png';" height = "250" width = "250"/>
 					    </div>
 					    <input type="file" flow-btn />
 					</div>
@@ -60,7 +60,7 @@
 		<md-button ng-hide="newEmployee" ng-click="saveEmployee()" class="md-primary">Update</md-button>
 		<md-button ng-show="newEmployee" ng-click="createEmployee()" class="md-primary">Create</md-button>
 		<md-button ng-click="confirmExit($event)" class="md-primary">Exit</md-button>
-		<md-button ng-hide="newEmployee" ng-click="deleteEmployee(currEmp)" class="md-primary md-raised">Delete permenantly</md-button>
+		<md-button ng-hide="newEmployee" ng-click="deleteEmployee(currentEmployee)" class="md-primary md-raised">Delete permenantly</md-button>
 	</div>
 </form>
 </md-dialog>

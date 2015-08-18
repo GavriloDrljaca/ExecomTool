@@ -6,10 +6,10 @@
     	<md-input-container md-no-float = "true" class="md-icon-float">
     	   <label>Name:</label>
     	   <md-icon md-svg-src="icons/ic_account_box_black_24px.svg"></md-icon>
-    	   <input required type = "text" ng-model = "currEmp.nameEmployee"/>
+    	   <input required type = "text" ng-model = "currentEmployee.nameEmployee"/>
     	</md-input-container>
     	<md-input-container flex="20">
-    		<md-select placeholder = "Gender" ng-model = "currEmp.gender">
+    		<md-select placeholder = "Gender" ng-model = "currentEmployee.gender">
     			<md-option value = "Female">Female</md-option>
     			<md-option value = "Male">Male</md-option>								
 			</md-select>
@@ -19,7 +19,7 @@
     	   <input type = "date"  ng-model = "dateBirth" />
  		</md-input-container> 
  		<md-input-container>
- 			<md-select placeholder = "Employee role" ng-model = "currEmp.employeeRole">
+ 			<md-select placeholder = "Employee role" ng-model = "currentEmployee.employeeRole">
  				<md-option value = "EMP">Employee</md-option>
  				<md-option value = "OFF">Office manager</md-option>
  				<md-option value = "HRM">Human resource manager</md-option>

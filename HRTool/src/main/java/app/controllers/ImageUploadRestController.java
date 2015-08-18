@@ -21,7 +21,7 @@ public class ImageUploadRestController {
 
 	private static String imagePath = "/temp/";
 
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@RequestMapping(value = "/{username}/image", method = RequestMethod.POST)
 	public ResponseEntity<String> uploadingPOST(
 			@RequestParam("picture") MultipartFile image) {
 		if (!image.isEmpty()) {
