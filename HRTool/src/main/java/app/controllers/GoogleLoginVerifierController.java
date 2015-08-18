@@ -58,8 +58,7 @@ public class GoogleLoginVerifierController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public String logIn(@RequestParam("idtoken") String id_Token, HttpServletRequest request,
-			HttpServletResponse response){
+	public String logIn(@RequestParam("idtoken") String id_Token, HttpServletRequest request){
 		
 		System.out.println("Token granted from frontend: " + id_Token);
 		
@@ -132,10 +131,8 @@ public class GoogleLoginVerifierController {
 	
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logOut(){
+	public void logOut(){
 		SecurityContextHolder.getContext().setAuthentication(null);
-		
-		return "redirect:/index.html";
 	}
 	
 

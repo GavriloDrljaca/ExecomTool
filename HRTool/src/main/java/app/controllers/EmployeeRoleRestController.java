@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,22 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/employeeRole")
 public class EmployeeRoleRestController {
 	
-	
+	/**
+	 * 
+	 * @return {EmployeeRole} of authenticated user as string
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<String> getRole(){
-
-		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null){
+	public ResponseEntity getRole(){
 			UserDetails ud = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			ArrayList<SimpleGrantedAuthority> sga = (ArrayList<SimpleGrantedAuthority>) ud.getAuthorities();
-			
-			System.out.println("SGA : "+sga.get(0).getAuthority());
-			return new ResponseEntity<String>("{\"role\": \""+sga.get(0).getAuthority()+"\"}", HttpStatus.OK);
-		}
-		return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
-	}
+			return new ResponseEntity(sga.get(0).getAuthority(), HttpStatus.OK);
 
+	}
 }

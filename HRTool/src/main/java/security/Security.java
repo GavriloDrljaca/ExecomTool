@@ -28,7 +28,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		
-		http
+		/*http
 		.formLogin().disable()
 		.authorizeRequests()
 			.antMatchers("/").permitAll()
@@ -48,7 +48,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 			.anyRequest().authenticated()
 		.and()
         .csrf()
-            .disable();
+            .disable();*/
 		
 	}
 	
