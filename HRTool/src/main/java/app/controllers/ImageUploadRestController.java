@@ -1,8 +1,6 @@
 package app.controllers;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 
 import javax.servlet.ServletContext;
 
@@ -17,27 +15,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-
 public class ImageUploadRestController {
 
 	@Autowired
     private ServletContext servletContext;
-
-	
-
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadingPOST(@RequestParam("flowFilename") String fileName,
 			@RequestParam("slika") MultipartFile file){
 		if (!file.isEmpty()) {
             try {
-            	
-                byte[] bytes = ((MultipartFile) file).getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(
-                        		new File(servletContext.getRealPath("/images/")+fileName)));
-                stream.write(bytes);
-                stream.close();
-                System.out.println("---------------FILE UPLOADED------------" + servletContext.getRealPath("/images"));
+                file.transferTo(new File(servletContext.getRealPath("/images") + file.getOriginalFilename()));
                 return "images/"+fileName;
             } catch (Exception e) {
                 return "You failed to upload " + e.getMessage();
@@ -45,12 +33,6 @@ public class ImageUploadRestController {
         } else {
             return "You failed to upload  because the file was empty.";
         }
-	}
-	
-
-	public String returnPath(String path){
-		System.out.println(servletContext.getRealPath("images"));
-		return servletContext.getRealPath("images");
 	}
 	
 }
