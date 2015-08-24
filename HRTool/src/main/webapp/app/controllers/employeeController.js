@@ -87,7 +87,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			// EXTRACTING EMPLOYEMENT DATES
 			$scope.extractEmploymentDates = function(){
 				$scope.dateDictionary = {};
-				// $scope.startDate = new Date($scope.currEmp.startDate);
+				// $scope.startDate = new Date($scope.currentEmployee.startDate);
 				$scope.totalWorkExperience = 0;
 				angular.forEach($scope.employmentInfos, function(empInfo, key){
 					$scope.dateDictionary[empInfo.companyName] = {};
@@ -172,7 +172,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 					// IT WILL BE ATTACH IN FUNCTION saveEItoEMployee
 					/*
 					 * employmentInfoesService.saveEmployee(data,
-					 * $scope.currEmp).success(function(){ alert("saved!"); })
+					 * $scope.currentEmployee).success(function(){ alert("saved!"); })
 					 */
 				});
 				
@@ -180,7 +180,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			}
 			$scope.saveEIsToEmployee = function(){
 				angular.forEach($scope.employmentInfos, function(ei, key){
-					employmentInfoesService.saveEmployee(ei, $scope.currEmp);
+					employmentInfoesService.saveEmployee(ei, $scope.currentEmployee);
 					
 				});
 			}
@@ -429,7 +429,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				var newProjectInfo = {};
 				projectInfoService.create(newProjectInfo).success(function(data){
 					newProjectInfo = data;
-					projectInfoService.saveEmployee(data, $scope.currEmp._links.self.href).success(function(){
+					projectInfoService.saveEmployee(data, $scope.currentEmployee._links.self.href).success(function(){
 						projectInfoService.saveProject(data, project).success(function(data){
 							//updateVIEW
 							$scope.updateProjectInfoView(data,newProjectInfo)
@@ -451,34 +451,34 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			$scope.activeForm = "none";
 			$scope.currRealDeal = selectedEmployee;
 
-			$scope.currEmp = $scope.currRealDeal;
+			$scope.currentEmployee = $scope.currRealDeal;
 			// Date of Birth
 			$scope.dateBirth = new Date(selectedEmployee.dateOfBirth);
 
 			// startDate
-			$scope.startDate = new Date($scope.currEmp.startDate);
+			$scope.startDate = new Date($scope.currentEmployee.startDate);
 			// endDate
-			$scope.endDate = new Date($scope.currEmp.endDate);
+			$scope.endDate = new Date($scope.currentEmployee.endDate);
 			// startDate from booklet
 			/*$scope.startDateFromBooklet = new Date(
-					$scope.currEmp.startDateFromBooklet);*/
+					$scope.currentEmployee.startDateFromBooklet);*/
 
 			$scope.createEmployee = function(){
-				if ($scope.currEmp.nameEmployee == "" || angular.equals($scope.currEmp.nameEmployee,undefined)){
-					$scope.currEmp.nameEmployee = "No name";
+				if ($scope.currentEmployee.nameEmployee == "" || angular.equals($scope.currentEmployee.nameEmployee,undefined)){
+					$scope.currentEmployee.nameEmployee = "No name";
 				}
-				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
+				$scope.currentEmployee.dateOfBirth = $scope.dateBirth.toJSON();
 				/*
-				 * $scope.currEmp.startDate = $scope.startDate;
-				 * $scope.currEmp.endDate = $scope.endDate;
-				 * $scope.currEmp.startDateFromBooklet =
+				 * $scope.currentEmployee.startDate = $scope.startDate;
+				 * $scope.currentEmployee.endDate = $scope.endDate;
+				 * $scope.currentEmployee.startDateFromBooklet =
 				 * $scope.startDateFromBooklet;
 				 */
 				
-				employeeService.create($scope.currEmp).success(function(data) {
-					$scope.currEmp = data;
+				employeeService.create($scope.currentEmployee).success(function(data) {
+					$scope.currentEmployee = data;
 					// $scope.saveTags();
-					selectedEmployee = $scope.currEmp;
+					selectedEmployee = $scope.currentEmployee;
 					$scope.newEmployee = false;
 					// $mdDialog.cancel();
 					$scope.init();
@@ -486,23 +486,23 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				});	
 			}
 			$scope.saveEmployee = function() {
-				if ($scope.currEmp.nameEmployee == ""){
-					$scope.currEmp.nameEmployee = "No name";
+				if ($scope.currentEmployee.nameEmployee == ""){
+					$scope.currentEmployee.nameEmployee = "No name";
 				}
 				// saving (new) DateOfBirth
-				$scope.currEmp.dateOfBirth = $scope.dateBirth.toJSON();
+				$scope.currentEmployee.dateOfBirth = $scope.dateBirth.toJSON();
 
 				// saving (new) startDateFromBooklet
-				//$scope.currEmp.startDateFromBooklet = $scope.startDateFromBooklet;
+				//$scope.currentEmployee.startDateFromBooklet = $scope.startDateFromBooklet;
 
 				$scope.saveEmploymentInfos();
 				$scope.updateEmploymentInfoesTagClouds();
 				$scope.saveEIsToEmployee();
-				$scope.currEmp.yearsOfWorking = Math.floor($scope.totalWorkExperience/12);
+				$scope.currentEmployee.yearsOfWorking = Math.floor($scope.totalWorkExperience/12);
 				if($scope.dateDictionary['Execom'] != undefined){
-					$scope.currEmp.yearsOfWorkingExpInExecom = Math.floor($scope.dateDictionary['Execom'].workExperience/12);
+					$scope.currentEmployee.yearsOfWorkingExpInExecom = Math.floor($scope.dateDictionary['Execom'].workExperience/12);
 				}else{
-					$scope.currEmp.yearsOfWorkingExpInExecom =0;
+					$scope.currentEmployee.yearsOfWorkingExpInExecom =0;
 				}
 				if($scope.index != undefined){
 					//SAVING PROJECT INFOS !
@@ -523,7 +523,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				}
 				
 				$scope.saveTags();
-				employeeService.update($scope.currEmp).success(function(data){
+				employeeService.update($scope.currentEmployee).success(function(data){
 					for (i = 0; i<$scope.projInfos.length; i++){
 						$http.put($scope.projInfos[i]._links.self.href, $scope.projInfos[i]).success(function(data){
 							
@@ -636,7 +636,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			 */
 			// TAGCLOUD: FILL tagCLOUDS
 			$scope.fillTagClouds = function(){
-				employeeService.getEmployeeTagClouds($scope.currEmp).success(function(data){
+				employeeService.getEmployeeTagClouds($scope.currentEmployee).success(function(data){
 					
 					if(!data.hasOwnProperty('_embedded')){
 						$scope.initEmptyTagClouds();
@@ -782,7 +782,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				for(i =0; i<$scope.newTags.length; i++){
 					$scope.req+=$scope.newTags[i]._links.self.href +"\n";
 				}
-				tagCloudService.saveTag($scope.currEmp._links.tagClouds.href,$scope.req)
+				tagCloudService.saveTag($scope.currentEmployee._links.tagClouds.href,$scope.req)
 			}
 			
 			$scope.newTag = {};
@@ -822,19 +822,19 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 			
 			$scope.imageSwitch = true;
 			$scope.imageUploaded = function(serverResponse, size){
-				$scope.currEmp.image = serverResponse;
+				$scope.currentEmployee.image = serverResponse;
 				$scope.imageSwitch = true;
 				alert(serverResponse);
 			}
 			$scope.generateCV = function() {
-				emp = $scope.currEmp;
+				emp = $scope.currentEmployee;
 				array = emp._links.self.href.split('/');
 				$window.open("/report/cv?id=" + array[array.length-1],"_self");
 			}
 			//CONFIRM EXIT
 			$scope.confirmExit = function(ev){
 				var confirm = $mdDialog.confirm()
-					.title("Do you want to save changes to employee : "+ $scope.currEmp.nameEmployee)
+					.title("Do you want to save changes to employee : "+ $scope.currentEmployee.nameEmployee)
 					.ok("YES")
 					.cancel("NO")
 					.targetEvent(ev);
@@ -863,7 +863,7 @@ app.controller('employeeController', function($http, $rootScope, $scope, $window
 				$scope.showSimpleToast = function() {
 				    $mdToast.show(
 				      $mdToast.simple()
-				        .content("Employee " + $scope.currEmp.nameEmployee + " updated!")
+				        .content("Employee " + $scope.currentEmployee.nameEmployee + " updated!")
 				        .position($scope.getToastPosition())
 				        .hideDelay(3000)
 				    );
