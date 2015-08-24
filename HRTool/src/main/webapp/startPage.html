@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
+<style>
+.sliderdemoBasicUsage input[type="number"] {
+  text-align: center;} </style>
 
-<!-- Latest compiled and minified CSS -->
+<!-- Latest compiled and minified CSS 
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<!-- jQuery library -->
+<!-- jQuery library 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 
-<!-- Latest compiled JavaScript -->
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<script src="http://cdn.jsdelivr.net/angularjs/1.3.5/angular.min.js"></script>
 <script
-	src="http://cdn.jsdelivr.net/angularjs/1.3.5/angular-animate.min.js"></script>
-<script
-	src="http://cdn.jsdelivr.net/angularjs/1.3.5/angular-aria.min.js"></script>
-<script
-	src="http://cdn.jsdelivr.net/angularjs/1.3.5/angular-route.min.js"></script>
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.0/angular-material.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
 	
 <script type="text/javascript" src="https://rawgit.com/betsol/angular-input-date/master/src/angular-input-date.js"></script>
-<script src="app/js/jquery.min.js"></script>
+<!--<script src="app/js/jquery.min.js"></script>-->
 <script src="app/app.js"></script>
+<link rel="stylesheet" type="text/css" href="app/css/css.css">
+<!-- concatenated flow.js + ng-flow libraries -->
+<script src="app/js//ng-flow-standalone.min.js"></script>
+<!-- or include the files separately -->
+<script src="app/js/ng-flow.js"></script>
+<script src="app/js/ng-flow.min.js"></script>
+<script src="app/directives/telephoneDirective.js"></script>
+<script src="app/directives/numericOnly.js"></script>
 <script src="app/controllers/startPageController.js"></script>
+<script src="app/controllers/restrictedEmployeeController.js"></script>
 <script src="app/controllers/employeeController.js"></script>
 <script src="app/controllers/projectController.js"></script>
+<script src="app/controllers/tagCloudController.js"></script>
 <script src="app/services/startPageService.js"></script>
 <script src="app/services/employeeService.js"></script>
 <script src="app/services/projectService.js"></script>
 <script src="app/services/projectInfoService.js"></script>
+<script src="app/services/tagCloudService.js"></script>
+<script src="app/services/employmentInfoesService.js"></script>
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
 </head>
 <body>
 
-	<div ng-controller="startPageController">
+	<div ng-controller="startPageController"  ng-init="init()">
+		
 		
 			
-		<md-tabs md-dynamic-height="" md-border-bottom=""> <md-tab
+		<md-tabs ng-if="role=='HRM'" md-dynamic-height="" md-border-bottom=""> <md-tab
 				label="Employees"> <md-content class="md-padding">
 			 <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
 			</md-content>
@@ -54,8 +68,30 @@
 			
 			</md-content> 
 		</md-tab> 
+		<md-tab label="Reports">
+             <md-content class="md-padding">
+                <div data-ng-include data-src="'app/partials/employeeReportsTab.html'"></div>
+            
+            </md-content> 
+        </md-tab>
+        		<md-tab label="Analysis">
+             <md-content class="md-padding">
+                <div data-ng-include data-src="'app/partials/analysis.html'"></div>
+            
+            </md-content> 
+        </md-tab>
+         </md-tab>
+        		<md-tab label="TagClouds">
+             <md-content class="md-padding">
+                <div data-ng-include data-src="'app/partials/tagCloudsTab.html'" ng-controller = "tagCloudController"></div>
+            
+            </md-content> 
+        </md-tab>
 		</md-tabs>
 
+        <div ng-if="role!='HRM'">
+         <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
+        </div>
 
 		</div>
 

@@ -10,6 +10,7 @@ import app.model.Employee;
 import app.model.Project;
 import app.model.ProjectInfo;
 import app.model.TagCloud;
+import app.model.TagCloudEnum;
 import app.repository.EmployeeRepository;
 import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
@@ -44,19 +45,7 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("ppetar@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2000-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		try {
-			emp.setEndDate(sdf.parse("2010-05-05"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("1995-06-06"));
@@ -105,12 +94,7 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("smaric@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
@@ -159,12 +143,6 @@ public class ImportData {
 		emp.setPhoneNumber("0691221225");
 		emp.setEmail("mmilosevic@execom.eu");
 		emp.setEmergencyPhoneNumber("021488599");
-		try {
-			emp.setStartDate(sdf.parse("2010-01-01"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
 			emp.setStartDateFromBooklet(sdf.parse("2010-01-01"));
@@ -214,12 +192,7 @@ public class ImportData {
 			emp.setPhoneNumber("0645555555");
 			emp.setEmail("nemanja.milutinovicc@gmail.com");
 			emp.setEmergencyPhoneNumber("021488599");
-			try {
-				emp.setStartDate(sdf.parse("2010-01-01"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 
 			try {
 				emp.setStartDateFromBooklet(sdf.parse("2008-01-01"));
@@ -278,149 +251,149 @@ public class ImportData {
 		TagCloud tc = new TagCloud();
 
 		tc.setNameTagCloud("Java");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("C#");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("C++");
-		tc.setTipTagCloud("programming language");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("mySQL");
-		tc.setTipTagCloud("database");
+		tc.setTipTagCloud(TagCloudEnum.Database);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Oracle");
-		tc.setTipTagCloud("database");
+		tc.setTipTagCloud(TagCloudEnum.Database);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Windows");
-		tc.setTipTagCloud("OS");
+		tc.setTipTagCloud(TagCloudEnum.OS);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("UBUNTU");
-		tc.setTipTagCloud("OS");
+		tc.setTipTagCloud(TagCloudEnum.OS);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Server");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Desktop");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Web");
-		tc.setTipTagCloud("platform");
+		tc.setTipTagCloud(TagCloudEnum.Platform);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Eclipse");
-		tc.setTipTagCloud("IDE");
+		tc.setTipTagCloud(TagCloudEnum.IDE);
 		tagRep.save(tc);
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Microsoft Visual Studio");
-		tc.setTipTagCloud("IDE");
+		tc.setTipTagCloud(TagCloudEnum.IDE);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("xml");
-		tc.setTipTagCloud("technologie");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Spring");
-		tc.setTipTagCloud("technologie");
+		tc.setTipTagCloud(TagCloudEnum.Technologie);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Team leader");
-		tc.setTipTagCloud("job role");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Software engineer");
-		tc.setTipTagCloud("job role");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Army");
-		tc.setTipTagCloud("industry");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Comercial");
-		tc.setTipTagCloud("industry");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
-		tc.setNameTagCloud("Army");
-		tc.setTipTagCloud("industry");
+		tc.setNameTagCloud("Naval");
+		tc.setTipTagCloud(TagCloudEnum.Industry);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("High School");
-		tc.setTipTagCloud("education");
+		tc.setTipTagCloud(TagCloudEnum.Education);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("master");
-		tc.setTipTagCloud("education");
+		tc.setTipTagCloud(TagCloudEnum.Education);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("English");
-		tc.setTipTagCloud("foreign languages");
+		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("CEO");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.ForeignLanguage);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("Project manager");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 		tc = new TagCloud();
 
 		tc.setNameTagCloud("HR manager");
-		tc.setTipTagCloud("position");
+		tc.setTipTagCloud(TagCloudEnum.Position);
 		tagRep.save(tc);
 
 	}

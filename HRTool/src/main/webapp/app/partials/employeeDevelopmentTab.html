@@ -1,0 +1,64 @@
+<!-- Personal DEVELOPMENT -->
+	<div id="develop" class="form-group">
+		<h3>Personal development</h3>
+		<form>
+			<md-content layout-padding layout="column" layout-sm="column">
+				<md-input-container md-no-float="true" class="md-icon-float"> 
+				    <label>Licenses and certificates:</label>
+                    <md-icon md-svg-src="icons/ic_style_black_24px.svg"></md-icon>
+				    <input type="text" ng-model="currEmp.licencesCertificates"> 
+				</md-input-container>
+				<md-input-container md-no-float="true" class="md-icon-float">
+					<label>Awards:</label>
+                    <md-icon md-svg-src="icons/ic_stars_black_24px.svg"></md-icon>
+					<input type="text" ng-model="currEmp.awards"> 
+				</md-input-container>
+				<md-input-container md-no-float="true" class="md-icon-float">
+					<label>Training, learning, priority:</label>
+                    <md-icon md-svg-src="icons/ic_cake_black_24px.svg"></md-icon>
+					<textarea ng-model="currEmp.trainingLearningPriority"></textarea>
+				</md-input-container> 
+			</md-content>
+		</form>
+		
+		<h5>Education</h5>
+			 <md-chips ng-model="tagDictionary['Education']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+				       md-items='item in querySearch(searchText, "Education")' md-item-text="item.nameTagCloud" 
+				       placeholder="Search for a education">
+				       
+				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+				         <md-not-found >
+				        	<span ng-click = "addNewTagCloud(searchText, 'Education')">
+				        	Click here to add new education ({{searchText}})</span>
+				        </md-not-found>
+				      </md-autocomplete>
+				
+				      <md-chip-template>
+				        <span>
+				          <strong>{{$chip.nameTagCloud}}</strong>
+				          <em>({{$chip.tipTagCloud}})</em>
+				        </span>
+				      </md-chip-template>
+			  </md-chips>
+		<h5>Foreign language</h5>
+			 <md-chips ng-model="tagDictionary['ForeignLanguage']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+				      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+				       md-items='item in querySearch(searchText, "ForeignLanguage")' md-item-text="item.nameTagCloud" 
+				       placeholder="Search for a language">
+				       
+				        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+				         <md-not-found >
+				        	<span ng-click = "addNewTagCloud(searchText, 'ForeignLanguage')">
+				        	Click here to add new foreign language ({{searchText}})</span>
+				        </md-not-found>
+				      </md-autocomplete>
+				
+				      <md-chip-template>
+				        <span>
+				          <strong>{{$chip.nameTagCloud}}</strong>
+				          <em>({{$chip.tipTagCloud}})</em>
+				        </span>
+				      </md-chip-template>
+			  </md-chips>	
+	</div>

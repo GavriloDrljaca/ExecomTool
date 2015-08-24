@@ -18,6 +18,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 
 repositories {
@@ -25,11 +26,22 @@ repositories {
  	mavenCentral()
 }
 
+configurations {
+    providedRuntime
+}
+
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile 'org.springframework.data:spring-data-rest-webmvc:2.3.2.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE')
-    compile('org.springframework:spring-webmvc:4.1.6.RELEASE')
+    compile('org.springframework.security:spring-security-core:4.0.2.RELEASE')
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.0.7.RELEASE')
+    compile('com.google.api-client:google-api-client:1.20.0')
+    compile('com.lowagie:itext:4.2.1')
+    compile('com.itextpdf:itextpdf:5.5.6')
+    compile('jfree:jfreechart:1.0.13')
     compile("com.h2database:h2")
+    compile('mysql:mysql-connector-java:5.1.36')
     testCompile("junit:junit")
 
 }
@@ -38,10 +50,13 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
+    baseName = 'test'
+    version = '1'
+}
 
-    
-    baseName = 'gs-spring-boot'
-    version = '0.1.0'
+war {
+    baseName = 'HRTool'
+    version = '1.0'
 }
 
 
@@ -57,7 +72,7 @@ uploadArchives {
     }
 }
 task wrapper(type: Wrapper){
-	gradleVersion = '2.3'
+	gradleVersion = '2.5'
 }
 
 

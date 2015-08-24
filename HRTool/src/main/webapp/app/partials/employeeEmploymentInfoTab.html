@@ -1,0 +1,110 @@
+<!-- EMPLOYMENT INFO -->
+	<div id="employment" class="form-group" layout="row">
+		<div flex="45" layout="row" layout-wrap>
+			<md-content flex="50" layout-padding layout="column" layout-sm="column">
+                <h3>Employment information</h3>
+				<md-input-container class="md-icon-float">
+				    <label>Username:</label>
+                    <md-icon md-svg-src="icons/ic_account_box_black_24px.svg"></md-icon>
+				    <input type="text" ng-model="currEmp.username"> 
+				</md-input-container>
+			    <md-input-container class="md-icon-float">
+				    <label>Total work experience:</label>
+                    <md-icon md-svg-src="icons/ic_history_black_24px.svg"></md-icon>
+				    <input type="text" ng-model="totalExperienceString" ng-readonly = "1==1">
+			    </md-input-container>
+				<md-input-container class="md-icon-float">
+				    <label>Id card number:</label>
+                    <md-icon md-svg-src="icons/ic_credit_card_black_24px.svg"></md-icon>
+				    <input type="text" ng-model="currEmp.idCardNumber" numeric-only> 
+				</md-input-container>
+				<md-input-container class="md-icon-float">
+				    <label>Passport number:</label>
+                    <md-icon md-svg-src="icons/ic_flight_takeoff_black_24px.svg"></md-icon>
+				    <input type="text" ng-model="currEmp.passportNumber" numeric-only>
+				</md-input-container>
+			</md-content>
+		</div>
+		
+		<div offset="5" flex="40" layout="row">
+			<div flex="100">
+                <h3>Employee employment infos:</h3>
+			    <md-button class = "md-primary md-raised" ng-click = "addNewEmploymentHistory()">Add new employment history</md-button>
+            
+	            <div id = "newAdd" ng-show = "addNewEmpInfo == 'true'">
+	                <md-whiteframe class="md-whiteframe-z1" layout = "column" >
+	                    <form name = "newEmpInfoForm" novalidate>
+	                        <md-content layout-padding layout="column" layout-sm="column">
+	                            <md-input-container>
+	                                <label>Company name:</label>
+	                                <input  id="companyNameInput" type = "text"  name = "name" ng-model = "newEmpInfo.companyName" required autofocus>
+	                                <span style="color:red" ng-show="newEmpInfoForm.name.$invalid">
+	                                    <span ng-show="newEmpInfoForm.name.$error.required">Company name is required.</span>
+	                                </span> 
+	                            </md-input-container>
+	                            <md-input-container md-no-float="true" layout="column" layout-align="center start"> 
+	                                <label>Start date:</label>
+	                                <input type="date" ng-model = "newEmpInfo.startDate"> 
+	                            </md-input-container>
+                                <md-input-container layout="column" layout-align="center start">
+	                                <label>End date:</label>
+	                                <input type="date" ng-model = "newEmpInfo.endDate"> 
+	                            </md-input-container> 
+	                        </md-content>
+	                    </form>
+	                    <span layout = "row" layout-align = "right right">
+	                        <md-button ng-disabled = "newEmpInfoForm.name.$invalid" class = "md-primary md-raised" ng-click = "saveNewEmploymentHistory()">Save new employment history</md-button>
+	                        <md-button class = "md-primary md-raised" ng-click = "cancelAddNewEmpHistory()">Cancel</md-button>
+	                    </span>
+	                </md-whiteframe>
+	            </div>
+			    
+				<md-divider></md-divider>
+				<div ng-repeat = "empInfo in employmentInfos">
+					<md-whiteframe class="md-whiteframe-z1" layout = "column" layout-padding>
+						<form id = "ngEMPform">
+							<md-content layout-padding layout="column" layout-sm="column">
+								<md-input-container>
+									<label>Company name:</label>
+									<input type = text ng-model = "empInfo.companyName">	
+								</md-input-container>
+								<md-input-container md-no-float="true" layout="column" layout-align="center start"> 
+									<label>Start date:</label>
+									<input type="date" ng-model = "dateDictionary[empInfo.companyName].startDate"> 
+								</md-input-container>
+								 <md-input-container md-no-float="true" layout="column" layout-align="center start">
+									<label>End date:</label>
+									<input type="date" ng-model = "dateDictionary[empInfo.companyName].endDate"> 
+								</md-input-container>
+								<md-input-container md-no-float="true" layout="column" layout-align="center start">
+									<label>Work Experience in months:</label>
+									<input type="txt" ng-model = "dateDictionary[empInfo.companyName].workExperience" ng-readonly= "1==1"> 
+								</md-input-container>  
+							</md-content>
+						</form>
+						<p>Position</p>
+						<md-chips ng-model="EItagClouds[empInfo.companyName].tagClouds" md-autocomplete-snap="" md-require-match="" readonly = "false">
+					      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+						       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
+						       placeholder="Search for a position">
+						       
+						        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+		                        <md-not-found >
+						        	<span ng-click = "addNewTagCloudEI(empInfo.companyName, searchText, 'Position')">
+						        	Click here to add new position ({{searchText}})</span>
+						        </md-not-found>
+					      </md-autocomplete>
+						
+					      <md-chip-template>
+		                      <span>
+						          <strong>{{$chip.nameTagCloud}}</strong>
+						          <em>({{$chip.tipTagCloud}})</em>
+		                      </span>
+					      </md-chip-template>
+						</md-chips>
+					    <md-divider ng-if="!$last"></md-divider>
+					</md-whiteframe>
+		      </div>
+         </div>
+     </div>
+</div>    

@@ -1,14 +1,20 @@
 package app.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import app.model.TagCloud;
+import app.model.TagCloudEnum;
 
+import java.util.List;
 
 @Repository
-public interface TagCloudRepository extends CrudRepository<TagCloud, Integer> {
+public interface TagCloudRepository extends JpaRepository<TagCloud, Integer> {
+
+	TagCloud findByNameTagCloud(@Param("tagCloudName") String tagCloudName);
+
+	List<TagCloud> findByTipTagCloud(@Param("tipTagCloud") TagCloudEnum tiptagcloud);
 	
-	TagCloud findByNameTagCloud(String tagCloudName);
-	Iterable<TagCloud> findByTipTagCloud(String tagCloudType);
+	TagCloud findByTipTagCloudAndNameTagCloud(@Param("tipTagCloud") TagCloudEnum tipTagCloud, @Param("tagCloudName") String tagCloudName);
 }

@@ -1,55 +1,69 @@
-<md-dialog aria-label="Employee" flex="100">
-  <form>
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <h2>Employee</h2>
-      <span flex></span>
-		<md-button class="md-button" ng-click="answer('not applicable')">
-        X
-      </md-button>
-    </div>
-  </md-toolbar>
-  <md-dialog-content>
-    <div>
-    <!-- Dodaj EMPLOYEEE -->
-      <h2>{{currEmp.nameEmployee}}</h2>
-    </div>
-    <div class = "md-actions" layout = "row"><md-button ng-click = "showForm('basic')" class=" md-raised md-primary">Basic info</md-button>
-    <md-button ng-click = "showForm('contact')" class=" md-raised md-primary">Contact info</md-button>
-    <md-button ng-click = "showDate('sf')" class=" md-raised md-primary">Employment info</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Work experience</md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Personal development </md-button>
-    <md-button ng-click = "" class=" md-raised md-primary">Social skills and competences</md-button>
-    
-    </div>
-    <span flex></span>
-    <div ng-show ="activeForm == 'basic'" class = "form-group">
-	<h3>Basic information</h3>
+<md-dialog aria-label="Employee" flex="100" ng-init="init()">
+<form>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>{{currEmp.nameEmployee}}</h2>
+	</div>
+	</md-toolbar>
+
+	<md-dialog-content>
+	   <md-tabs md-dynamic-height md-border-bottom>
+	       <md-tab label="Basic info">
+		      <md-content class="md-padding" layout="row">
+			     <div data-ng-include data-src="'app/partials/employeeBasicInfoTab.html'" flex="50"></div>
+			     <div flex offset = "15">
+					<div flow-init="{target: '/upload'  , testChunks:false, singleFile: 'true', uploadMethod: 'post', method: 'multipart', fileParameterName:'slika' }"
+					     flow-files-submitted="$flow.upload()"
+					     flow-file-success="imageUploaded($message, $file.size)"
+					     flow-file-added = "!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()] && $file.size < 100000000">
+					    <div class="thumbnail" ng-hide="imageSwitch" >
+					      	<img src="images/Koala.jpg" height = "250" width = "250"/>
+					    </div>
+					    <div class="thumbnail" ng-show="imageSwitch">
+					      <img src= {{currEmp.image}} alt = "defaultImage" onError="this.onerror=null;this.src='images/defaultImage.png';" height = "250" width = "250"/>
+					    </div>
+					    <input type="file" flow-btn />
+					</div>
+			     </div>
+		      </md-content>
+		   </md-tab>
 	
-    <form >
-    <md-content layout-padding layout="column" layout-sm="column">
-    	<md-input-container md-no-float = "true">
-    	<label>Name:</label><input type = "text" ng-model = "currEmp.nameEmployee">
-    	</md-input-container>
-    	<md-input-container>
-    	<label>Gender:</label><input type = "text" ng-model = "currEmp.gender">
-    	</md-input-container>
-    	<md-input-container>
-    	<label>Date of birth:</label><input type = "date"  ng-model = "dateBirth" >
- 		</md-input-container>
- 	</md-content>
-    </form>
- 	<md-button ng-click = "saveEmployee()" class = "md-raised">Save</md-button>
-    </div>
-  </md-dialog-content>
-  <div class="md-actions" layout="row">
-    <span flex></span>
-    <md-button ng-click="answer('not useful')" class="md-primary">
-     Not Useful
-    </md-button>
-    <md-button ng-click="answer('useful')" class="md-primary">
-      Useful
-    </md-button>
-  </div>
-  </form>
+	       <md-tab ng-if="!newEmployee" label="Contact info">
+	           <md-content class="md-padding" layout="row">
+			     <div data-ng-include data-src="'app/partials/employeeContactInfoTab.html'" flex="50"></div>
+			   </md-content>
+		   </md-tab> 	
+		   <md-tab ng-if="!newEmployee" label="Employment info">
+	 	     <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeEmploymentInfoTab.html'"></div>
+			 </md-content>
+		   </md-tab> 	
+		   <md-tab ng-if="!newEmployee" label="Work experience">
+	 	     <md-content class="md-padding">
+			     <div data-ng-include data-src="'app/partials/employeeWorkExperienceTab.html'" flex="50"></div>
+			 </md-content>
+		   </md-tab> 	
+		   <md-tab ng-if="!newEmployee" label="Personal Development">
+	 	     <md-content class="md-padding" layout="row">
+			     <div data-ng-include data-src="'app/partials/employeeDevelopmentTab.html'" flex="50"></div>
+			 </md-content>
+		   </md-tab>	
+		   <md-tab ng-if="!newEmployee" label="Social skills and competences">
+             <md-content class="md-padding" layout="row">
+			     <div data-ng-include
+					data-src="'app/partials/employeeSkillsTab.html'" flex="50"></div>
+			 </md-content>
+		   </md-tab>	
+	   </md-tabs>   
+    </md-dialog-content>
+    <md-divider></md-divider>    
+	<div class="md-actions" layout="row">
+		<span flex></span>
+		<md-button ng-hide="newEmployee" ng-click="generateCV()" class="md-primary">Generate CV</md-button>
+		<md-button ng-hide="newEmployee" ng-click="saveEmployee()" class="md-primary">Update</md-button>
+		<md-button ng-show="newEmployee" ng-click="createEmployee()" class="md-primary">Create</md-button>
+		<md-button ng-click="confirmExit($event)" class="md-primary">Exit</md-button>
+		<md-button ng-hide="newEmployee" ng-click="deleteEmployee(currEmp)" class="md-primary md-raised">Delete permenantly</md-button>
+	</div>
+</form>
 </md-dialog>

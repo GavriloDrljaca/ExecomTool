@@ -1,15 +1,35 @@
-<table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th><h3>Naziv projekta</h3></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="project in projects">
-                        <td ng-click="showProject($event, project)">{{ project.nameProject }}</td>
-                        <td><md-button class="md-primary md-raised"
-                                ng-click="deleteProject(project)" flex flex-md="100">
-                            Obrisi projekat </md-button></td>
-                    </tr>
-                </tbody>
-            </table>
+<md-toolbar>
+   <div class="md-toolbar-tools">
+     <h3>
+       <span>Projects</span>
+     </h3>
+   </div>
+</md-toolbar>
+<md-content>
+    <div layout="row">
+        <div flex offset="5" flex="25">
+			<md-list layout="column" layout-align="center start">  
+			    <md-list-item class="md-3-line">
+                    <md-radio-group ng-model="projectGroup" ng-change="setProjectList(projectGroup)">
+                        <md-radio-button style="display: inline" value="Execom"> All Execom projects </md-radio-button>
+                        <md-radio-button style="display: inline" value="Active"> Active Execom projects </md-radio-button>
+                        <md-radio-button style="display: inline" value="All"> All projects (Execom and from employee history) </md-radio-button>
+                    </md-radio-group>
+                 </md-list-item>
+                 <md-list-item>
+			        <md-input-container>
+			            <label>Filter projects:</label>
+			            <input type="text" ng-model="filterForProjects"/>
+			        </md-input-container>
+			    </md-list-item>
+			    <md-list-item class="md-3-line" ng-click="showProject($event, newProject)">New entry</md-list-item>
+			    <md-list-item class="md-3-line" ng-click="showProject($event, pr)" ng-repeat="pr in projects | filter:filterForProjects">
+			        <div class="md-list-item-text">
+			          <h3>{{ pr.nameProject }}</h3>
+			        </div>
+			    </md-list-item>
+			</md-list>
+		</div>
+    </div>
+    <md-divider></md-divider>
+</md-content>

@@ -1,80 +1,99 @@
 package app.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class TagCloud {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idTagCloud;
-	
+
 	private String nameTagCloud;
+
+	private TagCloudEnum tipTagCloud;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	private Set<Project> projects;
 	
-	private String tipTagCloud;
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	@JsonIgnore
+	private Set<Employee> employees;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
-	private List<Project> projects;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	@JsonIgnore
+	private Set<EmploymentInfo> employmentInfos;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="tagClouds")
-	private List<Employee> employees;
-	
-	public TagCloud(){
-		
-	}
-//	@OneToMany(mappedBy="tagCloud")
-//	private List<TagClouds> tagClouds;
-//	
-//	@OneToMany(mappedBy="tagCloud")
-//	private List<TagCloudEmp> tagCloudEmps;
-	
-	public List<Employee> getEmployees() {
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tagClouds")
+	private Set<ProjectInfo> projectInfos;
+
+	public Set<Employee> getEmployees() {
 		return employees;
 	}
-	public void setEmployees(List<Employee> employees) {
+
+	public void setEmployees(Set<Employee> employees) {
 		this.employees = employees;
 	}
-	public List<Project> getProjects() {
+
+	public Set<Project> getProjects() {
 		return projects;
 	}
-	public void setProjects(List<Project> projects) {
+
+	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
+
 	public int getIdTagCloud() {
 		return idTagCloud;
 	}
+
 	public void setIdTagCloud(int idTagCloud) {
 		this.idTagCloud = idTagCloud;
 	}
+
 	public String getNameTagCloud() {
 		return nameTagCloud;
 	}
+
 	public void setNameTagCloud(String nameTagCloud) {
 		this.nameTagCloud = nameTagCloud;
 	}
-	public String getTipTagCloud() {
+
+	public TagCloudEnum getTipTagCloud() {
 		return tipTagCloud;
 	}
-	public void setTipTagCloud(String tipTagCloud) {
+
+	public void setTipTagCloud(TagCloudEnum tipTagCloud) {
 		this.tipTagCloud = tipTagCloud;
 	}
-//	public List<TagClouds> getTagClouds() {
-//		return tagClouds;
-//	}
-//	public void setTagClouds(List<TagClouds> tagClouds) {
-//		this.tagClouds = tagClouds;
-//	}
-//	public List<TagCloudEmp> getTagCloudEmps() {
-//		return tagCloudEmps;
-//	}
-//	public void setTagCloudEmps(List<TagCloudEmp> tagCloudEmps) {
-//		this.tagCloudEmps = tagCloudEmps;
-//	}
+
+	public Set<EmploymentInfo> getEmploymentInfos() {
+		return employmentInfos;
+	}
+
+	public void setEmploymentInfos(Set<EmploymentInfo> employmentInfos) {
+		this.employmentInfos = employmentInfos;
+	}
+
+	public Set<ProjectInfo> getProjectInfos() {
+		return projectInfos;
+	}
+
+	public void setProjectInfos(Set<ProjectInfo> projectInfos) {
+		this.projectInfos = projectInfos;
+	}
 }

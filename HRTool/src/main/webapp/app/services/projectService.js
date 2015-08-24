@@ -1,25 +1,32 @@
-/**
- * 
- */
-app.factory('projectFactory', function($http) {
-
-	var factory = {};
-
-	factory.getAllProjects = function() {
-		return $http.get('/projects/getAll');
-	};
-
-	factory.getProject = function(id) {
-		return $http.get('/projects/getProject', [ id ])
-	};
-
-	factory.saveProject = function(project) {
-		return $http.post('/projects/saveProject', [project])
-	};
-	
-	factory.deleteProject = function(id) {
-		return $http.post('/projects/deleteProject', [id])
+app.service('projectService', function($http) {
+	var url = '/projects';
+	return {	
+		list: function() {
+			return $http.get(url);
+		},
+		save: function(project) {
+			return $http.post(url, project);
+		},
+		delete: function(project) {
+			return $http.delete(project._links.self.href);
+		},
+		update: function(project){
+			return $http.put(project._links.self.href, project);
+		},
+		tagCloudsForProject: function(project) {
+			return $http.get(project._links.tagClouds.href);
+		},
+		saveTagCloudsForProject: function(projectUrl, tagClouds) {
+			console.log(tagClouds);
+			return $http({
+				url: projectUrl,
+				data: tagClouds,
+				method: "PUT",
+				headers: {"Content-Type": "text/uri-list"}
+			});
+		},
+		projectInfosForProject: function(project) {
+			return $http.get(project._links.projectInfo.href)
+		}
 	}
-
-	return factory;
 });

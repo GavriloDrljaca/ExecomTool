@@ -1,0 +1,144 @@
+<div>
+    <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h3>
+        <span>Report</span>
+      </h3>
+    </div> 
+    </md-toolbar>
+    
+    <form>
+	    <md-content layout="row">
+	    <div flex="50">
+	         <p>Seniority:</p>
+             <md-radio-group ng-model="report.seniority">
+                <md-radio-button style="display: inline" value="Junior"> Junior </md-radio-button>
+                <md-radio-button style="display: inline" value="Medior"> Medior </md-radio-button>
+                <md-radio-button style="display: inline" value="Senior"> Senior </md-radio-button>
+             </md-radio-group>
+             <br/>
+	        <md-input-container md-no-float = "true">
+	           <label>Years of experiance:</label><input type="number" min="0" ng-model="report.yearsOfExperiance"/>
+	         </md-input-container>
+	         <md-radio-group ng-model="report.yearsOfExperianceRelation">
+	            <md-radio-button style="display: inline" value="Less"> Less </md-radio-button>
+	            <md-radio-button style="display: inline" value="Equals"> Equals </md-radio-button>
+	            <md-radio-button style="display: inline" value="More"> More </md-radio-button>
+	         </md-radio-group><span>Default is Equals</span>
+	         <br/>
+	         <md-input-container md-no-float = "true">
+	           <label>Date of employment in execom:</label><input type="date" ng-model="report.yearOfEmployment"/>
+	         </md-input-container>
+		     <md-radio-group ng-model="report.yearOfEmploymentRelation">
+		        <md-radio-button style="display: inline" value="Before"> Before </md-radio-button>
+		        <md-radio-button style="display: inline" value="After"> After </md-radio-button>
+		     </md-radio-group><span>Default is After</span>
+		     <br/>
+		     <h5>Education</h5>
+             <md-chips ng-model="report.searchTagDictionary['Education']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Education")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a education">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <br/>
+              <h5>Job role</h5>
+              <md-chips ng-model="report.searchTagDictionary['JobRole']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "JobRole")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a job role">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <br/>
+              <h5>Technologies</h5>
+              <md-chips ng-model="report.searchTagDictionary['Technologie']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Technologie")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a technologie">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <br/>
+              <h5>Position</h5>
+              <md-chips ng-model="report.searchTagDictionary['Position']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Position")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a position">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <h5>Database knowelage</h5>
+              <md-chips ng-model="report.searchTagDictionary['Database']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "Database")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a database">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <h5>Known languages</h5>
+              <md-chips ng-model="report.searchTagDictionary['ForeignLanguage']" md-autocomplete-snap="" md-require-match="" readonly = "false">
+                      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                       md-items='item in querySearch(searchText, "ForeignLanguage")' md-item-text="item.nameTagCloud" 
+                       placeholder="Search for a language">
+                        <span md-highlight-text="searchText">{{item.nameTagCloud}} :: {{item.tipTagCloud}}</span>
+                      </md-autocomplete>
+                      <md-chip-template>
+                        <span>
+                          <strong>{{$chip.nameTagCloud}}</strong>
+                          <em>({{$chip.tipTagCloud}})</em>
+                        </span>
+                      </md-chip-template>
+              </md-chips>
+              <md-button class="md-primary" ng-click="makeReport()">Find employees by criteria</md-button>
+              <md-button class="md-primary" ng-click="clearForm()">Clear form and result</md-button>
+        </div>
+        <div offset="10">
+	         <md-list layout="column" layout-align="center start">   
+	            <md-list-item class="md-3-line">
+	                <md-input-container>
+	                    <label>Filter employees:</label>
+	                    <input type="text" ng-model="filterForEmployeesReport"/>
+	                </md-input-container>
+	            </md-list-item>
+	            <md-list-item class="md-3-line" ng-click="showEmployeeReport($event, emp)" ng-repeat="emp in reportResult | filter:filterForEmployeesReport">
+	                <div class="md-list-item-text">
+	                     <h3>{{ emp.nameEmployee }}</h3>
+	                </div>
+	            </md-list-item>
+	         </md-list>
+        </div>
+        </md-content>
+    </form>
+</div>
