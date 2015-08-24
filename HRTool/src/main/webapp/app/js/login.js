@@ -41,9 +41,11 @@ onSignIn = function onSignIn(googleUser) {
         complete: function(data, xhr, textStatus) {
         	
             console.log('complete : status: ' +xhr.status);
-            console.log('complete : data: '+data);
+            console.log(data);
             console.log('complete : textStatus: '+textStatus)
-
+            if(data.status ==  200){
+            	window.location = "/startPage.html"
+            }
         } 
 	  	
 	    });
@@ -58,7 +60,7 @@ signOut = function signOut() {
     var request;
   	
   	request = $.ajax({
-        url: "/signin/logout",
+        url: "/logout",
         type: "GET"
     });
     

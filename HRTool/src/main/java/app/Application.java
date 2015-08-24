@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,11 +30,12 @@ import app.repository.EmploymentInfoRepository;
 import app.repository.ProjectInfoRepository;
 import app.repository.ProjectRepository;
 import app.repository.TagCloudRepository;
+import app.security.UserDetailsServiceImpl;
 
 @SpringBootApplication
 
 public class Application extends SpringBootServletInitializer implements CommandLineRunner {
-
+	private static final Logger log = Logger.getLogger(Application.class);
 	@Autowired
 	TagCloudRepository tagRep;
 	@Autowired
@@ -742,12 +744,11 @@ public class Application extends SpringBootServletInitializer implements Command
 		empInfoRep.save(empInfo);
 		
 		Set<TagCloud> bla = empInfoRep.findOne(1).getTagClouds();
-		System.out.println();
 		
 	}
 	public void addTagsToEmpInfo(){
-		System.out.println("EMP: "+ empInfoRep.findOne(1).getCompanyName() + "   TAG: "+tagRep.findOne(24).getNameTagCloud());
-		System.out.println(empInfoRep.findOne(1).getTagClouds());
+		log.info("EMP: "+ empInfoRep.findOne(1).getCompanyName() + "   TAG: "+tagRep.findOne(24).getNameTagCloud());
+		log.info(empInfoRep.findOne(1).getTagClouds());
 		
 		EmploymentInfo ei =empInfoRep.findOne(1); 
 		ei.getTagClouds().add(tagRep.findOne(24));
@@ -757,7 +758,7 @@ public class Application extends SpringBootServletInitializer implements Command
 		ei =empInfoRep.findOne(2);
 		ei.getTagClouds().add(tagRep.findOne(24));
 		empInfoRep.save(ei);
-		System.out.println(empInfoRep.findOne(1).getTagClouds());
+		log.info(empInfoRep.findOne(1).getTagClouds());
 	}
 	public void addTagsToProject(){
 		Project p = projRep.findOne(1);
