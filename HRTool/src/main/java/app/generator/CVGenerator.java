@@ -2,12 +2,10 @@ package app.generator;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -15,11 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
-
-import app.model.Employee;
-import app.model.EmploymentInfo;
-import app.model.Project;
-import app.model.TagCloud;
 
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
@@ -33,9 +26,14 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
 import com.lowagie.text.rtf.RtfWriter2;
 
+import app.model.Employee;
+import app.model.EmploymentInfo;
+import app.model.Project;
+import app.model.TagCloud;
+
 public class CVGenerator {
 
-	public static Document document = new Document();
+	//public static Document document = new Document();
 
 	/**
 	 * Calculates years of @param employee's working experience.
