@@ -61,26 +61,13 @@ public class ReportRestController {
     private ServletContext servletContext;
 	
 	private Logger logger = Logger.getLogger(ReportRestController.class.getName());
-	/**
-	 * Returns only the tag clouds that contain the given employee
-	 * @param extracted
-	 * @param toExtract
-	 * @param employee
-	 * @return
-	 */
-	
+
 	private void getTagClouds(Set<TagCloud> extracted, Employee employee, TagCloudEnum tagCloudType) {
 		employee.getTagClouds().stream().filter(tc -> tc.getTipTagCloud().equals(tagCloudType)).forEach(tc -> extracted.add(tc));;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/cv")
-	/**
-	 * Sends generates cv file to response.
-	 * @param id employee's id
-	 * @return File as an array of bytes.
-	 * @throws IOException
-	 */
 	public ResponseEntity generateRtf(@RequestParam("id") int id) throws IOException {
 		Employee employee = employeeRepository.findOne(id);
 		Set<TagCloud> education = new HashSet<>();
@@ -139,13 +126,9 @@ public class ReportRestController {
     	ResponseEntity response = new ResponseEntity(data, headers, HttpStatus.OK);
         return response;
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/seniority")
-	/**
-	 * Sends seniority pie chart as an array of bytes.
-	 * @return Seniority pie chart
-	 */
 	public ResponseEntity generateChart() {
 		File file = null;
 		file = ChartGenerator.generatePieChart(employeeRepository.findAll());
@@ -171,10 +154,6 @@ public class ReportRestController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/technology") 
-	/**
-	 * Sends technologies pie chart as an array of bytes.
-	 * @return Technologies pie chart
-	 */
 	public ResponseEntity generatePieTech() {
 		File file = null;
 		file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Technologie);
@@ -200,10 +179,6 @@ public class ReportRestController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/database") 
-	/**
-	 * Sends databases pie chart as an array of bytes.
-	 * @return Databases pie chart
-	 */
 	public ResponseEntity generatePieDB() {
 		File file = null;
 		file = ChartGenerator.generateTechnologyOrDatabase(projectInfoRepository.findAll(),TagCloudEnum.Database);

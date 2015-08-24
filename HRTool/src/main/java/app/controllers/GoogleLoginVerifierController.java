@@ -38,89 +38,95 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 @RequestMapping("/signin")
 public class GoogleLoginVerifierController {
 
-	private static final Logger log = Logger
-			.getLogger(GoogleLoginVerifierController.class);
+    private static final Logger log = Logger.getLogger(GoogleLoginVerifierController.class);
 
-	NetHttpTransport transport = new NetHttpTransport();
+    NetHttpTransport transport = new NetHttpTransport();
 
-	private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
-			transport, new JacksonFactory())
-			.setAudience(
-					Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com"))
-			.build();
+    private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
+            transport, new JacksonFactory())
+            .setAudience(Arrays.asList("282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com"))
+            .build();
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-	@Autowired
-	UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public HttpStatus logIn(@RequestParam("idtoken") String id_Token,
-			HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
 
-		GoogleIdToken idToken;
-		Payload payload = null;
-		UserDetails uDetails;
+    public String logIn(@RequestParam("idtoken") String id_Token, HttpServletRequest request) {
 
-		try {
-			idToken = verifier.verify(id_Token);
+        System.out.println("Token granted from frontend: " + id_Token);
 
-			if (idToken != null) {
-				payload = idToken.getPayload();
+        GoogleIdToken idToken;
+        Payload payload = null;
+        UserDetails uDetails;
+
+        try {
+            idToken = verifier.verify(id_Token);
+
+            if (idToken != null) {
+                payload = idToken.getPayload();
 
 
-				if (
-				// If multiple clients access the backend server:
-				Arrays.asList(
-						"282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com")
-						.contains(payload.getAuthorizedParty())) {
+                if (
+                    // If multiple clients access the backend server:
+                        Arrays.asList(
+                                "282087479252-4v31a07nrjnmfganchk4i1btpvoprjro.apps.googleusercontent.com")
+                                .contains(payload.getAuthorizedParty())) {
 
-					log.info("GLVC User email: " + payload.getEmail());
+                    log.info("GLVC User email: " + payload.getEmail());
 
-					Employee emp = null;
-					if ((emp = employeeRepository.findByEmail(payload.getEmail())) != null) {
-						uDetails = userDetailsService
-								.loadUserByUsername(payload.getEmail());
+                    Employee emp = null;
+                    if ((emp = employeeRepository.findByEmail(payload.getEmail())) != null) {
+                        uDetails = userDetailsService
+                                .loadUserByUsername(payload.getEmail());
 
-						request.getSession();
+                        request.getSession();
 
-						Authentication auth = new UsernamePasswordAuthenticationToken(
-								uDetails = userDetailsService.loadUserByUsername(payload
-										.getEmail()), null,
-								uDetails.getAuthorities());
+                        Authentication auth = new UsernamePasswordAuthenticationToken(
+                                uDetails = userDetailsService.loadUserByUsername(payload
+                                        .getEmail()), null,
+                                uDetails.getAuthorities());
 
-						SecurityContextHolder.getContext().setAuthentication(
-								auth);
+                        SecurityContextHolder.getContext().setAuthentication(
+                                auth);
 
-						log.info("GLVC SCH username: "
-								+ ((UserDetails) SecurityContextHolder
-										.getContext().getAuthentication()
-										.getPrincipal()).getUsername());
+                        log.info("GLVC SCH username: "
+                                + ((UserDetails) SecurityContextHolder
+                                .getContext().getAuthentication()
+                                .getPrincipal()).getUsername());
 
-						log.info("GLVC AUTHORITIES: " + auth.getAuthorities());
+                        log.info("GLVC AUTHORITIES: " + auth.getAuthorities());
 
-						return HttpStatus.OK;
+                        return HttpStatus.OK;
 
-					} else {
-						throw new UserNotFoundException(payload.getEmail());
-					}
+                    } else {
+                        throw new UserNotFoundException(payload.getEmail());
+                    }
 
-				} else {
-					log.info("Invalid ID token.");
-				}
-			} else {
-				log.info("Invalid ID token.");
-			}
+                } else {
+                    log.info("Invalid ID token.");
+                }
+            } else {
+                log.info("Invalid ID token.");
+            }
 
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return HttpStatus.BAD_REQUEST;
-	}
+        return HttpStatus.BAD_REQUEST;
+    }
+
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public void logOut() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
 
 }
