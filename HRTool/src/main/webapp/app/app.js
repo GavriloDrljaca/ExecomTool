@@ -3,22 +3,23 @@
  * created by Gavrilo Drljaca
  */
 
-var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ng', 'flow']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial', 'flow']);
 
-app.filter("jsDate", function () {
-    return function (x) {
-       // return new Date(parseInt(x.toString().substring(6)));
-    	return new Date(parseInt(x));
-    };
-});
-
-app.config(function($routeProvider, $locationProvider){
+app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
-		.when('/tagCloudTab', {                                            
-	        templateUrl: "app/partials/tagCloudsTab.html",                                               
-	        controller:'tagCloudController',                                
-	       })                                                                      
-	       .otherwise({                      
-	           template: 'does not exists'   
-	       });      
-});
+		.when('/tagCloudTab', {                                               
+	        controller:'tagCloudController',               
+	        templateUrl: 'app/partials/tagCloudsTab.html',
+	    })
+	    .when('/', {
+	    	controller: 'LoginController',
+	    	templateUrl: 'app/partials/login.html',
+	    })
+	    .when('/startPage', {
+	    	controller: 'startPageController',
+	    	templateUrl: 'app/partials/startPage.html',
+	    })
+	    .otherwise({                      
+	        redirectTo: '/'
+	    });      
+}]);

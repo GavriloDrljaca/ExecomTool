@@ -1,0 +1,24 @@
+<div>
+    <md-content>
+    
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+              <span flex></span>
+            </div>
+        </md-toolbar>
+        
+        <span layout layout-align="center center">
+            <img ng-src="app/pic/hr_tool3.png" alt="" />
+        </span>
+        
+        <span layout layout-align="center center">
+            <md-button aria-label="google.com" class="g-signin2" data-onsuccess="onSignIn"></md-button>
+        </span>
+        
+        <section layout="row" layout-sm="column" layout-align="center center">
+            <md-button class="md-raised md-primary"><a onclick="signOut();">Sign out</a></md-button>
+            <md-button class="md-raised md-primary"><a onclick="revokeAllScopes();">Revoke all scopes</a></md-button>
+        </section>
+        
+    </md-content> 
+</div>

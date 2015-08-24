@@ -123,5 +123,4 @@ public class GoogleLoginVerifierController {
 		return HttpStatus.BAD_REQUEST;
 	}
 
-
 }

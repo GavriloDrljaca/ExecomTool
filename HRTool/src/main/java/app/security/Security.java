@@ -1,6 +1,5 @@
 package app.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,7 @@ public class Security extends WebSecurityConfigurerAdapter{
     private UserDetailsServiceImpl userDetailsService;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+		http.httpBasic().disable()
 		.formLogin().disable()
 		.authorizeRequests()
 			.antMatchers("/").permitAll()

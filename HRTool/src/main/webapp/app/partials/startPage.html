@@ -1,0 +1,38 @@
+<div ng-init="init()">		
+	<md-tabs ng-if="role=='HRM'" md-dynamic-height="" md-border-bottom="">
+	
+		<md-tab label="Employees"> 
+		     <md-content class="md-padding">
+			      <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
+			 </md-content>
+	    </md-tab>
+	    
+		<md-tab label="Projects">
+			 <md-content class="md-padding">
+	               <div data-ng-include data-src="'app/partials/projectTab.html'"></div>
+			</md-content> 
+		</md-tab>
+		
+		<md-tab label="Reports">
+	         <md-content class="md-padding">
+	            <div data-ng-include data-src="'app/partials/employeeReportsTab.html'"></div>
+	        </md-content> 
+	    </md-tab>
+	    
+	    <md-tab label="Analysis">
+	         <md-content class="md-padding">
+	            <div data-ng-include data-src="'app/partials/analysis.html'"></div>
+	        </md-content> 
+	    </md-tab>
+	    
+	    <md-tab label="TagClouds">
+	         <md-content class="md-padding">
+	            <div data-ng-include data-src="'app/partials/tagCloudsTab.html'" ng-controller="tagCloudController"></div>
+	        </md-content> 
+	    </md-tab>
+    
+	</md-tabs>
+    <div ng-if="role!='HRM'">
+        <div data-ng-include data-src="'app/partials/employeeTab.html'"></div>
+    </div>
+</div>

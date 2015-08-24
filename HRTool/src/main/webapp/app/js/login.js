@@ -1,4 +1,3 @@
-
 onSignIn = function onSignIn(googleUser) {
 
 	  	var profile = googleUser.getBasicProfile();
@@ -41,17 +40,14 @@ onSignIn = function onSignIn(googleUser) {
         complete: function(data, xhr, textStatus) {
         	
             console.log('complete : status: ' +xhr.status);
-            console.log(data);
+            console.log('complete : data: '+data);
             console.log('complete : textStatus: '+textStatus)
-            if(data.status ==  200){
-            	window.location = "/startPage.html"
-            }
+
         } 
 	  	
 	    });
  	
 }
-
 
 
 signOut = function signOut() {
@@ -60,7 +56,7 @@ signOut = function signOut() {
     var request;
   	
   	request = $.ajax({
-        url: "/logout",
+        url: "/signin/logout",
         type: "GET"
     });
     
@@ -68,8 +64,6 @@ signOut = function signOut() {
       console.log('User signed out.');
     });
   }
-
-
 
 revokeAllScopes = function revokeAllScopes() {
 	  var auth2 = gapi.auth2.getAuthInstance();
@@ -81,8 +75,7 @@ revokeAllScopes = function revokeAllScopes() {
 	  auth2.disconnect();
 	  
 	  request = $.ajax({
-	        url: "/signin/logout",
+	        url: "/employees/logout",
 	        type: "GET" 	
 	    });
-	} 
-
+	}
